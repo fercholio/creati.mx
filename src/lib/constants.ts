@@ -12,7 +12,7 @@ export const socialLinks = {
 
 export const contactInfo = {
   email: 'hola@creati.mx',
-  location: 'Monterrey, NL, México',
+  location: 'Mérida, Yucatán, México',
 } as const
 
 export const companyValues = [
@@ -98,5 +98,28 @@ export const testimonials = [
     quote: 'Pasamos de una idea en una servilleta a una app usada por 5,000 personas en 3 meses.',
     author: 'Ana Gutiérrez',
     role: 'Fundadora, EduFlow',
+  },
+] as const
+
+export const faqs = [
+  {
+    question: '¿Qué tipo de proyectos hacen?',
+    answer: 'Desarrollamos aplicaciones web, móviles, plataformas SaaS y herramientas internas. Si involucra software y usuarios, nos interesa.',
+  },
+  {
+    question: '¿Cuánto cuesta un proyecto?',
+    answer: 'Depende del alcance. Trabajamos con presupuestos desde proyectos MVP hasta plataformas enterprise. Siempre damos un estimado claro antes de empezar.',
+  },
+  {
+    question: '¿Cuánto tiempo toma un proyecto?',
+    answer: 'Un MVP típico toma de 6 a 12 semanas. Proyectos más complejos pueden tomar 3-6 meses. Siempre entregamos en fases para que veas progreso real desde la semana uno.',
+  },
+  {
+    question: '¿Trabajan con equipos remotos?',
+    answer: 'Sí. Nuestro equipo es remoto-first. Trabajamos con clientes en toda Latinoamérica y Estados Unidos. La comunicación clara es nuestra prioridad.',
+  },
+  {
+    question: '¿Qué pasa después del lanzamiento?',
+    answer: 'Ofrecemos planes de soporte y evolución continua. Tu producto sigue mejorando basado en datos reales de uso y feedback de usuarios.',
   },
 ] as const

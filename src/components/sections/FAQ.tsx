@@ -5,32 +5,11 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Container } from '@/components/layout/Container'
 import { Reveal } from '@/components/ui/Animations'
 import { ChevronDown } from 'lucide-react'
+import { faqs } from '@/lib/constants'
 
-const faqs = [
-  {
-    question: '¿Qué tipo de proyectos hacen?',
-    answer: 'Desarrollamos aplicaciones web, móviles, plataformas SaaS y herramientas internas. Si involucra software y usuarios, nos interesa.',
-  },
-  {
-    question: '¿Cuánto cuesta un proyecto?',
-    answer: 'Depende del alcance. Trabajamos con presupuestos desde proyectos MVP hasta plataformas enterprise. Siempre damos un estimado claro antes de empezar.',
-  },
-  {
-    question: '¿Cuánto tiempo toma un proyecto?',
-    answer: 'Un MVP típico toma de 6 a 12 semanas. Proyectos más complejos pueden tomar 3-6 meses. Siempre entregamos en fases para que veas progreso real desde la semana uno.',
-  },
-  {
-    question: '¿Trabajan con equipos remotos?',
-    answer: 'Sí. Nuestro equipo es remoto-first. Trabajamos con clientes en toda Latinoamérica y Estados Unidos. La comunicación clara es nuestra prioridad.',
-  },
-  {
-    question: '¿Qué pasa después del lanzamiento?',
-    answer: 'Ofrecemos planes de soporte y evolución continua. Tu producto sigue mejorando basado en datos reales de uso y feedback de usuarios.',
-  },
-]
-
-function FAQItem({ question, answer }: { question: string; answer: string }) {
+function FAQItem({ question, answer, index }: { question: string; answer: string; index: number }) {
   const [open, setOpen] = useState(false)
+  const panelId = `faq-panel-${index}`
 
   return (
     <div className="border-b border-gray-100 last:border-0">
@@ -38,6 +17,7 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
         onClick={() => setOpen(!open)}
         className="w-full flex items-center justify-between py-5 text-left group"
         aria-expanded={open}
+        aria-controls={panelId}
       >
         <span className="text-sm font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors pr-4">
           {question}
@@ -53,6 +33,8 @@ function FAQItem({ question, answer }: { question: string; answer: string }) {
       <AnimatePresence initial={false}>
         {open && (
           <motion.div
+            id={panelId}
+            role="region"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: 'auto', opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
@@ -87,8 +69,8 @@ export function FAQ() {
 
           <Reveal delay={0.1}>
             <div className="rounded-2xl bg-white border border-gray-100 px-6 divide-y-0">
-              {faqs.map((faq) => (
-                <FAQItem key={faq.question} {...faq} />
+              {faqs.map((faq, index) => (
+                <FAQItem key={faq.question} {...faq} index={index} />
               ))}
             </div>
           </Reveal>

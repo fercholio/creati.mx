@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 
 export const siteConfig = {
   name: 'Creati',
-  description: 'Software that fits your life. We build products real people love to use.',
+  description: 'Software que se adapta a tu vida. Creamos productos digitales que las personas realmente disfrutan usar.',
   url: 'https://creati.mx',
   ogImage: '/og.png',
   links: {
@@ -18,23 +18,46 @@ export const metadata: Metadata = {
   },
   description: siteConfig.description,
   keywords: [
-    'software', 'desarrollo', 'aplicaciones', 'diseño', 'UX',
-    'productos digitales', 'México', 'tecnología',
+    'desarrollo de software a medida México',
+    'agencia de software Mérida',
+    'desarrollo de aplicaciones web',
+    'desarrollo de aplicaciones móviles',
+    'diseño UX México',
+    'productos digitales',
+    'software a medida',
+    'consultoría tecnológica',
+    'plataformas SaaS',
+    'inteligencia artificial',
   ],
-  authors: [{ name: siteConfig.name }],
+  authors: [{ name: siteConfig.name, url: siteConfig.url }],
   creator: siteConfig.name,
   openGraph: {
     type: 'website',
     locale: 'es_MX',
     url: siteConfig.url,
-    title: siteConfig.name,
+    title: `${siteConfig.name} — Software que se adapta a tu vida`,
     description: siteConfig.description,
     siteName: siteConfig.name,
+    images: [
+      {
+        url: siteConfig.ogImage,
+        width: 1200,
+        height: 630,
+        alt: 'Creati — Desarrollo de software a medida en México',
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
-    title: siteConfig.name,
+    title: `${siteConfig.name} — Software que se adapta a tu vida`,
     description: siteConfig.description,
+    images: [siteConfig.ogImage],
+  },
+  alternates: {
+    canonical: '/',
+    languages: {
+      'es-MX': siteConfig.url,
+    },
   },
   robots: {
     index: true,
@@ -47,4 +70,8 @@ export const metadata: Metadata = {
       'max-snippet': -1,
     },
   },
+  other: {
+    'theme-color': '#4f46e5',
+  },
+  manifest: '/manifest.json',
 }

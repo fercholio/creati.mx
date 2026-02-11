@@ -1,0 +1,22 @@
+{
+  "name": "Creati — Software que se adapta a tu vida",
+  "short_name": "Creati",
+  "description": "Creamos productos digitales que las personas realmente disfrutan usar.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fefdfb",
+  "theme_color": "#4f46e5",
+  "lang": "es-MX",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

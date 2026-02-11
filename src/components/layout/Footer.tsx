@@ -4,7 +4,7 @@ import { Linkedin, Twitter, Github, Mail, MapPin } from 'lucide-react'
 
 export function Footer() {
   return (
-    <footer className="bg-gray-950 text-gray-400 mt-0">
+    <footer aria-label="Pie de página" className="bg-gray-950 text-gray-400 mt-0">
       {/* Organic divider */}
       <div className="relative h-16 -mt-16">
         <svg viewBox="0 0 1440 64" preserveAspectRatio="none" className="absolute inset-0 w-full h-full">

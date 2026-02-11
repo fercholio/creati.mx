@@ -42,19 +42,19 @@ html {
 
 body {
   font-family: var(--font-sans), system-ui, sans-serif;
-  color: #1a1a2e;
-  background-color: #fefdfb;
+  color: var(--color-gray-900);
+  background-color: var(--color-sand-50);
 }
 
 /* Selection */
 ::selection {
-  background-color: #e0e7ff;
-  color: #312e81;
+  background-color: var(--color-indigo-100);
+  color: var(--color-indigo-950);
 }
 
 /* Focus rings */
 :focus-visible {
-  outline: 2px solid #6366f1;
+  outline: 2px solid var(--color-indigo-500);
   outline-offset: 2px;
   border-radius: 4px;
 }

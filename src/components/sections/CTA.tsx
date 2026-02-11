@@ -40,7 +40,8 @@ export function CTA() {
             <Button
               href="/contact"
               size="lg"
-              className="bg-white text-indigo-700 hover:bg-indigo-50 shadow-lg shadow-indigo-900/20 hover:shadow-xl"
+              variant="secondary"
+              className="bg-white text-indigo-700 border-white hover:bg-indigo-50 hover:border-indigo-50 shadow-lg shadow-indigo-900/20 hover:shadow-xl"
             >
               Hablemos de tu proyecto
               <ArrowRight className="w-4 h-4" />

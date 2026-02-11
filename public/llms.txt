@@ -1,0 +1,24 @@
+# Creati.mx
+
+> Software que se adapta a tu vida.
+
+Creati es una agencia de desarrollo de software con sede en Mérida, Yucatán, México. Creamos productos digitales que las personas realmente disfrutan usar.
+
+## Servicios
+
+- Diseño centrado en personas: Interfaces intuitivas desde el primer clic.
+- Ingeniería robusta: Arquitecturas escalables que crecen con tu negocio.
+- Inteligencia integrada: IA que potencia herramientas más inteligentes para equipos reales.
+- Lanzamiento ágil: De la idea al producto en semanas, no meses.
+
+## Proceso
+
+1. Escuchamos: Entendemos tu mundo, tus usuarios y el problema real.
+2. Diseñamos: Prototipos funcionales que puedes tocar y validar.
+3. Construimos: Desarrollo ágil con entregas semanales.
+
+## Contacto
+
+- Email: hola@creati.mx
+- Web: https://creati.mx
+- Ubicación: Mérida, Yucatán, México

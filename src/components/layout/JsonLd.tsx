@@ -1,5 +1,5 @@
 export default function JsonLd() {
-  const structuredData = {
+  const organization = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: 'Creati',
@@ -8,8 +8,8 @@ export default function JsonLd() {
     description: 'Software que se adapta a tu vida. Creamos productos digitales que las personas realmente disfrutan usar.',
     address: {
       '@type': 'PostalAddress',
-      addressLocality: 'Monterrey',
-      addressRegion: 'Nuevo León',
+      addressLocality: 'Mérida',
+      addressRegion: 'Yucatán',
       addressCountry: 'MX',
     },
     contactPoint: {
@@ -25,10 +25,30 @@ export default function JsonLd() {
     ],
   }
 
+  const webSite = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: 'Creati',
+    url: 'https://creati.mx',
+    description: 'Software que se adapta a tu vida. Creamos productos digitales que las personas realmente disfrutan usar.',
+    inLanguage: 'es-MX',
+    publisher: {
+      '@type': 'Organization',
+      name: 'Creati',
+      url: 'https://creati.mx',
+    },
+  }
+
   return (
-    <script
-      type="application/ld+json"
-      dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
-    />
+    <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(organization) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(webSite) }}
+      />
+    </>
   )
 }

@@ -7,6 +7,9 @@ import { CTA } from '@/components/sections/CTA'
 export const metadata: Metadata = {
   title: 'Nosotros',
   description: 'Conoce la historia detrás de Creati. Por qué existimos y cómo construimos software diferente.',
+  alternates: {
+    canonical: '/about',
+  },
 }
 
 export default function AboutPage() {
