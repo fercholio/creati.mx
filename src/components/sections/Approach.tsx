@@ -33,7 +33,7 @@ export function Approach() {
   return (
     <section className="py-24 lg:py-32 relative overflow-hidden">
       <div className="absolute inset-0 -z-10">
-        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-indigo-50/40 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-0 w-[400px] h-[400px] bg-navy-50/40 rounded-full blur-3xl" />
       </div>
 
       <Container>
@@ -53,9 +53,9 @@ export function Approach() {
                 className="w-full h-full object-cover"
               />
             </div>
-            <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/60 via-indigo-900/20 to-transparent" />
+            <div className="absolute inset-0 bg-gradient-to-r from-navy-900/60 via-navy-900/20 to-transparent" />
             <div className="absolute bottom-0 left-0 p-6 lg:p-10">
-              <p className="text-xs font-semibold text-indigo-200 uppercase tracking-widest mb-2">
+              <p className="text-xs font-semibold text-navy-200 uppercase tracking-widest mb-2">
                 Nuestro enfoque
               </p>
               <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white leading-tight">
@@ -70,7 +70,7 @@ export function Approach() {
           {approaches.map((item, i) => (
             <Reveal key={item.title} delay={i * 0.1}>
               <div className="rounded-2xl bg-white border border-gray-100 p-6 hover:shadow-lg hover:shadow-gray-100/50 hover:-translate-y-0.5 transition-all duration-300 h-full">
-                <div className="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-4">
+                <div className="w-10 h-10 rounded-xl bg-navy-50 text-navy-600 flex items-center justify-center mb-4">
                   {item.icon}
                 </div>
                 <h3 className="text-base font-semibold text-gray-900 mb-2 font-[family-name:var(--font-display)]">

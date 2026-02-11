@@ -1,34 +1,34 @@
 @import "tailwindcss";
 
 @theme inline {
-  /* ── Primary: Indigo ── */
-  --color-indigo-50: #eef2ff;
-  --color-indigo-100: #e0e7ff;
-  --color-indigo-200: #c7d2fe;
-  --color-indigo-300: #a5b4fc;
-  --color-indigo-400: #818cf8;
-  --color-indigo-500: #6366f1;
-  --color-indigo-600: #4f46e5;
-  --color-indigo-700: #4338ca;
-  --color-indigo-800: #3730a3;
-  --color-indigo-900: #312e81;
-  --color-indigo-950: #1e1b4b;
+  /* ── Primary: Navy ── */
+  --color-navy-50: #f0f4f8;
+  --color-navy-100: #d9e2ec;
+  --color-navy-200: #bcccdc;
+  --color-navy-300: #9fb3c8;
+  --color-navy-400: #627d98;
+  --color-navy-500: #486581;
+  --color-navy-600: #334e68;
+  --color-navy-700: #243b53;
+  --color-navy-800: #1a2f44;
+  --color-navy-900: #102a43;
+  --color-navy-950: #0a1929;
 
-  /* ── Warm Accent: Amber/Gold ── */
-  --color-warm-50: #fffbeb;
-  --color-warm-100: #fef3c7;
-  --color-warm-200: #fde68a;
-  --color-warm-300: #fcd34d;
-  --color-warm-400: #fbbf24;
-  --color-warm-500: #f59e0b;
-  --color-warm-600: #d97706;
+  /* ── Accent: Antique Gold ── */
+  --color-gold-50: #fcf9f0;
+  --color-gold-100: #f5ecd1;
+  --color-gold-200: #e8d5a3;
+  --color-gold-300: #d4b872;
+  --color-gold-400: #c49a4a;
+  --color-gold-500: #a37e2e;
+  --color-gold-600: #836420;
 
-  /* ── Sand Neutrals ── */
-  --color-sand-50: #fefdfb;
-  --color-sand-100: #fdf8f0;
-  --color-sand-200: #f5efe3;
-  --color-sand-300: #e8dfd0;
-  --color-sand-400: #d4c8b4;
+  /* ── Cream Neutrals ── */
+  --color-cream-50: #faf8f5;
+  --color-cream-100: #f4efe5;
+  --color-cream-200: #e9e1d2;
+  --color-cream-300: #dbd0bc;
+  --color-cream-400: #cbbfa5;
 
   /* ── Fonts ── */
   --font-sans: var(--font-inter);
@@ -43,18 +43,18 @@ html {
 body {
   font-family: var(--font-sans), system-ui, sans-serif;
   color: var(--color-gray-900);
-  background-color: var(--color-sand-50);
+  background-color: var(--color-cream-50);
 }
 
 /* Selection */
 ::selection {
-  background-color: var(--color-indigo-100);
-  color: var(--color-indigo-950);
+  background-color: var(--color-navy-100);
+  color: var(--color-navy-950);
 }
 
 /* Focus rings */
 :focus-visible {
-  outline: 2px solid var(--color-indigo-500);
+  outline: 2px solid var(--color-navy-500);
   outline-offset: 2px;
   border-radius: 4px;
 }

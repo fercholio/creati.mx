@@ -130,8 +130,8 @@ export function HeroCollage({
       </div>
 
       {/* Decorative elements */}
-      <div className="absolute -top-6 -right-6 w-24 h-24 bg-warm-200/40 rounded-full blur-2xl -z-10" />
-      <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-indigo-100/50 rounded-full blur-2xl -z-10" />
+      <div className="absolute -top-6 -right-6 w-24 h-24 bg-gold-200/40 rounded-full blur-2xl -z-10" />
+      <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-navy-100/50 rounded-full blur-2xl -z-10" />
     </div>
   )
 }

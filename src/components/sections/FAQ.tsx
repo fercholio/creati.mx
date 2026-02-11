@@ -19,7 +19,7 @@ function FAQItem({ question, answer, index }: { question: string; answer: string
         aria-expanded={open}
         aria-controls={panelId}
       >
-        <span className="text-sm font-semibold text-gray-900 group-hover:text-indigo-600 transition-colors pr-4">
+        <span className="text-sm font-semibold text-gray-900 group-hover:text-navy-600 transition-colors pr-4">
           {question}
         </span>
         <motion.div
@@ -58,7 +58,7 @@ export function FAQ() {
         <div className="max-w-2xl mx-auto">
           <Reveal>
             <div className="text-center mb-12">
-              <p className="text-xs font-semibold text-indigo-600 uppercase tracking-widest mb-4">
+              <p className="text-xs font-semibold text-navy-600 uppercase tracking-widest mb-4">
                 Preguntas frecuentes
               </p>
               <h2 className="text-2xl sm:text-3xl font-bold font-[family-name:var(--font-display)] text-gray-900">

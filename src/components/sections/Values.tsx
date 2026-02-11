@@ -18,7 +18,7 @@ export function Values() {
       <Container>
         <div className="mb-16">
           <Reveal>
-            <p className="text-xs font-semibold text-indigo-600 uppercase tracking-widest mb-4">
+            <p className="text-xs font-semibold text-navy-600 uppercase tracking-widest mb-4">
               Nuestros valores
             </p>
           </Reveal>
@@ -38,7 +38,7 @@ export function Values() {
                   i % 2 !== 0 ? 'sm:ml-auto sm:max-w-lg' : 'sm:max-w-lg'
                 }`}
               >
-                <div className="shrink-0 w-14 h-14 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center">
+                <div className="shrink-0 w-14 h-14 rounded-2xl bg-navy-50 text-navy-600 flex items-center justify-center">
                   {iconMap[value.icon]}
                 </div>
                 <div>

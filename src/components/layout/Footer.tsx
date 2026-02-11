@@ -20,11 +20,11 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-indigo-500 to-indigo-600 flex items-center justify-center">
+              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-navy-500 to-navy-600 flex items-center justify-center">
                 <span className="text-white font-bold text-base">C</span>
               </div>
               <span className="text-xl font-bold font-[family-name:var(--font-display)] text-white">
-                Creati<span className="text-indigo-400">.mx</span>
+                Creati<span className="text-navy-400">.mx</span>
               </span>
             </div>
             <p className="text-sm leading-relaxed max-w-sm mb-6">
@@ -72,7 +72,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm hover:text-indigo-400 transition-colors"
+                    className="text-sm hover:text-navy-400 transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -88,13 +88,13 @@ export function Footer() {
             </h4>
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-indigo-400 shrink-0" />
-                <a href={`mailto:${contactInfo.email}`} className="hover:text-indigo-400 transition-colors">
+                <Mail className="w-4 h-4 text-navy-400 shrink-0" />
+                <a href={`mailto:${contactInfo.email}`} className="hover:text-navy-400 transition-colors">
                   {contactInfo.email}
                 </a>
               </li>
               <li className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-indigo-400 shrink-0" />
+                <MapPin className="w-4 h-4 text-navy-400 shrink-0" />
                 {contactInfo.location}
               </li>
             </ul>

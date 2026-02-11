@@ -39,22 +39,22 @@ export function Problem() {
                 </div>
               </motion.div>
               {/* Decorative accent */}
-              <div className="absolute -bottom-4 -right-4 w-full h-full rounded-2xl lg:rounded-3xl border-2 border-indigo-100 -z-10" />
+              <div className="absolute -bottom-4 -right-4 w-full h-full rounded-2xl lg:rounded-3xl border-2 border-navy-100 -z-10" />
             </div>
           </Reveal>
 
           {/* Text content */}
           <div className="max-w-lg">
             <Reveal>
-              <p className="text-xs font-semibold text-indigo-600 uppercase tracking-widest mb-4">
+              <p className="text-xs font-semibold text-navy-600 uppercase tracking-widest mb-4">
                 El problema
               </p>
             </Reveal>
             <Reveal delay={0.1}>
               <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] text-gray-900 leading-tight mb-6">
                 La mayoría del software no se hizo para{' '}
-                <span className="text-gray-300 line-through decoration-warm-400 decoration-2">máquinas</span>{' '}
-                <span className="text-indigo-600">personas</span>.
+                <span className="text-gray-300 line-through decoration-gold-400 decoration-2">máquinas</span>{' '}
+                <span className="text-navy-600">personas</span>.
               </h2>
             </Reveal>
             <Reveal delay={0.2}>
@@ -65,11 +65,11 @@ export function Problem() {
             </Reveal>
             <Reveal delay={0.3}>
               <div className="relative inline-block">
-                <div className="absolute inset-0 bg-gradient-to-r from-indigo-100 to-warm-100 rounded-2xl blur-sm" />
+                <div className="absolute inset-0 bg-gradient-to-r from-navy-100 to-gold-100 rounded-2xl blur-sm" />
                 <div className="relative bg-white rounded-2xl px-8 py-6 border border-gray-100 shadow-sm">
                   <p className="text-base font-medium text-gray-800">
                     En Creati, cada producto empieza con una pregunta:{' '}
-                    <span className="text-indigo-600 font-semibold">¿esto mejora la vida de alguien?</span>
+                    <span className="text-navy-600 font-semibold">¿esto mejora la vida de alguien?</span>
                   </p>
                 </div>
               </div>

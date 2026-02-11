@@ -20,7 +20,7 @@ export function Input({ label, error, className, id, ...props }: InputProps) {
         className={cn(
           'w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm',
           'placeholder:text-gray-400',
-          'focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500',
+          'focus:outline-none focus:ring-2 focus:ring-navy-500/20 focus:border-navy-500',
           'transition-all duration-200',
           error && 'border-red-300 focus:ring-red-500/20 focus:border-red-500',
           className
@@ -52,7 +52,7 @@ export function Textarea({ label, error, className, id, ...props }: TextareaProp
         className={cn(
           'w-full px-4 py-3 rounded-xl border border-gray-200 bg-white text-gray-900 text-sm',
           'placeholder:text-gray-400 resize-none',
-          'focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500',
+          'focus:outline-none focus:ring-2 focus:ring-navy-500/20 focus:border-navy-500',
           'transition-all duration-200',
           error && 'border-red-300 focus:ring-red-500/20 focus:border-red-500',
           className

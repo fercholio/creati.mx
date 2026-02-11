@@ -9,7 +9,7 @@ export function CTA() {
   return (
     <section className="py-24 lg:py-32 relative overflow-hidden">
       {/* Background */}
-      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-indigo-600 via-indigo-700 to-indigo-900" />
+      <div className="absolute inset-0 -z-10 bg-gradient-to-br from-navy-600 via-navy-700 to-navy-900" />
       <div className="absolute inset-0 -z-10 opacity-10">
         <div
           className="w-full h-full"
@@ -19,18 +19,18 @@ export function CTA() {
           }}
         />
       </div>
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-warm-400/10 rounded-full blur-3xl -z-10" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold-400/10 rounded-full blur-3xl -z-10" />
 
       <Container className="text-center">
         <Reveal>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] text-white leading-tight mb-6">
             ¿Listo para crear algo
             <br />
-            <span className="text-warm-300">extraordinario</span>?
+            <span className="text-gold-300">extraordinario</span>?
           </h2>
         </Reveal>
         <Reveal delay={0.1}>
-          <p className="text-lg text-indigo-200 max-w-xl mx-auto mb-10 leading-relaxed">
+          <p className="text-lg text-navy-200 max-w-xl mx-auto mb-10 leading-relaxed">
             Cuéntanos tu idea. No importa la etapa — una servilleta, un prototipo o un producto existente.
             Estamos aquí para ayudar.
           </p>
@@ -41,7 +41,7 @@ export function CTA() {
               href="/contact"
               size="lg"
               variant="secondary"
-              className="bg-white text-indigo-700 border-white hover:bg-indigo-50 hover:border-indigo-50 shadow-lg shadow-indigo-900/20 hover:shadow-xl"
+              className="bg-white text-navy-700 border-white hover:bg-navy-50 hover:border-navy-50 shadow-lg shadow-navy-900/20 hover:shadow-xl"
             >
               Hablemos de tu proyecto
               <ArrowRight className="w-4 h-4" />

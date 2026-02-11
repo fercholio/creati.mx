@@ -11,7 +11,7 @@ export function Testimonials() {
       <Container>
         <div className="text-center mb-16">
           <Reveal>
-            <p className="text-xs font-semibold text-indigo-600 uppercase tracking-widest mb-4">
+            <p className="text-xs font-semibold text-navy-600 uppercase tracking-widest mb-4">
               Lo que dicen de nosotros
             </p>
           </Reveal>
@@ -25,13 +25,13 @@ export function Testimonials() {
         <Stagger className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
           {testimonials.map((t) => (
             <StaggerItem key={t.author}>
-              <div className="relative rounded-2xl bg-gradient-to-br from-sand-50 to-white border border-gray-100 p-7 hover:shadow-lg hover:shadow-gray-100/50 transition-all duration-300 h-full flex flex-col">
-                <Quote className="w-8 h-8 text-indigo-200 mb-4 shrink-0" />
+              <div className="relative rounded-2xl bg-gradient-to-br from-cream-50 to-white border border-gray-100 p-7 hover:shadow-lg hover:shadow-gray-100/50 transition-all duration-300 h-full flex flex-col">
+                <Quote className="w-8 h-8 text-navy-200 mb-4 shrink-0" />
                 <p className="text-sm text-gray-700 leading-relaxed flex-1 mb-6">
                   &ldquo;{t.quote}&rdquo;
                 </p>
                 <div className="flex items-center gap-3">
-                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-400 to-indigo-600 flex items-center justify-center text-white text-xs font-bold">
+                  <div className="w-10 h-10 rounded-full bg-gradient-to-br from-navy-400 to-navy-600 flex items-center justify-center text-white text-xs font-bold">
                     {t.author.split(' ').map(n => n[0]).join('')}
                   </div>
                   <div>
