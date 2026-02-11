@@ -15,7 +15,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es" className={`${inter.variable} ${dmSans.variable}`}>
-      <body className="antialiased bg-sand-50 text-gray-900 min-h-screen flex flex-col">
+        <body className="antialiased bg-cream-50 text-gray-900 min-h-screen flex flex-col">
         <JsonLd />
         <Navbar />
         <main className="flex-1">{children}</main>
