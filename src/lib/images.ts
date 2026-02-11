@@ -56,7 +56,7 @@ export const images = {
       alt: 'Reunión con cliente para entender sus necesidades',
     },
     design: {
-      src: 'https://images.unsplash.com/photo-1581291518633-83b4eef1d2fa?auto=format&fit=crop&w=600&q=80',
+      src: 'https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=600&q=80',
       alt: 'Diseñador trabajando en prototipos de interfaz',
     },
     build: {
