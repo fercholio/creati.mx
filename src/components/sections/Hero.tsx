@@ -4,6 +4,8 @@ import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
 import { Container } from '@/components/layout/Container'
+import { HeroCollage } from '@/components/ui/MagazineImages'
+import { images } from '@/lib/images'
 
 export function Hero() {
   return (
@@ -95,6 +97,15 @@ export function Hero() {
             Conoce Creati
           </Button>
         </motion.div>
+
+        {/* Magazine-style image collage */}
+        <HeroCollage
+          images={[
+            images.hero.teamCollab,
+            images.hero.codeOnScreen,
+            images.hero.designProcess,
+          ]}
+        />
       </Container>
     </section>
   )

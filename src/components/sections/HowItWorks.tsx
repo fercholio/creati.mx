@@ -1,8 +1,16 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import { Container } from '@/components/layout/Container'
 import { Reveal } from '@/components/ui/Animations'
 import { steps } from '@/lib/constants'
+import { images } from '@/lib/images'
+
+const stepImages = [
+  images.howItWorks.listen,
+  images.howItWorks.design,
+  images.howItWorks.build,
+]
 
 export function HowItWorks() {
   return (
@@ -13,7 +21,7 @@ export function HowItWorks() {
       </div>
 
       <Container>
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 lg:mb-20">
           <Reveal>
             <p className="text-xs font-semibold text-indigo-600 uppercase tracking-widest mb-4">
               Cómo trabajamos
@@ -26,26 +34,43 @@ export function HowItWorks() {
           </Reveal>
         </div>
 
-        <div className="max-w-3xl mx-auto space-y-0">
+        <div className="space-y-16 lg:space-y-24 max-w-5xl mx-auto">
           {steps.map((step, i) => (
-            <Reveal key={step.number} delay={i * 0.15}>
-              <div className="relative flex gap-6 pb-12 last:pb-0 group">
-                {/* Vertical line */}
-                {i < steps.length - 1 && (
-                  <div className="absolute left-[27px] top-14 bottom-0 w-px bg-gradient-to-b from-indigo-200 to-transparent" />
-                )}
+            <Reveal key={step.number} delay={i * 0.1}>
+              <div
+                className={`grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center ${
+                  i % 2 !== 0 ? 'lg:direction-rtl' : ''
+                }`}
+              >
+                {/* Image — alternates sides */}
+                <motion.div
+                  className={`relative ${i % 2 !== 0 ? 'lg:order-2' : ''}`}
+                  whileHover={{ scale: 1.02 }}
+                  transition={{ duration: 0.4 }}
+                >
+                  <div className="aspect-[4/3] overflow-hidden rounded-2xl bg-gray-100 shadow-lg shadow-gray-200/30">
+                    <img
+                      src={stepImages[i].src}
+                      alt={stepImages[i].alt}
+                      loading="lazy"
+                      decoding="async"
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                  <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-black/5" />
 
-                {/* Number */}
-                <div className="shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-600 to-indigo-700 text-white flex items-center justify-center font-bold text-sm shadow-md shadow-indigo-200 group-hover:shadow-lg group-hover:shadow-indigo-200 transition-shadow">
-                  {step.number}
-                </div>
+                  {/* Floating step number badge */}
+                  <div className={`absolute -top-4 ${i % 2 !== 0 ? '-left-4' : '-right-4'} w-14 h-14 rounded-2xl bg-gradient-to-br from-indigo-600 to-indigo-700 text-white flex items-center justify-center font-bold text-sm shadow-lg shadow-indigo-200 z-10`}>
+                    {step.number}
+                  </div>
+                </motion.div>
 
                 {/* Content */}
-                <div className="pt-2">
-                  <h3 className="text-xl font-semibold text-gray-900 mb-2 font-[family-name:var(--font-display)]">
+                <div className={`${i % 2 !== 0 ? 'lg:order-1 lg:text-right' : ''}`}>
+                  <h3 className="text-2xl lg:text-3xl font-bold text-gray-900 mb-3 font-[family-name:var(--font-display)]">
                     {step.title}
                   </h3>
-                  <p className="text-sm text-gray-500 leading-relaxed max-w-md">
+                  <p className="text-base text-gray-500 leading-relaxed max-w-md ${i % 2 !== 0 ? 'lg:ml-auto' : ''}">
                     {step.description}
                   </p>
                 </div>

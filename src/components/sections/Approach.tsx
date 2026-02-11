@@ -1,8 +1,10 @@
 'use client'
 
+import { motion } from 'framer-motion'
 import { Container } from '@/components/layout/Container'
 import { Reveal } from '@/components/ui/Animations'
 import { Lightbulb, PenTool, Code2, RefreshCw } from 'lucide-react'
+import { images } from '@/lib/images'
 
 const approaches = [
   {
@@ -35,18 +37,34 @@ export function Approach() {
       </div>
 
       <Container>
-        <div className="text-center mb-16">
-          <Reveal>
-            <p className="text-xs font-semibold text-indigo-600 uppercase tracking-widest mb-4">
-              Nuestro enfoque
-            </p>
-          </Reveal>
-          <Reveal delay={0.1}>
-            <h2 className="text-3xl sm:text-4xl font-bold font-[family-name:var(--font-display)] text-gray-900 leading-tight">
-              Cómo hacemos software diferente
-            </h2>
-          </Reveal>
-        </div>
+        {/* Full-bleed editorial image */}
+        <Reveal>
+          <motion.div
+            className="relative mb-16 lg:mb-20 overflow-hidden rounded-2xl lg:rounded-3xl"
+            whileHover={{ scale: 1.005 }}
+            transition={{ duration: 0.5 }}
+          >
+            <div className="aspect-[21/9] md:aspect-[3/1]">
+              <img
+                src={images.about.laptopWork.src}
+                alt={images.about.laptopWork.alt}
+                loading="lazy"
+                decoding="async"
+                className="w-full h-full object-cover"
+              />
+            </div>
+            <div className="absolute inset-0 bg-gradient-to-r from-indigo-900/60 via-indigo-900/20 to-transparent" />
+            <div className="absolute bottom-0 left-0 p-6 lg:p-10">
+              <p className="text-xs font-semibold text-indigo-200 uppercase tracking-widest mb-2">
+                Nuestro enfoque
+              </p>
+              <h2 className="text-2xl sm:text-3xl lg:text-4xl font-bold font-[family-name:var(--font-display)] text-white leading-tight">
+                Cómo hacemos software diferente
+              </h2>
+            </div>
+            <div className="absolute inset-0 ring-1 ring-inset ring-black/5 rounded-2xl lg:rounded-3xl" />
+          </motion.div>
+        </Reveal>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-3xl mx-auto">
           {approaches.map((item, i) => (
