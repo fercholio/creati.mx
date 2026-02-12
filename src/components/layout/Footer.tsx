@@ -21,7 +21,7 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2.5 mb-4">
-              <LogoIcon size={36} variant="light" />
+              <LogoIcon size={36} variant="color" />
               <span className="text-xl font-bold font-[family-name:var(--font-display)] text-white">
                 Crea<span className="text-white">TI</span><span className="text-accent-400">.mx</span>
               </span>
