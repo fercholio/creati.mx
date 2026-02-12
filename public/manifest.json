@@ -4,8 +4,8 @@
   "description": "Creamos productos digitales que las personas realmente disfrutan usar.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#fefdfb",
-  "theme_color": "#243b53",
+  "background_color": "#0a1628",
+  "theme_color": "#0a1628",
   "lang": "es-MX",
   "icons": [
     {
