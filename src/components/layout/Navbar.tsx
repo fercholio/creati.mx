@@ -6,6 +6,7 @@ import { usePathname } from 'next/navigation'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { navLinks } from '@/lib/constants'
+import { LogoIcon } from '@/components/ui/Logo'
 
 export function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
@@ -58,13 +59,9 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-navy-700 to-navy-900 flex items-center justify-center shadow-md group-hover:shadow-accent-200 transition-shadow duration-300">
-              <span className="text-white font-bold text-base tracking-tight">C</span>
-              <div className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-sm bg-accent-500" />
-              <div className="absolute inset-0 rounded-xl bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
-            </div>
+            <LogoIcon size={36} variant="color" className="group-hover:scale-105 transition-transform duration-200" />
             <span className="text-xl font-bold font-[family-name:var(--font-display)] text-gray-900">
-              Creati<span className="text-accent-500">.mx</span>
+              Crea<span className="text-navy-700">TI</span><span className="text-accent-500">.mx</span>
             </span>
           </Link>
 

@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { navLinks, socialLinks, contactInfo } from '@/lib/constants'
 import { Linkedin, Twitter, Github, Mail, MapPin } from 'lucide-react'
+import { LogoIcon } from '@/components/ui/Logo'
 
 export function Footer() {
   return (
@@ -20,12 +21,9 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-navy-600 to-navy-700 flex items-center justify-center">
-                <span className="text-white font-bold text-base">C</span>
-                <div className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-sm bg-accent-400" />
-              </div>
+              <LogoIcon size={36} variant="light" />
               <span className="text-xl font-bold font-[family-name:var(--font-display)] text-white">
-                Creati<span className="text-accent-400">.mx</span>
+                Crea<span className="text-white">TI</span><span className="text-accent-400">.mx</span>
               </span>
             </div>
             <p className="text-sm leading-relaxed max-w-sm mb-6">
