@@ -70,7 +70,7 @@ export function Approach() {
           {approaches.map((item, i) => (
             <Reveal key={item.title} delay={i * 0.1}>
               <div className="rounded-2xl bg-white border border-gray-100 p-6 hover:shadow-lg hover:shadow-gray-100/50 hover:-translate-y-0.5 transition-all duration-300 h-full">
-                <div className="w-10 h-10 rounded-xl bg-navy-50 text-navy-600 flex items-center justify-center mb-4">
+                <div className="w-10 h-10 rounded-xl bg-accent-50 text-accent-500 flex items-center justify-center mb-4">
                   {item.icon}
                 </div>
                 <h3 className="text-base font-semibold text-gray-900 mb-2 font-[family-name:var(--font-display)]">

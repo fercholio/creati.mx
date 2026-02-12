@@ -13,8 +13,8 @@ export function Hero() {
       {/* Background elements */}
       <div className="absolute inset-0 -z-10">
         {/* Gradient orbs */}
-        <div className="absolute top-20 left-1/4 w-[500px] h-[500px] bg-navy-200/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-gold-200/20 rounded-full blur-3xl" />
+        <div className="absolute top-20 left-1/4 w-[500px] h-[500px] bg-accent-200/20 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] bg-accent-100/15 rounded-full blur-3xl" />
         <div className="absolute top-1/2 right-10 w-[300px] h-[300px] bg-navy-100/20 rounded-full blur-3xl" />
         {/* Grid pattern */}
         <div
@@ -36,8 +36,8 @@ export function Hero() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-navy-50 text-navy-700 text-xs font-semibold border border-navy-100 mb-8">
-            <span className="w-1.5 h-1.5 rounded-full bg-navy-500 animate-pulse" />
+          <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-50 text-accent-600 text-xs font-semibold border border-accent-100 mb-8">
+            <span className="w-1.5 h-1.5 rounded-full bg-accent-500 animate-pulse" />
             Construyendo el futuro del software
           </span>
         </motion.div>
@@ -52,7 +52,7 @@ export function Hero() {
           Software que se{' '}
           <span className="relative inline-block">
             <motion.span
-              className="bg-gradient-to-r from-navy-700 via-navy-600 to-navy-500 bg-clip-text text-transparent"
+              className="bg-gradient-to-r from-accent-500 via-accent-400 to-navy-400 bg-clip-text text-transparent"
               initial={{ backgroundPosition: '0% 50%' }}
               animate={{ backgroundPosition: ['0% 50%', '100% 50%', '0% 50%'] }}
               transition={{ duration: 5, repeat: Infinity, ease: 'linear' }}
@@ -61,7 +61,7 @@ export function Hero() {
               adapta
             </motion.span>
             <motion.div
-              className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-gold-400 to-gold-300 rounded-full origin-left"
+              className="absolute -bottom-1 left-0 right-0 h-1 bg-gradient-to-r from-accent-500 to-accent-300 rounded-full origin-left"
               initial={{ scaleX: 0 }}
               animate={{ scaleX: 1 }}
               transition={{ duration: 0.8, delay: 0.6, ease: [0.21, 0.47, 0.32, 0.98] }}

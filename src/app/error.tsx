@@ -23,7 +23,7 @@ export default function GlobalError({
         </p>
         <button
           onClick={() => reset()}
-          className="inline-flex items-center px-6 py-3 rounded-xl bg-indigo-600 text-white font-semibold hover:bg-indigo-700 transition-colors"
+          className="inline-flex items-center px-6 py-3 rounded-xl bg-accent-500 text-white font-semibold hover:bg-accent-600 transition-colors"
         >
           Reintentar
         </button>

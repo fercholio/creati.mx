@@ -18,7 +18,7 @@ export function Features() {
       <Container>
         <div className="text-center mb-16">
           <Reveal>
-            <p className="text-xs font-semibold text-navy-600 uppercase tracking-widest mb-4">
+            <p className="text-xs font-semibold text-accent-500 uppercase tracking-widest mb-4">
               Lo que hacemos
             </p>
           </Reveal>

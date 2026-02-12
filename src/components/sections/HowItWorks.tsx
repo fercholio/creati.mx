@@ -23,7 +23,7 @@ export function HowItWorks() {
       <Container>
         <div className="text-center mb-16 lg:mb-20">
           <Reveal>
-            <p className="text-xs font-semibold text-navy-600 uppercase tracking-widest mb-4">
+            <p className="text-xs font-semibold text-accent-500 uppercase tracking-widest mb-4">
               Cómo trabajamos
             </p>
           </Reveal>
@@ -60,7 +60,7 @@ export function HowItWorks() {
                   <div className="absolute inset-0 rounded-2xl ring-1 ring-inset ring-black/5" />
 
                   {/* Floating step number badge */}
-                  <div className={`absolute -top-4 ${i % 2 !== 0 ? '-left-4' : '-right-4'} w-14 h-14 rounded-2xl bg-gradient-to-br from-navy-600 to-navy-700 text-white flex items-center justify-center font-bold text-sm shadow-lg shadow-navy-200 z-10`}>
+                  <div className={`absolute -top-4 ${i % 2 !== 0 ? '-left-4' : '-right-4'} w-14 h-14 rounded-2xl bg-gradient-to-br from-accent-500 to-accent-600 text-white flex items-center justify-center font-bold text-sm shadow-lg shadow-accent-200 z-10`}>
                     {step.number}
                   </div>
                 </motion.div>

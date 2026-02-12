@@ -11,7 +11,7 @@ export function AboutHero() {
       {/* Background */}
       <div className="absolute inset-0 -z-10">
         <div className="absolute top-20 right-1/4 w-[500px] h-[500px] bg-navy-100/30 rounded-full blur-3xl" />
-        <div className="absolute bottom-0 left-1/3 w-[400px] h-[400px] bg-gold-100/30 rounded-full blur-3xl" />
+        <div className="absolute bottom-0 left-1/3 w-[400px] h-[400px] bg-accent-100/20 rounded-full blur-3xl" />
       </div>
 
       <Container>
@@ -19,14 +19,14 @@ export function AboutHero() {
           {/* Text */}
           <div className="max-w-xl">
             <Reveal>
-              <p className="text-xs font-semibold text-navy-600 uppercase tracking-widest mb-4">
+              <p className="text-xs font-semibold text-accent-500 uppercase tracking-widest mb-4">
                 Nuestra historia
               </p>
             </Reveal>
             <Reveal delay={0.1}>
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-[family-name:var(--font-display)] text-gray-900 leading-[1.1] mb-6">
                 Hacemos software para{' '}
-                <span className="bg-gradient-to-r from-navy-600 to-navy-500 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-accent-500 to-accent-400 bg-clip-text text-transparent">
                   personas reales
                 </span>
               </h1>

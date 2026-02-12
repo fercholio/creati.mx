@@ -19,14 +19,14 @@ export function CTA() {
           }}
         />
       </div>
-      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gold-400/10 rounded-full blur-3xl -z-10" />
+      <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-accent-400/10 rounded-full blur-3xl -z-10" />
 
       <Container className="text-center">
         <Reveal>
           <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] text-white leading-tight mb-6">
             ¿Listo para crear algo
             <br />
-            <span className="text-gold-300">extraordinario</span>?
+            <span className="text-accent-300">extraordinario</span>?
           </h2>
         </Reveal>
         <Reveal delay={0.1}>

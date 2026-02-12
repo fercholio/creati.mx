@@ -130,7 +130,7 @@ export function HeroCollage({
       </div>
 
       {/* Decorative elements */}
-      <div className="absolute -top-6 -right-6 w-24 h-24 bg-gold-200/40 rounded-full blur-2xl -z-10" />
+      <div className="absolute -top-6 -right-6 w-24 h-24 bg-accent-200/30 rounded-full blur-2xl -z-10" />
       <div className="absolute -bottom-8 -left-8 w-32 h-32 bg-navy-100/50 rounded-full blur-2xl -z-10" />
     </div>
   )
@@ -193,7 +193,7 @@ export function EditorialStack({
       {/* Decorative dot pattern */}
       <div className="absolute -top-4 -left-4 w-20 h-20 opacity-20 -z-10"
         style={{
-          backgroundImage: 'radial-gradient(circle, #6366f1 1.5px, transparent 1.5px)',
+          backgroundImage: 'radial-gradient(circle, #0066ff 1.5px, transparent 1.5px)',
           backgroundSize: '10px 10px',
         }}
       />

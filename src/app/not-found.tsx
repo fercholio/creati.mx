@@ -15,11 +15,11 @@ export default function NotFound() {
         className="text-center max-w-md"
       >
         <div className="relative mb-8">
-          <span className="text-[10rem] font-bold font-[family-name:var(--font-display)] text-indigo-100 leading-none select-none">
+          <span className="text-[10rem] font-bold font-[family-name:var(--font-display)] text-accent-100 leading-none select-none">
             404
           </span>
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-indigo-500 to-indigo-700 flex items-center justify-center shadow-xl shadow-indigo-200">
+            <div className="w-20 h-20 rounded-2xl bg-gradient-to-br from-accent-500 to-navy-700 flex items-center justify-center shadow-xl shadow-accent-200">
               <span className="text-white text-3xl font-bold">?</span>
             </div>
           </div>

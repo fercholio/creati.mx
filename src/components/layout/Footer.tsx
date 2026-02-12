@@ -4,13 +4,13 @@ import { Linkedin, Twitter, Github, Mail, MapPin } from 'lucide-react'
 
 export function Footer() {
   return (
-    <footer aria-label="Pie de página" className="bg-gray-950 text-gray-400 mt-0">
+    <footer aria-label="Pie de página" className="bg-navy-950 text-gray-400 mt-0">
       {/* Organic divider */}
       <div className="relative h-16 -mt-16">
         <svg viewBox="0 0 1440 64" preserveAspectRatio="none" className="absolute inset-0 w-full h-full">
           <path
             d="M0,32 C360,64 720,0 1080,32 C1260,48 1380,40 1440,32 L1440,64 L0,64 Z"
-            fill="#030712"
+            fill="#060e1a"
           />
         </svg>
       </div>
@@ -20,11 +20,12 @@ export function Footer() {
           {/* Brand */}
           <div className="md:col-span-2">
             <div className="flex items-center gap-2.5 mb-4">
-              <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-navy-500 to-navy-600 flex items-center justify-center">
+              <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-navy-600 to-navy-700 flex items-center justify-center">
                 <span className="text-white font-bold text-base">C</span>
+                <div className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-sm bg-accent-400" />
               </div>
               <span className="text-xl font-bold font-[family-name:var(--font-display)] text-white">
-                Creati<span className="text-navy-400">.mx</span>
+                Creati<span className="text-accent-400">.mx</span>
               </span>
             </div>
             <p className="text-sm leading-relaxed max-w-sm mb-6">
@@ -72,7 +73,7 @@ export function Footer() {
                 <li key={link.href}>
                   <Link
                     href={link.href}
-                    className="text-sm hover:text-navy-400 transition-colors"
+                    className="text-sm hover:text-accent-400 transition-colors"
                   >
                     {link.label}
                   </Link>
@@ -88,20 +89,20 @@ export function Footer() {
             </h4>
             <ul className="space-y-3 text-sm">
               <li className="flex items-center gap-2">
-                <Mail className="w-4 h-4 text-navy-400 shrink-0" />
-                <a href={`mailto:${contactInfo.email}`} className="hover:text-navy-400 transition-colors">
+                <Mail className="w-4 h-4 text-accent-400 shrink-0" />
+                <a href={`mailto:${contactInfo.email}`} className="hover:text-accent-400 transition-colors">
                   {contactInfo.email}
                 </a>
               </li>
               <li className="flex items-center gap-2">
-                <MapPin className="w-4 h-4 text-navy-400 shrink-0" />
+                <MapPin className="w-4 h-4 text-accent-400 shrink-0" />
                 {contactInfo.location}
               </li>
             </ul>
           </div>
         </div>
 
-        <div className="border-t border-gray-800 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+        <div className="border-t border-navy-800 mt-12 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
           <p>&copy; {new Date().getFullYear()} Creati.mx — Todos los derechos reservados.</p>
           <p className="text-gray-500">Hecho con cuidado en México</p>
         </div>

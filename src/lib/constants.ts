@@ -43,25 +43,25 @@ export const features = [
     title: 'Diseño centrado en personas',
     description: 'Interfaces que se sienten naturales desde el primer clic.',
     icon: 'Users',
-    accent: 'from-navy-500 to-navy-700',
+    accent: 'from-accent-500 to-accent-600',
   },
   {
     title: 'Ingeniería robusta',
     description: 'Arquitecturas escalables que crecen con tu negocio.',
     icon: 'Code2',
-    accent: 'from-gold-400 to-gold-600',
+    accent: 'from-navy-500 to-navy-700',
   },
   {
     title: 'Inteligencia integrada',
     description: 'IA que potencia, no reemplaza. Herramientas más inteligentes para equipos reales.',
     icon: 'Brain',
-    accent: 'from-emerald-700 to-emerald-900',
+    accent: 'from-accent-400 to-navy-500',
   },
   {
     title: 'Lanzamiento ágil',
     description: 'De la idea al producto en semanas, no meses. Iteramos rápido, entregamos valor temprano.',
     icon: 'Zap',
-    accent: 'from-stone-500 to-stone-700',
+    accent: 'from-navy-400 to-navy-700',
   },
 ] as const
 

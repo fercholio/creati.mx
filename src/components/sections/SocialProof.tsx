@@ -21,7 +21,7 @@ export function SocialProof() {
             {logos.map((name) => (
               <div
                 key={name}
-                className="text-gray-300 font-bold text-lg font-[family-name:var(--font-display)] tracking-tight hover:text-indigo-400 transition-colors duration-300 cursor-default"
+                className="text-gray-300 font-bold text-lg font-[family-name:var(--font-display)] tracking-tight hover:text-accent-400 transition-colors duration-300 cursor-default"
               >
                 {name}
               </div>

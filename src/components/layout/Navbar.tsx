@@ -58,12 +58,13 @@ export function Navbar() {
         <div className="flex items-center justify-between h-16 lg:h-20">
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-navy-600 to-navy-700 flex items-center justify-center shadow-md group-hover:shadow-navy-200 transition-shadow duration-300">
+            <div className="relative w-9 h-9 rounded-xl bg-gradient-to-br from-navy-700 to-navy-900 flex items-center justify-center shadow-md group-hover:shadow-accent-200 transition-shadow duration-300">
               <span className="text-white font-bold text-base tracking-tight">C</span>
+              <div className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-sm bg-accent-500" />
               <div className="absolute inset-0 rounded-xl bg-white/10 opacity-0 group-hover:opacity-100 transition-opacity" />
             </div>
             <span className="text-xl font-bold font-[family-name:var(--font-display)] text-gray-900">
-              Creati<span className="text-navy-600">.mx</span>
+              Creati<span className="text-accent-500">.mx</span>
             </span>
           </Link>
 
@@ -83,7 +84,7 @@ export function Navbar() {
                 {pathname === link.href && (
                   <motion.div
                     layoutId="nav-indicator"
-                    className="absolute bottom-0 left-3 right-3 h-0.5 bg-navy-600 rounded-full"
+                    className="absolute bottom-0 left-3 right-3 h-0.5 bg-accent-500 rounded-full"
                     transition={{ type: 'spring', stiffness: 380, damping: 30 }}
                   />
                 )}
@@ -91,7 +92,7 @@ export function Navbar() {
             ))}
             <Link
               href="/contact"
-              className="ml-4 inline-flex items-center px-5 py-2.5 rounded-xl bg-navy-600 text-white text-sm font-semibold hover:bg-navy-700 active:scale-[0.97] transition-all duration-200 shadow-md shadow-navy-200 hover:shadow-lg hover:shadow-navy-200"
+              className="ml-4 inline-flex items-center px-5 py-2.5 rounded-xl bg-accent-500 text-white text-sm font-semibold hover:bg-accent-600 active:scale-[0.97] transition-all duration-200 shadow-md shadow-accent-200 hover:shadow-lg hover:shadow-accent-200"
             >
               Hablemos
             </Link>
@@ -125,7 +126,7 @@ export function Navbar() {
                   href={link.href}
                   className={`block px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
                     pathname === link.href
-                      ? 'text-navy-700 bg-navy-50'
+                      ? 'text-navy-700 bg-accent-50'
                       : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'
                   }`}
                 >
@@ -134,7 +135,7 @@ export function Navbar() {
               ))}
               <Link
                 href="/contact"
-                className="block w-full text-center px-4 py-3 mt-2 rounded-xl bg-navy-600 text-white text-sm font-semibold hover:bg-navy-700 transition-colors"
+                className="block w-full text-center px-4 py-3 mt-2 rounded-xl bg-accent-500 text-white text-sm font-semibold hover:bg-accent-600 transition-colors"
               >
                 Hablemos
               </Link>
