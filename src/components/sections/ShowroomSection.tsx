@@ -1,9 +1,9 @@
-﻿'use client'
+'use client'
 
 import React from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
-import { Sparkles, ArrowRight, Tablet } from 'lucide-react'
+import { Sparkles, ArrowRight, Tablet, Zap } from 'lucide-react'
 import { Container } from '@/components/layout/Container'
 import { ShowroomHub } from '@/components/showroom/ShowroomHub'
 
@@ -24,8 +24,8 @@ export function ShowroomSection() {
             transition={{ duration: 0.5 }}
           >
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-50 text-accent-600 text-xs font-bold border border-accent-100 mb-4 shadow-2xs">
-              <Sparkles className="w-3.5 h-3.5 text-accent-500" />
-              Play & Try · Showroom Interactivo
+              <Zap className="w-3.5 h-3.5 text-accent-500" />
+              Demostración Ejecutiva & Simulador en Vivo
             </span>
           </motion.div>
 
@@ -36,9 +36,9 @@ export function ShowroomSection() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] text-gray-900 tracking-tight leading-[1.15]"
           >
-            Prueba en vivo soluciones reales para{' '}
+            Prueba la tecnología en vivo que{' '}
             <span className="bg-gradient-to-r from-accent-600 via-accent-500 to-navy-600 bg-clip-text text-transparent">
-              tu industria
+              impulsará tu empresa
             </span>
           </motion.h2>
 
@@ -49,7 +49,7 @@ export function ShowroomSection() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-sm sm:text-base text-gray-600 mt-4 max-w-2xl mx-auto leading-relaxed"
           >
-            No vendemos promesas ni diapositivas aburridas. Interactúa con micro-aplicaciones funcionales diseñadas para las industrias más dinámicas de Mérida, Yucatán, el Sureste y Centro de México.
+            Explora nuestro catálogo de plataformas especializadas. Selecciona cualquier solución para experimentar su interfaz, interactuar con los flujos operativos en vivo y visualizar el impacto directo en tu negocio.
           </motion.p>
         </div>
 
@@ -76,7 +76,7 @@ export function ShowroomSection() {
             className="inline-flex items-center gap-2 px-6 py-3.5 rounded-2xl bg-navy-900 hover:bg-navy-800 text-white text-xs sm:text-sm font-bold shadow-lg shadow-navy-950/10 hover:shadow-xl transition-all cursor-pointer group"
           >
             <Tablet className="w-4 h-4 text-accent-400" />
-            <span>Abrir Showroom Completo en Modo Presentación</span>
+            <span>Abrir Ecosistema Completo en Modo Presentación</span>
             <ArrowRight className="w-4 h-4 text-accent-400 group-hover:translate-x-1 transition-transform" />
           </Link>
         </motion.div>
