@@ -1,202 +1,245 @@
-﻿export interface ShowroomApp {
-  id: 'livu' | 'hrtci' | 'estateflow' | 'kavita' | 'routeops' | 'medikcore' | 'loyaltypulse' | 'credifast'
+export interface ShowroomRole {
+  id: string
+  label: string
+  badge: string
+  description: string
+}
+
+export interface PitchGuide {
+  pain: string
+  valueProp: string
+  closingQuestion: string
+}
+
+export interface MetricHighlight {
+  label: string
+  value: string
+  detail: string
+}
+
+export interface ShowroomApp {
+  id: string
   title: string
   badge: string
+  isFeatured?: boolean
   iconName: string
   industry: string
   targetRegion: string
   tagline: string
   painPoint: string
   solutionOverview: string
-  metrics: {
-    label: string
-    value: string
-    detail: string
-  }[]
-  roles: {
-    id: string
-    label: string
-    badge: string
-    description: string
-  }[]
-  pitchGuide: {
-    pain: string
-    valueProp: string
-    closingQuestion: string
-  }
+  metrics: MetricHighlight[]
+  roles: ShowroomRole[]
+  pitchGuide: PitchGuide
   whatsappMessage: string
-  isFeatured?: boolean
 }
 
 export const SHOWROOM_APPS: ShowroomApp[] = [
   {
+    id: 'novabrain',
+    title: 'NovaBrain AI',
+    badge: 'IA & Agentes Autónomos',
+    isFeatured: true,
+    iconName: 'Clock',
+    industry: 'Empresas Corporativas, Inmobiliarias & Ventas B2B',
+    targetRegion: 'Mérida, Cancún, CDMX & Cobertura Nacional',
+    tagline: 'Agente autónomo de IA multimodal que atiende clientes por WhatsApp 24/7, responde cotizaciones y audita contratos en PDF.',
+    painPoint: 'Fugas de prospectos nocturnos y de fin de semana por falta de atención inmediata, además de cuellos de botella en la elaboración manual de propuestas y revisión de contratos.',
+    solutionOverview: 'Motor de Inteligencia Artificial entrenado con la base de conocimiento de tu empresa que responde con velocidad ultra-rápida (Groq AI 0.38s), emite dictámenes financieros y genera documentos certificados.',
+    metrics: [
+      { label: 'Tiempo de Respuesta', value: '< 1.5 seg', detail: 'Atención inmediata por WhatsApp y Web sin esperas' },
+      { label: 'Disponibilidad Operativa', value: '24 / 7', detail: 'Cero prospectos perdidos fuera de horario de oficina' },
+      { label: 'Auditoría de Documentos', value: '100% Auto', detail: 'Lectura OCR de PDF y facturas CFDI en 0.4 segundos' },
+    ],
+    roles: [
+      {
+        id: 'chat',
+        label: 'Chat de IA & Cotización WhatsApp',
+        badge: 'Vista Cliente',
+        description: 'Simula preguntas en tiempo real, calcula cotizaciones y genera respuestas de negocio.',
+      },
+      {
+        id: 'ocr',
+        label: 'Auditoría OCR de PDF & Facturas',
+        badge: 'Vista Documentos',
+        description: 'Lee automáticamente contratos en PDF, valida sellos fiscales del SAT y emite dictámenes.',
+      },
+    ],
+    pitchGuide: {
+      pain: '"¿Cuántas oportunidades de venta pierden sus asesores por responder mensajes 12 horas después?"',
+      valueProp: '"NovaBrain AI atiende de inmediato con el tono experto de su empresa, cotiza en vivo y califica a los prospectos antes de pasarlos a su equipo comercial."',
+      closingQuestion: '"¿Qué proceso de atención o revisión de documentos les gustaría automatizar primero con IA?"',
+    },
+    whatsappMessage: 'Hola Creati, queremos probar NovaBrain AI en nuestra empresa.',
+  },
+  {
     id: 'livu',
     title: 'LIVU',
     badge: 'Proptech & Condominios',
-    iconName: 'ShieldCheck',
-    industry: 'Privadas Residenciales, Condominios & Torres',
-    targetRegion: 'Mérida Norte, Riviera Maya, Querétaro & CDMX',
-    tagline: 'Plataforma integral para residenciales: control de accesos con QR dinámico en caseta, cobro de cuotas y app móvil para residentes.',
-    painPoint: 'Filas interminables en caseta de acceso por registros manuales en libretas, morosidad de hasta 45% en cuotas de mantenimiento y falta de transparencia financiera con vecinos.',
-    solutionOverview: 'Ecosistema móvil (.NET MAUI + Laravel API): invitaciones con QR dinámico inviolable para visitas, bitácora digital en caseta con escáner, cobro automatizado de mantenimiento vía SPEI/Stripe con recibos fiscales y marketplace de servicios del hogar.',
     isFeatured: true,
+    iconName: 'ShieldCheck',
+    industry: 'Privadas Residenciales, Desarrollos & Condominios',
+    targetRegion: 'Mérida (Temozón, Dzityá, Altabrisa) & Riviera Maya',
+    tagline: 'Control de accesos inteligente con QR dinámico inviolable, terminal en caseta LPR y recaudación condominal por SPEI/Stripe con recibo fiscal.',
+    painPoint: 'Largas filas en caseta para invitados, cobro manual de mantenimiento con alta morosidad y desconfianza en el manejo de fondos por la mesa directiva.',
+    solutionOverview: 'LIVU conecta a residentes, administración y guardias en una plataforma integrada: accesos QR en 6 segundos, cobranza automatizada y transparencia financiera.',
     metrics: [
-      { label: 'Tiempo en Caseta', value: '< 6 seg', detail: 'Acceso exprés con escáner de QR dinámico' },
-      { label: 'Reducción de Morosidad', value: '-85%', detail: 'Cobro y recordatorios automáticos por WhatsApp/SPEI' },
-      { label: 'Ecosistema', value: 'Web + App', detail: 'App para condóminos y terminal para guardias' },
+      { label: 'Ingreso en Caseta', value: '< 6 seg', detail: 'Lectura instantánea de QR sin detener la fila' },
+      { label: 'Reducción de Morosidad', value: '-85%', detail: 'Recordatorios automáticos y cobro por SPEI' },
+      { label: 'Transparencia Financiera', value: '100%', detail: 'Reportes de ingresos y gastos visibles para condóminos' },
     ],
     roles: [
       {
         id: 'resident',
-        label: 'Residente / Condómino',
+        label: 'Residente / Vecino',
         badge: 'Vista Residente',
-        description: 'Genera pases QR para visitas, paga cuota de mantenimiento y reserva amenidades.',
+        description: 'Genera pases QR dinámicos para invitados y paga la cuota de mantenimiento con 1 clic por SPEI.',
       },
       {
         id: 'guard',
-        label: 'Guardia en Caseta de Acceso',
+        label: 'Guardia de Caseta',
         badge: 'Vista Caseta',
-        description: 'Escanea códigos QR de visitas, valida placas y autoriza apertura de pluma.',
+        description: 'Escanea códigos QR, valida placas registradas y autoriza apertura de pluma vehicular.',
       },
       {
         id: 'admin',
-        label: 'Mesa Directiva / Administrador',
+        label: 'Administrador / Mesa Directiva',
         badge: 'Vista Admin',
-        description: 'Supervisa finanzas condominales, recaudación, morosos y bitácora de seguridad.',
+        description: 'Monitorea recaudación mensual, morosidad por lote y envía avisos generales a la privada.',
       },
     ],
     pitchGuide: {
-      pain: '"¿Cuánto tiempo pierden sus visitas y proveedores esperando en la caseta de acceso, y cuántos vecinos tienen atrasos en sus cuotas de mantenimiento?"',
-      valueProp: '"LIVU digitaliza el acceso en 6 segundos con QR y automatiza la cobranza condominal, brindando plusvalía inmediata y seguridad total a la privada."',
-      closingQuestion: '"¿Cuántas casas, departamentos o lotes integran su privada para prepararles una demostración con la mesa directiva?"',
+      pain: '"¿Cuánto tiempo pierden sus visitas en caseta solicitando identificación física y llamando a los residentes?"',
+      valueProp: '"LIVU elimina las filas en caseta con pases QR que expiran automáticamente y automatiza la cobranza de mantenimiento por SPEI sin trabajo manual."',
+      closingQuestion: '"¿Cuántas casas o departamentos tiene su privada para presentarles una cotización a la medida?"',
     },
-    whatsappMessage: 'Hola Creati, me interesa implementar la plataforma LIVU en nuestra privada o condominio.',
+    whatsappMessage: 'Hola Creati, me interesa implementar LIVU en mi privada/condominio.',
   },
   {
     id: 'hrtci',
     title: 'HR-TCI / Tempus',
-    badge: 'SaaS B2B & Rentabilidad',
-    iconName: 'Clock',
-    industry: 'Empresas de Servicios, Consultoría, Agencias & Tech',
-    targetRegion: 'Mérida, Sureste, CDMX, Bajío & LATAM',
-    tagline: 'Time & Cost Intelligence: control de horas, costeo por proyecto y AI Coach para maximizar la rentabilidad operativa.',
-    painPoint: 'Empresas de servicios pierden hasta el 25% de margen por proyectos mal cotizados, fuga de horas no facturables y falta de visibilidad en el costo real por colaborador.',
-    solutionOverview: 'Plataforma dual (Vue.js 3 SPA + Laravel 11 Backend): tracking de tiempo por proyecto/tarea, costeo horario real (salario + carga social), AI Productivity Coach con Groq AI y flujo de aprobación semanal de timesheets.',
+    badge: 'Time & Cost Intelligence',
     isFeatured: true,
+    iconName: 'Clock',
+    industry: 'Consultoría, Agencias, Despachos & Software Houses',
+    targetRegion: 'Mérida, CDMX, Monterrey & Guadalajara',
+    tagline: 'Inteligencia de tiempo y costo horario por proyecto con auditoría de productividad impulsada por Groq AI.',
+    painPoint: 'Fugas de rentabilidad en proyectos con precio fijo debido a horas no facturables no registradas y salarios de equipo mal calculados.',
+    solutionOverview: 'HR-TCI cruza el tiempo real dedicado por cada colaborador con su costo horario de nómina (salario + cargas sociales) y analiza la eficiencia con IA.',
     metrics: [
-      { label: 'Margen de Proyecto', value: '+30%', detail: 'Costeo horario real y prevención de desvíos' },
-      { label: 'Horas Facturables', value: '+18 hrs/mes', detail: 'Recuperación de micro-actividades no registradas' },
-      { label: 'Inteligencia Artificial', value: 'Groq AI', detail: 'Auditoría automática de productividad y burnout' },
+      { label: 'Margen por Proyecto', value: '+30%', detail: 'Visibilidad exacta de costo horario vs precio facturado' },
+      { label: 'Horas Facturables', value: '+18 hrs/mes', detail: 'Recuperación de tiempo ocioso y reuniones innecesarias' },
+      { label: 'Aprobación de Timesheets', value: '1 Tap', detail: 'Flujo ágil de revisión semanal para Project Managers' },
     ],
     roles: [
       {
-        id: 'collaborator',
-        label: 'Colaborador / Consultor',
-        badge: 'Vista Equipo',
-        description: 'Cronómetro en vivo, registro de tareas por cliente y recomendaciones del AI Coach.',
+        id: 'consultant',
+        label: 'Consultor / Desarrollador',
+        badge: 'Vista Colaborador',
+        description: 'Registra tiempo con cronómetro en vivo y recibe recomendaciones de productividad de Groq AI.',
       },
       {
         id: 'manager',
-        label: 'Project Manager / Gerente',
+        label: 'Project Manager / Líder',
         badge: 'Vista PM',
-        description: 'Aprobación de timesheets semanales, control de presupuesto consumido y horas extra.',
+        description: 'Revisa y aprueba timesheets semanales, vigila consumo de presupuesto y asignación de equipo.',
       },
       {
         id: 'cfo',
-        label: 'Director / CFO',
-        badge: 'Vista Dirección',
-        description: 'Margen de rentabilidad por cliente, costo/hora real y facturación de servicios.',
+        label: 'CFO / Director de Finanzas',
+        badge: 'Vista CFO',
+        description: 'Visualiza la matriz de rentabilidad bruta por cliente, costo de nómina por hora y proyección mensual.',
       },
     ],
     pitchGuide: {
-      pain: '"¿Saben con exactitud qué proyectos o clientes les están dejando dinero real y cuáles les están costando más horas de las presupuestadas?"',
-      valueProp: '"HR-TCI cruza el tiempo de su equipo con los costos de nómina e inteligencia artificial para garantizar que cada hora trabajada sea rentable."',
-      closingQuestion: '"¿Cuántos colaboradores integran su equipo para configurarles una prueba piloto de rentabilidad?"',
+      pain: '"¿Saben con precisión de peso por peso si el proyecto que vendieron el mes pasado dejó margen real o perdieron dinero en horas de equipo?"',
+      valueProp: '"HR-TCI mide el costo horario exacto de su nómina por proyecto y les avisa con IA antes de que un cliente consuma horas de más."',
+      closingQuestion: '"¿Cuántas personas integran su equipo operativo para configurarles una prueba piloto sin costo?"',
     },
-    whatsappMessage: 'Hola Creati, queremos mejorar la rentabilidad de nuestros proyectos con HR-TCI / Tempus.',
+    whatsappMessage: 'Hola Creati, queremos evaluar la rentabilidad de nuestro equipo con HR-TCI.',
   },
   {
     id: 'estateflow',
     title: 'EstateFlow',
-    badge: 'Inmobiliario & Lotes',
+    badge: 'Masterplan & Lotes',
     iconName: 'Building2',
-    industry: 'Desarrollo Inmobiliario & Residencial',
-    targetRegion: 'Mérida, Yucatán, Riviera Maya & Querétaro',
-    tagline: 'Portal comercial de lotes y departamentos con cotizador inteligente y apartado digital en vivo.',
-    painPoint: 'Desarrolladoras y master brokers pierden hasta 40% de prospectos por cotizaciones manuales lentas y falta de actualización del inventario de lotes.',
-    solutionOverview: 'Mapa interactivo de lotes en tiempo real, cálculo paramétrico de enganche y mensualidades (MSI), apartado bancario en 3 clics y portal para brokers con cálculo de comisiones.',
+    industry: 'Desarrolladoras Inmobiliarias & Master Brokers',
+    targetRegion: 'Mérida (Temozón, Dzityá), Tulum, Cancún & Querétaro',
+    tagline: 'Masterplan interactivo de lotes residenciales con cotizador financiero a 36 MSI y apartado bancario instantáneo.',
+    painPoint: 'Vendedores mostrando listas de Excel desactualizadas con lotes duplicados y cotizaciones manuales lentas.',
+    solutionOverview: 'Mapa vectorizado interactivo que sincroniza disponibilidad en tiempo real, genera corridas financieras en PDF y permite apartar lotes con Stripe/SPEI.',
     metrics: [
-      { label: 'Tiempo de Cotización', value: 'Instantáneo', detail: 'De 2 horas a 10 segundos por cliente' },
-      { label: 'Tasa de Conversión', value: '+38%', detail: 'Más cierres con corridas financieras en vivo' },
-      { label: 'Apartados Digitales', value: '24/7', detail: 'Pagos con Stripe/SPEI directo a fiduciario' },
+      { label: 'Conversión de Ventas', value: '+38%', detail: 'Experiencia visual inmersiva para el comprador' },
+      { label: 'Tiempo de Cotización', value: '10 seg', detail: 'Cálculo instantáneo de enganche, mensualidades y MSI' },
+      { label: 'Apartados Digitales', value: 'Tiempo Real', detail: 'Bloqueo inmediato de inventario para evitar duplicidad' },
     ],
     roles: [
       {
         id: 'buyer',
         label: 'Inversionista / Comprador',
         badge: 'Vista Cliente',
-        description: 'Explora el masterplan, selecciona lotes, calcula su financiamiento y genera corrida en PDF.',
+        description: 'Explora mapa de lotes, filtra por superficie/precio, calcula mensualidades y aparta online.',
       },
       {
-        id: 'admin',
-        label: 'Director Comercial / Master Broker',
+        id: 'manager',
+        label: 'Director Comercial / Broker',
         badge: 'Vista Gerente',
-        description: 'Supervisa el mapa de calor de ventas, inventario en tiempo real, cobros y comisiones de brokers.',
+        description: 'Gestiona inventario (disponible, apartado, vendido), aprueba descuentos y revisa metas de equipo.',
       },
     ],
     pitchGuide: {
-      pain: '"¿Cuánto tiempo tarda su equipo de ventas en enviarle una corrida financiera actualizada a un inversionista que visita el desarrollo el fin de semana?"',
-      valueProp: '"Con EstateFlow su asesor entrega la corrida personalizada en el iPad antes de que el cliente se baje del carrito de golf, permitiendo apartar el lote al momento."',
-      closingQuestion: '"¿Cuántos lotes o unidades tienen en su desarrollo actual para configurarles una prueba piloto?"',
+      pain: '"¿Cuántas ventas han perdido porque un asesor tardó 2 horas en enviar una corrida financiera y el cliente se enfrió?"',
+      valueProp: '"EstateFlow le permite a sus vendedores cotizar en 10 segundos desde su iPad frente al cliente y apartar el lote en caliente."',
+      closingQuestion: '"¿Cuántos desarrollos o etapas tienen activos actualmente para integrarlos al Masterplan?"',
     },
-    whatsappMessage: 'Hola Creati, me interesa una solución como EstateFlow para desarrollos inmobiliarios.',
+    whatsappMessage: 'Hola Creati, nos interesa implementar EstateFlow para nuestros desarrollos inmobiliarios.',
   },
   {
     id: 'kavita',
     title: 'Kavita Concierge',
-    badge: 'Hotelería & Experiencias',
+    badge: 'Hotelería Boutique',
     iconName: 'Palmtree',
-    industry: 'Hoteles Boutique, Resorts & Glampings',
-    targetRegion: 'Mérida Colonial, Tulum, Holbox, San Miguel & Oaxaca',
-    tagline: 'Experiencia integral de huéspedes con room service, reserva de experiencias y llave digital sin fricción.',
-    painPoint: 'Los hoteles boutique pierden hasta el 30% de ingresos en alimentos, bebidas y tours porque los huéspedes no usan teléfonos de habitación ni descargan apps pesadas.',
-    solutionOverview: 'Web app progresiva (PWA) accesible por QR o enlace directo: pedidos a cocina con 1 tap, reserva de masajes mayas o tours a cenotes, y despacho automático a recepción.',
+    industry: 'Hoteles Boutique, Villas de Lujo & Glampings',
+    targetRegion: 'Mérida Colonial, Tulum, Holbox & Riviera Maya',
+    tagline: 'Concierge digital web app (sin descargas) para room service, experiencias gastronómicas y llave NFC.',
+    painPoint: 'Llamadas interminables a recepción, pedidos en papel con margen de error y falta de venta cruzada de tours y masajes.',
+    solutionOverview: 'Web app con código QR en la suite: el huésped ordena room service de autor, agenda masajes con cobro a su cuenta y abre su puerta con llave digital.',
     metrics: [
-      { label: 'Ticket Promedio por Huésped', value: '+24%', detail: 'Incremento de consumo de amenidades y room service' },
-      { label: 'Calificación en Reseñas', value: '4.9 ★', detail: 'Respuesta inmediata a solicitudes de huéspedes' },
-      { label: 'Sin Descarga', value: '100% Web', detail: 'Funciona al instante escaneando el QR de la habitación' },
+      { label: 'Ticket Promedio Extra', value: '+24%', detail: 'Venta impulsiva de room service y tours desde el celular' },
+      { label: 'Satisfacción Guest', value: '4.9 ★', detail: 'Atención inmediata sin llamadas ni esperas' },
+      { label: 'Descarga de Apps', value: '0 Mb', detail: 'Funciona directo en el navegador escaneando el QR' },
     ],
     roles: [
       {
         id: 'guest',
         label: 'Huésped en Suite',
         badge: 'Vista Huésped',
-        description: 'Ordena room service, reserva spa/tours y solicita toallas o late check-out desde su celular.',
+        description: 'Ordena platillos de autor, solicita toallas extra, agenda tratamientos de spa y usa llave digital.',
       },
       {
-        id: 'staff',
-        label: 'Concierge & Cocina',
-        badge: 'Vista Operativa',
-        description: 'Tablero Kanban de comandas y solicitudes en tiempo real con tiempos de entrega auditados.',
+        id: 'ops',
+        label: 'Operación / Recepción & Cocina',
+        badge: 'Vista Hotel',
+        description: 'Recibe comandas en tiempo real, asigna solicitudes a camaristas y monitorea tiempos de entrega.',
       },
     ],
     pitchGuide: {
-      pain: '"¿Qué porcentaje de sus huéspedes no consume en su restaurante o spa porque prefieren pedir por apps externas?"',
-      valueProp: '"Kavita convierte cada habitación en un punto de venta interactivo que incrementa la derrama directa en el hotel sin saturar la recepción."',
-      closingQuestion: '"¿Les gustaría ver cómo se vería el menú y las amenidades de su hotel en nuestra plataforma?"',
+      pain: '"¿Cuántas ventas adicionales de alimentos, bebidas y tours están dejando ir porque el huésped no quiere llamar a recepción?"',
+      valueProp: '"Kavita coloca el menú interactivo y catálogo de experiencias de su hotel a un QR de distancia en la mesita de noche."',
+      closingQuestion: '"¿Cuántas habitaciones o villas opera su hotel para prepararles una demostración personalizada?"',
     },
-    whatsappMessage: 'Hola Creati, me interesa la solución Kavita Concierge para nuestro hotel boutique.',
+    whatsappMessage: 'Hola Creati, queremos elevar la experiencia de nuestros huéspedes con Kavita Concierge.',
   },
   {
     id: 'routeops',
     title: 'RouteOps',
-    badge: 'Logística & Distribución',
+    badge: 'Logística & Frío',
     iconName: 'Truck',
-    industry: 'CEDIS, Transporte & Cadena de Suministro',
-    targetRegion: 'Hub Progreso, Mérida, Cancún, Tabasco & Bajío',
-    tagline: 'Torre de control logística con monitoreo de flotas, sensores de cadena de frío y firma de entrega digital.',
-    painPoint: 'Falta de visibilidad de rutas en tiempo real, pérdidas por variación térmica en perecederos y reportes manuales en papel con firmas que se extravían.',
-    solutionOverview: 'Panel de despacho y telemetría en vivo, trazabilidad de temperatura en tiempo real, optimización de paradas y comprobante de entrega digital (POD) con foto y firma.',
+    industry: 'Cadena de Frío, Distribuidoras de Alimentos & CEDIS',
+    targetRegion: 'Mérida (Hub Progreso), Cancún, Campeche & Tabasco',
+    tagline: 'Telemetría de cadena de frío (-18°C) en tiempo real, optimización de rutas de reparto y firma de entrega digital.',
+    painPoint: 'Mermas millonarias por pérdida de temperatura en congelados durante el trayecto y disputas con clientes por horarios de entrega.',
+    solutionOverview: 'Sensores IoT inviolables que transmiten la temperatura en ruta cada 30 segundos, alertas preventivas al chofer y prueba de entrega digital certificada.',
     metrics: [
       { label: 'Reducción de Merma Térmica', value: '-85%', detail: 'Alertas tempranas de temperatura en cabina fría' },
       { label: 'Ahorro de Combustible', value: '18%', detail: 'Rutas optimizadas con menor kilometraje ocioso' },

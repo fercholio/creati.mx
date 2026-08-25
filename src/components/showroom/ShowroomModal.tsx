@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React, { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -25,6 +25,7 @@ import {
   Award,
 } from 'lucide-react'
 import { SHOWROOM_APPS, ShowroomApp } from '@/data/showroomData'
+import { NovaBrainSandbox } from './sandboxes/NovaBrainSandbox'
 import { LivuSandbox } from './sandboxes/LivuSandbox'
 import { HrTciSandbox } from './sandboxes/HrTciSandbox'
 import { EstateFlowSandbox } from './sandboxes/EstateFlowSandbox'
@@ -57,7 +58,7 @@ interface ShowroomModalProps {
 export function ShowroomModal({
   isOpen,
   onClose,
-  initialAppId = 'livu',
+  initialAppId = 'novabrain',
   prospectName = '',
 }: ShowroomModalProps) {
   const [activeAppId, setActiveAppId] = useState<string>(initialAppId)
@@ -103,6 +104,8 @@ export function ShowroomModal({
 
   const renderActiveSandbox = () => {
     switch (currentApp.id) {
+      case 'novabrain':
+        return <NovaBrainSandbox role={selectedRoleId || currentApp.roles[0].id} />
       case 'livu':
         return <LivuSandbox role={selectedRoleId || currentApp.roles[0].id} />
       case 'hrtci':
@@ -120,124 +123,129 @@ export function ShowroomModal({
       case 'credifast':
         return <CrediFastSandbox role={selectedRoleId || currentApp.roles[0].id} />
       default:
-        return <LivuSandbox role={selectedRoleId || currentApp.roles[0].id} />
+        return <NovaBrainSandbox role={selectedRoleId || currentApp.roles[0].id} />
     }
   }
+
+  if (!isOpen) return null
 
   return (
     <>
       <AnimatePresence>
         {isOpen && (
-          <motion.div
-            key="showroom-modal-backdrop"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 md:p-6 bg-navy-950/70 backdrop-blur-xl overflow-y-auto"
-          >
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-navy-950/80 backdrop-blur-xl overflow-y-auto">
+            {/* Modal Backdrop */}
             <motion.div
-              key={`showroom-modal-card-${currentApp.id}`}
-              initial={{ opacity: 0, scale: 0.96, y: 15 }}
+              key="showroom-modal-backdrop"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={onClose}
+              className="fixed inset-0"
+            />
+
+            {/* Modal Card Window */}
+            <motion.div
+              key="showroom-modal-window"
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
-              exit={{ opacity: 0, scale: 0.96, y: 15 }}
-              transition={{ duration: 0.25 }}
-              className="relative w-full max-w-7xl bg-[#fafafa] rounded-3xl shadow-2xl border border-white/20 flex flex-col my-auto max-h-[94vh] overflow-hidden"
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.3 }}
+              className="relative w-full max-w-6xl bg-[#fafafa] text-gray-900 rounded-[32px] shadow-2xl border border-gray-200 overflow-hidden my-auto max-h-[94vh] flex flex-col font-[family-name:var(--font-display)]"
             >
-              {/* Co-Branding Personalized Banner if client name is specified */}
+              {/* Prospect Personalization Co-Branding Banner */}
               {prospectName && (
-                <div className="bg-gradient-to-r from-accent-600 to-navy-900 text-white px-6 py-2 text-xs flex items-center justify-between font-semibold shrink-0">
-                  <span className="flex items-center gap-2">
-                    <Sparkles className="w-3.5 h-3.5 text-accent-300" />
-                    <span>Demostración Ejecutiva Personalizada para: <strong>{prospectName}</strong></span>
-                  </span>
-                  <span className="text-[10px] bg-white/20 px-2 py-0.5 rounded font-mono">
-                    Creati Sales Kiosk Mode
+                <div className="bg-gradient-to-r from-navy-900 via-accent-600 to-navy-900 text-white px-4 py-2 text-xs text-center font-semibold flex items-center justify-center gap-2 border-b border-navy-800 shrink-0 shadow-inner">
+                  <Sparkles className="w-3.5 h-3.5 text-accent-400" />
+                  <span>
+                    Presentación Exclusiva de Software e IA preparada para <strong>{prospectName}</strong> · Asesoría Comercial B2B
                   </span>
                 </div>
               )}
 
-              {/* Top Bar Navigation */}
-              <div className="bg-white px-4 sm:px-6 py-3.5 border-b border-gray-200/80 flex flex-wrap items-center justify-between gap-3 shrink-0">
-                {/* Solution Selector Horizontal Pills */}
-                <div className="flex items-center gap-1.5 overflow-x-auto max-w-full pb-1 sm:pb-0 scrollbar-none">
-                  {SHOWROOM_APPS.map((app) => {
-                    const Icon = ICON_MAP[app.iconName] || Building2
-                    const isSelected = app.id === currentApp.id
-                    return (
-                      <button
-                        key={`modal-pill-${app.id}`}
-                        onClick={() => handleSelectApp(app.id)}
-                        className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer shrink-0 ${
-                          isSelected
-                            ? 'bg-navy-900 text-white shadow-sm'
-                            : 'bg-gray-100 hover:bg-gray-200 text-gray-700'
-                        }`}
-                      >
-                        <Icon className={`w-3.5 h-3.5 ${isSelected ? 'text-accent-400' : 'text-gray-500'}`} />
-                        <span>{app.title}</span>
-                        {app.isFeatured && (
-                          <span className="text-[9px] bg-accent-500 text-white px-1.5 py-0.2 rounded font-bold">
-                            Creati Core
-                          </span>
-                        )}
-                      </button>
-                    )
-                  })}
+              {/* Top Modal Navigation Header */}
+              <div className="p-4 sm:p-6 border-b border-gray-200 bg-white flex items-center justify-between gap-4 shrink-0 shadow-2xs">
+                <div className="flex items-center gap-3">
+                  <div className="w-10 h-10 rounded-2xl bg-accent-50 text-accent-600 border border-accent-100 flex items-center justify-center font-bold">
+                    <Tablet className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <div className="flex items-center gap-2">
+                      <span className="text-xs font-bold text-accent-600 uppercase tracking-wider">
+                        Creati Interactive Studio
+                      </span>
+                      <span className="text-[10px] bg-emerald-100 text-emerald-800 font-bold px-2 py-0.2 rounded-full">
+                        Entorno de Demostración 100% Funcional
+                      </span>
+                    </div>
+                    <h3 className="text-lg sm:text-xl font-bold text-navy-900 font-[family-name:var(--font-display)] flex items-center gap-2">
+                      <span>{currentApp.title}</span>
+                      <span className="text-xs font-semibold text-gray-500 bg-gray-100 px-2 py-0.5 rounded-md font-sans">
+                        {currentApp.badge}
+                      </span>
+                    </h3>
+                  </div>
                 </div>
 
-                {/* Actions & Close Button */}
-                <div className="flex items-center gap-2 ml-auto">
-                  <button
-                    onClick={() => setIsQuoteModalOpen(true)}
-                    className="px-3.5 py-1.5 bg-accent-500 hover:bg-accent-600 text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-sm transition-all cursor-pointer"
-                  >
-                    <Sparkles className="w-3.5 h-3.5" />
-                    <span className="hidden sm:inline">Cotizar {currentApp.title}</span>
-                    <span className="sm:hidden">Cotizar</span>
-                  </button>
-
-                  <button
-                    onClick={onClose}
-                    className="p-2 rounded-xl text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
-                    title="Cerrar Modal (Esc)"
-                  >
-                    <X className="w-5 h-5" />
-                  </button>
-                </div>
+                {/* Close Button */}
+                <button
+                  onClick={onClose}
+                  className="p-2.5 rounded-full text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors cursor-pointer"
+                  title="Cerrar Estudio (Esc)"
+                >
+                  <X className="w-6 h-6" />
+                </button>
               </div>
 
-              {/* Subheader: View Mode Switcher (Landing vs App) + Role Switcher */}
-              <div className="bg-gray-50/90 px-4 sm:px-6 py-2.5 border-b border-gray-200/80 flex flex-wrap items-center justify-between gap-3 text-xs shrink-0">
-                <div className="flex items-center gap-3">
-                  <span className="font-bold text-gray-800 text-sm flex items-center gap-2">
-                    <span>{currentApp.title}</span>
-                    <span className="text-[10px] bg-accent-50 text-accent-700 font-semibold px-2 py-0.5 rounded-full">
-                      {currentApp.industry}
-                    </span>
-                  </span>
+              {/* App Catalog Selector Tabs (Horizontal Pill Carousel) */}
+              <div className="px-4 sm:px-6 py-2.5 bg-gray-100/80 border-b border-gray-200 overflow-x-auto flex items-center gap-2 shrink-0 scrollbar-none">
+                <span className="text-[11px] text-gray-500 font-bold uppercase tracking-wider shrink-0 mr-1">
+                  Catálogo:
+                </span>
+                {SHOWROOM_APPS.map((app) => {
+                  const isSelected = app.id === activeAppId
+                  return (
+                    <button
+                      key={`tab-${app.id}`}
+                      onClick={() => handleSelectApp(app.id)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
+                        isSelected
+                          ? 'bg-navy-900 text-white shadow-sm ring-1 ring-navy-700'
+                          : 'bg-white hover:bg-gray-200 text-gray-700 border border-gray-200'
+                      }`}
+                    >
+                      <span>{app.title}</span>
+                    </button>
+                  )
+                })}
+              </div>
 
-                  {/* View Switcher: Landing vs App */}
-                  <div className="flex items-center bg-gray-200/80 p-0.5 rounded-xl">
+              {/* Toolbar: Switcher between Interactive App & Commercial Landing */}
+              <div className="px-4 sm:px-6 py-3 bg-white border-b border-gray-200 flex flex-wrap items-center justify-between gap-3 shrink-0 text-xs">
+                <div className="flex items-center gap-3">
+                  <span className="text-gray-500 font-medium hidden sm:inline">Modo de Vista:</span>
+                  <div className="flex items-center bg-gray-100 p-1 rounded-xl border border-gray-200">
                     <button
                       onClick={() => setViewMode('landing')}
-                      className={`px-3 py-1 rounded-lg font-semibold flex items-center gap-1 transition-all cursor-pointer ${
+                      className={`px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
                         viewMode === 'landing'
-                          ? 'bg-white text-navy-900 shadow-xs'
+                          ? 'bg-white text-navy-900 shadow-2xs'
                           : 'text-gray-600 hover:text-gray-900'
                       }`}
                     >
-                      <Layout className="w-3.5 h-3.5 text-accent-500" />
+                      <Layout className="w-3.5 h-3.5" />
                       <span>Landing Comercial</span>
                     </button>
+
                     <button
                       onClick={() => setViewMode('app')}
-                      className={`px-3 py-1 rounded-lg font-semibold flex items-center gap-1 transition-all cursor-pointer ${
+                      className={`px-3 py-1.5 rounded-lg font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
                         viewMode === 'app'
-                          ? 'bg-white text-navy-900 shadow-xs'
+                          ? 'bg-navy-900 text-white shadow-2xs'
                           : 'text-gray-600 hover:text-gray-900'
                       }`}
                     >
-                      <Layers className="w-3.5 h-3.5 text-accent-500" />
+                      <Layers className="w-3.5 h-3.5" />
                       <span>App / Dashboard Operativo</span>
                     </button>
                   </div>
@@ -377,7 +385,7 @@ export function ShowroomModal({
                 </div>
               </div>
             </motion.div>
-          </motion.div>
+          </div>
         )}
       </AnimatePresence>
 
