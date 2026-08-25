@@ -29,7 +29,7 @@ const AUTOMATION_CASES = [
       { value: '< 10 seg', label: 'Tiempo de Cotización' },
       { value: '100%', label: 'Disponibilidad En Vivo' },
     ],
-    tech: ['Next.js', 'Stripe SPEI', 'Framer Motion', 'PostgreSQL'],
+    tech: ['Portal Táctil iPad', 'SPEI Banxico', 'Stripe Payments', 'Base de Datos Cifrada'],
   },
   {
     title: 'Automatización de Operaciones & Telemetría en Ruta',
@@ -43,7 +43,7 @@ const AUTOMATION_CASES = [
       { value: '99.4%', label: 'Cumplimiento SLA' },
       { value: '-30%', label: 'Tiempo de Papeleo' },
     ],
-    tech: ['IoT Telemetry', 'WebSockets', 'Laravel', 'Docker'],
+    tech: ['Sensores IoT (-18°C)', 'Alertas en Tiempo Real', 'Google Maps API', 'Respaldo Cloud Amazon'],
   },
   {
     title: 'Automatización de Citas & Expedientes Digitales',
@@ -57,7 +57,7 @@ const AUTOMATION_CASES = [
       { value: '+30%', label: 'Eficacia en Consulta' },
       { value: '0 Papel', label: 'Flujo 100% Digital' },
     ],
-    tech: ['WhatsApp API', 'NOM-024', 'React', 'Node.js'],
+    tech: ['WhatsApp Business API', 'Expediente NOM-024', 'App Móvil Pacientes', 'Recordatorios Automáticos'],
   },
 ]
 
@@ -162,7 +162,7 @@ export function CaseStudies() {
                 {/* Explicit Tech Stack Pills */}
                 <div className="mt-6 pt-3.5 border-t border-gray-100 font-sans">
                   <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-1.5">
-                    Tecnología & Frameworks:
+                    Componentes del Ecosistema:
                   </span>
                   <div className="flex flex-wrap gap-1.5">
                     {item.tech.map((t) => (

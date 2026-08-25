@@ -52,32 +52,32 @@ const SECTORS: SectorInfo[] = [
     id: 'integrations',
     label: '🔌 Integraciones SAP, SPEI & SAT',
     title: 'Conexión transparente con la infraestructura actual de tu empresa',
-    description: 'Diseñamos conectores webhooks y APIs robustas para sincronizar datos en tiempo real.',
+    description: 'Conectamos tus sistemas actuales con webhooks y APIs automáticas para sincronizar datos sin sustituir tu software.',
     solutions: [
       {
         id: 'novabrain',
-        name: 'Enterprise API Bridge & Conectores Webhooks',
+        name: 'Enterprise API Bridge & Conectores ERP',
         tagline: 'Sincroniza inventarios, cartera, pagos bancarios y facturación CFDI 4.0 directamente con tu ERP.',
         highlight: '100% Tiempo Real · 0 Errores',
-        tech: ['SAP B1 API', 'Intelisis ERP', 'SAT CFDI 4.0', 'AWS Cloud', 'SPEI Banxico', 'Stripe'],
+        tech: ['SAP Business One', 'Intelisis ERP', 'SAT CFDI 4.0', 'SPEI Banxico', 'Stripe', 'Amazon AWS'],
       },
     ],
     techSpecs: [
       {
-        category: 'ERP & Sistemas Contables',
-        items: ['SAP Business One Service Layer', 'Intelisis ERP Webhooks', 'Microsip Sync Engine'],
+        category: 'ERPs & Sistemas Contables',
+        items: ['SAP Business One API Directa', 'Intelisis ERP Sincronización', 'Microsip Conector de Inventarios'],
       },
       {
         category: 'Pagos & Facturación Fiscal',
-        items: ['SPEI Directo Banxico', 'SAT CFDI 4.0 Auto-Factura', 'Stripe Payments API', 'MercadoPago / BBVA API'],
+        items: ['SPEI Banxico Pago Inmediato', 'SAT CFDI 4.0 Auto-Factura', 'Stripe Payments Tarjetas', 'MercadoPago / BBVA API'],
       },
       {
-        category: 'Canales & Mensajería',
-        items: ['WhatsApp Business API', 'Twilio SMS & SendGrid', 'Apple & Google Wallet Passes'],
+        category: 'Notificaciones & Canales',
+        items: ['WhatsApp Business API 24/7', 'Twilio SMS & Correo Autómata', 'Pases en Apple & Google Wallet'],
       },
       {
-        category: 'Infraestructura & IA',
-        items: ['Amazon Web Services (AWS)', 'Groq AI Fast LLM (0.38s)', 'Docker & Kubernetes'],
+        category: 'Infraestructura & Servidores',
+        items: ['Amazon Web Services (AWS)', 'Groq AI Fast LLM (0.38s)', 'Nube de Alta Disponibilidad 99.9%'],
       },
     ],
   },
@@ -85,39 +85,39 @@ const SECTORS: SectorInfo[] = [
     id: 'proptech',
     label: '🏢 Inmobiliarias & Condominios',
     title: 'Automatización de accesos, lotes y cobro condominal',
-    description: 'Ecosistema de código propio diseñado para optimizar el ciclo de venta, recaudación y control de visitas.',
+    description: 'Ecosistema de código propio diseñado para acelerar cierres de venta, cobrar cuotas y autorizar visitas.',
     solutions: [
       {
         id: 'livu',
-        name: 'LIVU · Control Residencial',
+        name: 'LIVU · Control Residencial & Caseta',
         tagline: 'Pases QR en caseta en 6 segundos y recaudación automatizada por SPEI con recibo fiscal.',
         highlight: 'Sin filas en caseta · Morosidad -85%',
-        tech: ['SAP B1 API', 'SPEI Banxico', 'Stripe', 'Twilio WhatsApp', 'PostgreSQL'],
+        tech: ['Pases QR Dinámicos', 'SPEI Banxico', 'Stripe', 'WhatsApp API', 'SAP B1 API'],
       },
       {
         id: 'estateflow',
         name: 'EstateFlow · Masterplan & Lotes',
         tagline: 'Mapa interactivo de lotes, corridas a 36 MSI y apartado bancario instantáneo.',
         highlight: 'Cotización en 10 seg · Cierres +38%',
-        tech: ['Next.js 16', 'Stripe API', 'PDF Auto Generator', 'AWS S3'],
+        tech: ['Mapa Interactivo HTML5', 'Stripe API', 'Cotizador PDF Auto', 'Amazon AWS'],
       },
     ],
     techSpecs: [
       {
-        category: 'Recaudación & Pasarelas',
-        items: ['SPEI Banxico Directo', 'Stripe Payments API'],
+        category: 'Cobranza & Recaudación',
+        items: ['SPEI Banxico Directo', 'Stripe Cobro con Tarjeta'],
       },
       {
-        category: 'Hardware & IoT Caseta',
-        items: ['LPR Camera Vision', 'Pases QR Dinámicos'],
+        category: 'Control de Caseta & Accesos',
+        items: ['Lectura de Placas (LPR)', 'Pases QR Dinámicos con Expiración'],
       },
       {
-        category: 'Frontend & UI Táctil',
-        items: ['Next.js 16 App Router', 'Framer Motion Engine'],
+        category: 'Experiencia del Usuario',
+        items: ['Portal Táctil e Intuitivo', 'Cotizaciones Financieras en PDF'],
       },
       {
-        category: 'Cloud & Base de Datos',
-        items: ['PostgreSQL Database', 'AWS S3 / CloudFront', 'Twilio WhatsApp API'],
+        category: 'Notificaciones & Seguridad',
+        items: ['Respaldo Seguro en Amazon AWS', 'Confirmaciones por WhatsApp', 'Base de Datos Cifrada'],
       },
     ],
   },
@@ -125,39 +125,39 @@ const SECTORS: SectorInfo[] = [
     id: 'operations',
     label: '💼 Operaciones & Inteligencia IA',
     title: 'Inteligencia de costo horario, rentabilidad y agentes de IA',
-    description: 'Modelos predictivos y agentes autónomos conectados a tus flujos de trabajo.',
+    description: 'Modelos predictivos y agentes autónomos orientados a aumentar el margen operativo de tu empresa.',
     solutions: [
       {
         id: 'novabrain',
         name: 'NovaBrain AI · Agente Autónomo B2B',
         tagline: 'Atención por WhatsApp 24/7, cotización en vivo y lectura de contratos en 0.4s.',
         highlight: 'Respuesta < 1.5s · Atención 24/7',
-        tech: ['Groq AI Fast LLM', 'OpenAI GPT-4o', 'WhatsApp Business API', 'RAG Vector DB'],
+        tech: ['Groq AI (Fast LLM)', 'OpenAI GPT-4o', 'WhatsApp Business API', 'Auditoría PDF OCR'],
       },
       {
         id: 'hrtci',
         name: 'HR-TCI / Tempus · Time & Cost Intelligence',
         tagline: 'Costeo horario real de nómina y auditoría de productividad impulsada por IA.',
         highlight: 'Margen +30% · Timesheet 1-Tap',
-        tech: ['Costing Engine', 'Vue 3', 'Laravel 11 API', 'Redis Cache'],
+        tech: ['Costeo Horario Real', 'Dashboard Gerencial', 'Motor de Auditoría IA'],
       },
     ],
     techSpecs: [
       {
         category: 'Motor de Inteligencia Artificial',
-        items: ['Groq AI Fast LLM (0.38s)', 'OpenAI GPT-4o Multimodal'],
+        items: ['Groq AI Inferencia Ultra-Rápida (0.38s)', 'OpenAI GPT-4o Visión & Documentos'],
       },
       {
-        category: 'Base de Conocimiento & RAG',
-        items: ['LangChain & RAG Vector DB', 'Python 3.12 FastAPI Services'],
+        category: 'Auditoría de Documentos',
+        items: ['Lectura OCR de Contratos en PDF', 'Validación Fiscal de Facturas SAT'],
       },
       {
-        category: 'Canales & Interfaz Táctil',
-        items: ['WhatsApp Business API', 'Vue 3 & React 19 Dashboards'],
+        category: 'Atención & Ventas 24/7',
+        items: ['WhatsApp Business API Automático', 'Portal Gerencial de Métricas'],
       },
       {
-        category: 'Infraestructura & Caché',
-        items: ['Node.js Microservices', 'Redis In-Memory', 'Docker Containers'],
+        category: 'Garantías de Plataforma',
+        items: ['Velocidad de Respuesta Sub-Segundo', 'Servidores Escalables Sin Caídas', 'Cifrado de Información'],
       },
     ],
   },
@@ -165,32 +165,32 @@ const SECTORS: SectorInfo[] = [
     id: 'logistics',
     label: '🚚 Logística & Cadena de Frío',
     title: 'Telemetría de temperatura en ruta y entregas certificadas',
-    description: 'Visibilidad total de la cadena de frío con sensores IoT y firma digital inviolable.',
+    description: 'Visibilidad total de la cadena de frío con sensores en tiempo real y evidencia digital inviolable.',
     solutions: [
       {
         id: 'routeops',
         name: 'RouteOps · Torre de Control',
         tagline: 'Monitoreo a -18°C en tiempo real y manifiesto de entrega con firma digital y GPS.',
         highlight: 'Merma -85% · SLA 99.4%',
-        tech: ['IoT Telemetry', 'WebSockets', 'Google Maps API', 'AWS IoT Core'],
+        tech: ['Sensores IoT (-18°C)', 'Alertas al Celular', 'Google Maps API', 'Firma GPS Digital'],
       },
     ],
     techSpecs: [
       {
-        category: 'Telemetría & Sensores',
-        items: ['Sensores IoT (-18°C)', 'WebSockets Real-Time'],
+        category: 'Telemetría & Cadena de Frío',
+        items: ['Sensores IoT de Temperatura (-18°C)', 'Alertas Instantáneas al Celular'],
       },
       {
-        category: 'Rutas & Cartografía',
-        items: ['Google Maps Platform API', 'PostgreSQL Spatial / GIS'],
+        category: 'Rutas & Geolocalización',
+        items: ['Google Maps Platform API', 'Trazabilidad de Rutas en Tiempo Real'],
       },
       {
-        category: 'Evidencia Legal Digital',
-        items: ['Firma Digital NOM-151', 'Manifiesto GPS Inviolable'],
+        category: 'Evidencia Legal & Entregas',
+        items: ['Firma Digital NOM-151', 'Comprobante Fotográfico con GPS'],
       },
       {
-        category: 'Servidores & Cloud',
-        items: ['Laravel 11 Backend API', 'AWS IoT Core Cluster', 'Docker Containers'],
+        category: 'Garantía de Servicio',
+        items: ['Servidor de Alta Disponibilidad 99.9%', 'Respaldo Cloud en Amazon AWS', 'Historial Inviolable de Viaje'],
       },
     ],
   },
@@ -351,10 +351,10 @@ export function IntegrationsGrid() {
               <div className="flex items-center justify-between">
                 <span className="text-[11px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2">
                   <Code2 className="w-4 h-4 text-navy-800" />
-                  <span>Especificaciones de Infraestructura & Ecosistema</span>
+                  <span>Garantías de Infraestructura & Ecosistema</span>
                 </span>
                 <span className="text-[10px] font-mono text-gray-400">
-                  Arquitectura Modular B2B
+                  Arquitectura Empresarial B2B
                 </span>
               </div>
 
