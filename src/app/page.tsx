@@ -1,6 +1,5 @@
 import { Hero } from '@/components/sections/Hero'
 import { SocialProof } from '@/components/sections/SocialProof'
-import { TechCatalogSection } from '@/components/sections/TechCatalogSection'
 import { IntegrationsGrid } from '@/components/sections/IntegrationsGrid'
 import { CaseStudies } from '@/components/sections/CaseStudies'
 import { ProjectEstimator } from '@/components/sections/ProjectEstimator'
@@ -15,7 +14,6 @@ export default function Home() {
       <ScrollProgress />
       <Hero />
       <SocialProof />
-      <TechCatalogSection />
       <IntegrationsGrid />
       <CaseStudies />
       <ProjectEstimator />
