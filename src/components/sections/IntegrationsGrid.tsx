@@ -29,6 +29,12 @@ import {
 import { Container } from '@/components/layout/Container'
 import { ShowroomModal } from '@/components/showroom/ShowroomModal'
 
+interface PurposeGroup {
+  purpose: string
+  iconLabel?: string
+  techList: { name: string; isStar?: boolean }[]
+}
+
 interface SectorInfo {
   id: string
   label: string
@@ -41,10 +47,60 @@ interface SectorInfo {
     highlight: string
     tech: string[]
   }[]
-  fullStack: { name: string; isStar?: boolean }[]
+  purposeGroups: PurposeGroup[]
 }
 
 const SECTORS: SectorInfo[] = [
+  {
+    id: 'integrations',
+    label: '🔌 Integraciones SAP, SPEI & SAT',
+    title: 'Conexión transparente con los sistemas que ya utiliza tu empresa',
+    description: 'Diseñamos conectores webhooks y APIs robustas para sincronizar datos en tiempo real.',
+    solutions: [
+      {
+        id: 'novabrain',
+        name: 'Enterprise API Bridge & Conectores Webhooks',
+        tagline: 'Sincroniza inventarios, cartera, pagos bancarios y facturación CFDI 4.0 directamente con tu ERP.',
+        highlight: '100% Tiempo Real · 0 Errores',
+        tech: ['SAP B1 API', 'Intelisis', 'SAT CFDI 4.0', 'AWS', 'SPEI Banxico', 'Stripe'],
+      },
+    ],
+    purposeGroups: [
+      {
+        purpose: 'ERPs & Sistemas Contables',
+        techList: [
+          { name: 'SAP Business One API', isStar: true },
+          { name: 'Intelisis ERP Webhooks', isStar: true },
+          { name: 'Microsip Sync', isStar: false },
+        ],
+      },
+      {
+        purpose: 'Pagos, Bancos & Facturación SAT',
+        techList: [
+          { name: 'SPEI Banxico Directo', isStar: true },
+          { name: 'SAT CFDI 4.0 Auto-Factura', isStar: true },
+          { name: 'Stripe Payments API', isStar: true },
+          { name: 'MercadoPago & BBVA API', isStar: false },
+        ],
+      },
+      {
+        purpose: 'Canales & Notificaciones',
+        techList: [
+          { name: 'WhatsApp Business API', isStar: true },
+          { name: 'Twilio SMS & SendGrid', isStar: false },
+          { name: 'Apple & Google Wallet', isStar: true },
+        ],
+      },
+      {
+        purpose: 'Infraestructura Cloud & IA',
+        techList: [
+          { name: 'Amazon Web Services (AWS)', isStar: true },
+          { name: 'Groq AI Fast LLM (0.38s)', isStar: true },
+          { name: 'Docker / Kubernetes', isStar: false },
+        ],
+      },
+    ],
+  },
   {
     id: 'proptech',
     label: '🏢 Inmobiliarias & Condominios',
@@ -66,16 +122,36 @@ const SECTORS: SectorInfo[] = [
         tech: ['Next.js 16', 'Stripe API', 'PDF Auto Generator', 'AWS S3'],
       },
     ],
-    fullStack: [
-      { name: 'Next.js 16 App Router', isStar: true },
-      { name: 'SPEI Banxico Directo', isStar: true },
-      { name: 'Stripe Payments', isStar: true },
-      { name: 'Twilio WhatsApp API' },
-      { name: 'PostgreSQL Database' },
-      { name: 'LPR Camera Vision (Caseta)', isStar: true },
-      { name: 'Framer Motion UI' },
-      { name: 'AWS S3 & CloudFront' },
-      { name: 'TailwindCSS Design System' },
+    purposeGroups: [
+      {
+        purpose: 'Recaudación & Bancos',
+        techList: [
+          { name: 'SPEI Banxico Directo', isStar: true },
+          { name: 'Stripe Payments API', isStar: true },
+        ],
+      },
+      {
+        purpose: 'Hardware & Accesos IoT',
+        techList: [
+          { name: 'LPR Camera Vision (Caseta)', isStar: true },
+          { name: 'Pases QR Dinámicos', isStar: true },
+        ],
+      },
+      {
+        purpose: 'Frontend & Experiencia Táctil',
+        techList: [
+          { name: 'Next.js 16 App Router', isStar: true },
+          { name: 'Framer Motion UI', isStar: false },
+        ],
+      },
+      {
+        purpose: 'Notificaciones & Almacenamiento',
+        techList: [
+          { name: 'Twilio WhatsApp API', isStar: false },
+          { name: 'PostgreSQL Database', isStar: false },
+          { name: 'AWS S3 Cloud', isStar: false },
+        ],
+      },
     ],
   },
   {
@@ -99,16 +175,36 @@ const SECTORS: SectorInfo[] = [
         tech: ['Costing Engine', 'Vue 3', 'Laravel 11 API', 'Redis Cache'],
       },
     ],
-    fullStack: [
-      { name: 'Groq AI Ultra-Fast LLM (0.38s)', isStar: true },
-      { name: 'OpenAI GPT-4o Multimodal', isStar: true },
-      { name: 'WhatsApp Business API', isStar: true },
-      { name: 'LangChain & RAG Vector DB' },
-      { name: 'Python 3.12 FastAPI' },
-      { name: 'Vue 3 & React 19' },
-      { name: 'Node.js Microservices' },
-      { name: 'Redis In-Memory Cache' },
-      { name: 'Docker & Kubernetes' },
+    purposeGroups: [
+      {
+        purpose: 'Motor de Inteligencia Artificial',
+        techList: [
+          { name: 'Groq AI Fast LLM (0.38s)', isStar: true },
+          { name: 'OpenAI GPT-4o Multimodal', isStar: true },
+        ],
+      },
+      {
+        purpose: 'Base de Conocimiento & RAG',
+        techList: [
+          { name: 'LangChain & RAG Vector DB', isStar: true },
+          { name: 'Python 3.12 FastAPI', isStar: false },
+        ],
+      },
+      {
+        purpose: 'Canales & Atencion 24/7',
+        techList: [
+          { name: 'WhatsApp Business API', isStar: true },
+          { name: 'Vue 3 / React 19 Dashboards', isStar: false },
+        ],
+      },
+      {
+        purpose: 'Infraestructura & Microservicios',
+        techList: [
+          { name: 'Node.js Engine', isStar: false },
+          { name: 'Redis Cache', isStar: false },
+          { name: 'Docker & Kubernetes', isStar: false },
+        ],
+      },
     ],
   },
   {
@@ -125,44 +221,36 @@ const SECTORS: SectorInfo[] = [
         tech: ['IoT Telemetry', 'WebSockets', 'Google Maps API', 'AWS IoT Core'],
       },
     ],
-    fullStack: [
-      { name: 'IoT Telemetry Sensors (-18°C)', isStar: true },
-      { name: 'WebSockets Real-Time Transmission', isStar: true },
-      { name: 'Laravel 11 Backend Framework' },
-      { name: 'Google Maps Platform API', isStar: true },
-      { name: 'Firma Digital NOM-151' },
-      { name: 'PostgreSQL Spatial / GIS' },
-      { name: 'AWS IoT Core Cluster' },
-      { name: 'Docker Containerized' },
-    ],
-  },
-  {
-    id: 'integrations',
-    label: '🔌 Integraciones SAP, SPEI & SAT',
-    title: 'Conexión transparente con los sistemas que ya utiliza tu empresa',
-    description: 'Diseñamos conectores webhooks y APIs robustas para sincronizar datos en tiempo real.',
-    solutions: [
+    purposeGroups: [
       {
-        id: 'novabrain',
-        name: 'Enterprise API Bridge & Conectores Webhooks',
-        tagline: 'Sincroniza inventarios, cartera, pagos bancarios y facturación CFDI 4.0 directamente con tu ERP.',
-        highlight: '100% Tiempo Real · 0 Errores',
-        tech: ['SAP B1 API', 'Intelisis', 'SAT CFDI 4.0', 'AWS', 'SPEI Banxico', 'Stripe'],
+        purpose: 'Telemetría & Sensores IoT',
+        techList: [
+          { name: 'Sensores IoT (-18°C)', isStar: true },
+          { name: 'WebSockets Real-Time', isStar: true },
+        ],
       },
-    ],
-    fullStack: [
-      { name: 'SAP Business One Service Layer API', isStar: true },
-      { name: 'Intelisis ERP Webhooks', isStar: true },
-      { name: 'Microsip Sync Connector' },
-      { name: 'SAT CFDI 4.0 Auto-Facturación', isStar: true },
-      { name: 'SPEI / Banxico Directo', isStar: true },
-      { name: 'Stripe Payments Integration', isStar: true },
-      { name: 'MercadoPago & BBVA API' },
-      { name: 'WhatsApp Business API & Twilio' },
-      { name: 'Amazon Web Services (AWS)' },
-      { name: 'Groq AI Fast LLM Connector', isStar: true },
-      { name: 'Apple & Google Wallet Passes' },
-      { name: 'Docker & Kubernetes Infrastructure' },
+      {
+        purpose: 'Rutas & Geolocalización',
+        techList: [
+          { name: 'Google Maps Platform API', isStar: true },
+          { name: 'PostgreSQL Spatial / GIS', isStar: false },
+        ],
+      },
+      {
+        purpose: 'Certificación & Evidencia Digital',
+        techList: [
+          { name: 'Firma Digital NOM-151', isStar: true },
+          { name: 'Manifiesto GPS Inviolable', isStar: false },
+        ],
+      },
+      {
+        purpose: 'Infraestructura & Cloud',
+        techList: [
+          { name: 'Laravel 11 Backend API', isStar: false },
+          { name: 'AWS IoT Core Cluster', isStar: false },
+          { name: 'Docker Containers', isStar: false },
+        ],
+      },
     ],
   },
 ]
@@ -271,7 +359,7 @@ export function IntegrationsGrid() {
               {currentSector.solutions.map((item, idx) => (
                 <div
                   key={idx}
-                  className="p-6 rounded-3xl bg-gray-50 hover:bg-accent-50/40 border border-gray-200/80 hover:border-accent-300 transition-all flex flex-col justify-between space-y-5 group"
+                  className="p-6 rounded-3xl bg-gray-50/70 hover:bg-accent-50/40 border border-gray-200/80 hover:border-accent-300 transition-all flex flex-col justify-between space-y-5 group"
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between gap-2">
@@ -317,34 +405,47 @@ export function IntegrationsGrid() {
               ))}
             </div>
 
-            {/* FULL TECH STACK & INTEGRATIONS ROW AT THE BOTTOM (Per User Request) */}
-            <div className="pt-6 border-t-2 border-dashed border-gray-200/90 font-sans space-y-3">
+            {/* GROUPED BY OPERATIONAL PURPOSE AT THE BOTTOM */}
+            <div className="pt-6 border-t border-gray-200/90 font-sans space-y-5">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-extrabold text-navy-950 uppercase tracking-wider flex items-center gap-1.5">
-                  <Star className="w-4 h-4 text-amber-500 fill-amber-500" />
-                  <span>Stack Completo & Ecosistema de Integraciones para este Sector:</span>
+                <span className="text-xs font-extrabold text-navy-950 uppercase tracking-wider flex items-center gap-2">
+                  <Star className="w-4 h-4 text-amber-500 fill-amber-500 shrink-0" />
+                  <span>Stack de Integraciones Agrupado por Propósito Operativo:</span>
                 </span>
-                <span className="text-[11px] font-mono font-bold text-emerald-600 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                  {currentSector.fullStack.length} Tecnologías Activas
+                <span className="text-[11px] font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
+                  {currentSector.purposeGroups.reduce((acc, g) => acc + g.techList.length, 0)} Tecnologías Integradas
                 </span>
               </div>
 
-              <div className="flex flex-wrap items-center gap-2">
-                {currentSector.fullStack.map((techItem, i) => (
+              {/* Purpose Group Grid */}
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {currentSector.purposeGroups.map((group, groupIdx) => (
                   <div
-                    key={i}
-                    className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all shadow-2xs border ${
-                      techItem.isStar
-                        ? 'bg-gradient-to-r from-navy-950 via-slate-900 to-navy-900 text-white border-accent-400/40 shadow-xs'
-                        : 'bg-gray-100 text-slate-800 border-gray-200 hover:bg-gray-200'
-                    }`}
+                    key={groupIdx}
+                    className="p-4 bg-slate-50/90 rounded-2xl border border-slate-200/80 space-y-2.5"
                   >
-                    {techItem.isStar ? (
-                      <Star className="w-3.5 h-3.5 text-amber-400 fill-amber-400 shrink-0" />
-                    ) : (
-                      <Check className="w-3.5 h-3.5 text-emerald-500 stroke-[3] shrink-0" />
-                    )}
-                    <span>{techItem.name}</span>
+                    <span className="text-[11px] font-bold text-accent-700 uppercase tracking-wider block">
+                      📌 Propósito: {group.purpose}
+                    </span>
+                    <div className="flex flex-wrap items-center gap-1.5">
+                      {group.techList.map((techItem, techIdx) => (
+                        <span
+                          key={techIdx}
+                          className={`px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1.5 border shadow-2xs ${
+                            techItem.isStar
+                              ? 'bg-white text-navy-950 border-amber-300 font-bold'
+                              : 'bg-white text-slate-700 border-slate-200'
+                          }`}
+                        >
+                          {techItem.isStar ? (
+                            <Star className="w-3 h-3 text-amber-500 fill-amber-500 shrink-0" />
+                          ) : (
+                            <Check className="w-3 h-3 text-emerald-500 stroke-[3] shrink-0" />
+                          )}
+                          <span>{techItem.name}</span>
+                        </span>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </div>
