@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 import { Container } from '@/components/layout/Container'
 import { ShowroomHub } from '@/components/showroom/ShowroomHub'
-import { Sparkles, Tablet, CheckCircle, ArrowLeft, ShieldCheck, HeartHandshake, Zap, Award } from 'lucide-react'
+import { SocialShareCards } from '@/components/ui/SocialShareCards'
+import { Sparkles, Tablet, CheckCircle, ArrowLeft, ShieldCheck, HeartHandshake, Zap, Award, QrCode } from 'lucide-react'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
@@ -61,6 +62,24 @@ export default function ShowroomPage() {
 
         {/* Interactive Showroom Grid & Studio Modal */}
         <ShowroomHub initialAppId="estateflow" isStandalonePage={true} />
+
+        {/* Executive Brochure Card with QR & Social Share Section */}
+        <div className="mt-20 border-t border-gray-200 pt-16">
+          <div className="text-center max-w-2xl mx-auto mb-8">
+            <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-50 text-amber-800 text-xs font-extrabold border border-amber-200 mb-2">
+              <QrCode className="w-3.5 h-3.5 text-amber-600" />
+              Brochure Impreso & Tarjetas para Redes Sociales
+            </span>
+            <h2 className="text-2xl sm:text-3xl font-bold text-gray-900 font-[family-name:var(--font-display)]">
+              Descarga o Escanea el Brochure con QR
+            </h2>
+            <p className="text-xs sm:text-sm text-gray-600 mt-1">
+              Ideal para compartir en reuniones con clientes, redes sociales o imprimir en carpetas comerciales.
+            </p>
+          </div>
+
+          <SocialShareCards />
+        </div>
 
         {/* Commercial Banner */}
         <div className="mt-20 p-8 sm:p-10 rounded-3xl bg-white border border-gray-200 shadow-sm text-center max-w-3xl mx-auto relative overflow-hidden">
