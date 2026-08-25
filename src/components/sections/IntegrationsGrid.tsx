@@ -11,7 +11,6 @@ import {
   MessageSquare,
   Sparkles,
   Play,
-  CheckCircle2,
   ArrowRight,
   ShieldCheck,
   Zap,
@@ -23,15 +22,14 @@ import {
   Send,
   Server,
   Cpu,
-  Star,
-  Check,
+  Code2,
 } from 'lucide-react'
 import { Container } from '@/components/layout/Container'
 import { ShowroomModal } from '@/components/showroom/ShowroomModal'
 
 interface PurposeGroup {
-  purpose: string
-  techList: { name: string; isStar?: boolean }[]
+  category: string
+  items: string[]
 }
 
 interface SectorInfo {
@@ -46,14 +44,14 @@ interface SectorInfo {
     highlight: string
     tech: string[]
   }[]
-  purposeGroups: PurposeGroup[]
+  techSpecs: PurposeGroup[]
 }
 
 const SECTORS: SectorInfo[] = [
   {
     id: 'integrations',
     label: '🔌 Integraciones SAP, SPEI & SAT',
-    title: 'Conexión transparente con los sistemas que ya utiliza tu empresa',
+    title: 'Conexión transparente con la infraestructura actual de tu empresa',
     description: 'Diseñamos conectores webhooks y APIs robustas para sincronizar datos en tiempo real.',
     solutions: [
       {
@@ -61,42 +59,25 @@ const SECTORS: SectorInfo[] = [
         name: 'Enterprise API Bridge & Conectores Webhooks',
         tagline: 'Sincroniza inventarios, cartera, pagos bancarios y facturación CFDI 4.0 directamente con tu ERP.',
         highlight: '100% Tiempo Real · 0 Errores',
-        tech: ['SAP B1 API', 'Intelisis', 'SAT CFDI 4.0', 'AWS', 'SPEI Banxico', 'Stripe'],
+        tech: ['SAP B1 API', 'Intelisis ERP', 'SAT CFDI 4.0', 'AWS Cloud', 'SPEI Banxico', 'Stripe'],
       },
     ],
-    purposeGroups: [
+    techSpecs: [
       {
-        purpose: 'ERPs & Sistemas Contables',
-        techList: [
-          { name: 'SAP Business One API', isStar: true },
-          { name: 'Intelisis ERP Webhooks', isStar: true },
-          { name: 'Microsip Sync', isStar: false },
-        ],
+        category: 'ERP & Sistemas Contables',
+        items: ['SAP Business One Service Layer', 'Intelisis ERP Webhooks', 'Microsip Sync Engine'],
       },
       {
-        purpose: 'Pagos, Bancos & Facturación SAT',
-        techList: [
-          { name: 'SPEI Banxico Directo', isStar: true },
-          { name: 'SAT CFDI 4.0 Auto-Factura', isStar: true },
-          { name: 'Stripe Payments API', isStar: true },
-          { name: 'MercadoPago & BBVA API', isStar: false },
-        ],
+        category: 'Pagos & Facturación Fiscal',
+        items: ['SPEI Directo Banxico', 'SAT CFDI 4.0 Auto-Factura', 'Stripe Payments API', 'MercadoPago / BBVA API'],
       },
       {
-        purpose: 'Canales & Notificaciones',
-        techList: [
-          { name: 'WhatsApp Business API', isStar: true },
-          { name: 'Twilio SMS & SendGrid', isStar: false },
-          { name: 'Apple & Google Wallet', isStar: true },
-        ],
+        category: 'Canales & Mensajería',
+        items: ['WhatsApp Business API', 'Twilio SMS & SendGrid', 'Apple & Google Wallet Passes'],
       },
       {
-        purpose: 'Infraestructura Cloud & IA',
-        techList: [
-          { name: 'Amazon Web Services (AWS)', isStar: true },
-          { name: 'Groq AI Fast LLM (0.38s)', isStar: true },
-          { name: 'Docker / Kubernetes', isStar: false },
-        ],
+        category: 'Infraestructura & IA',
+        items: ['Amazon Web Services (AWS)', 'Groq AI Fast LLM (0.38s)', 'Docker & Kubernetes'],
       },
     ],
   },
@@ -121,35 +102,22 @@ const SECTORS: SectorInfo[] = [
         tech: ['Next.js 16', 'Stripe API', 'PDF Auto Generator', 'AWS S3'],
       },
     ],
-    purposeGroups: [
+    techSpecs: [
       {
-        purpose: 'Recaudación & Bancos',
-        techList: [
-          { name: 'SPEI Banxico Directo', isStar: true },
-          { name: 'Stripe Payments API', isStar: true },
-        ],
+        category: 'Recaudación & Pasarelas',
+        items: ['SPEI Banxico Directo', 'Stripe Payments API'],
       },
       {
-        purpose: 'Hardware & Accesos IoT',
-        techList: [
-          { name: 'LPR Camera Vision (Caseta)', isStar: true },
-          { name: 'Pases QR Dinámicos', isStar: true },
-        ],
+        category: 'Hardware & IoT Caseta',
+        items: ['LPR Camera Vision', 'Pases QR Dinámicos'],
       },
       {
-        purpose: 'Frontend & Experiencia Táctil',
-        techList: [
-          { name: 'Next.js 16 App Router', isStar: true },
-          { name: 'Framer Motion UI', isStar: false },
-        ],
+        category: 'Frontend & UI Táctil',
+        items: ['Next.js 16 App Router', 'Framer Motion Engine'],
       },
       {
-        purpose: 'Notificaciones & Almacenamiento',
-        techList: [
-          { name: 'Twilio WhatsApp API', isStar: false },
-          { name: 'PostgreSQL Database', isStar: false },
-          { name: 'AWS S3 Cloud', isStar: false },
-        ],
+        category: 'Cloud & Base de Datos',
+        items: ['PostgreSQL Database', 'AWS S3 / CloudFront', 'Twilio WhatsApp API'],
       },
     ],
   },
@@ -174,35 +142,22 @@ const SECTORS: SectorInfo[] = [
         tech: ['Costing Engine', 'Vue 3', 'Laravel 11 API', 'Redis Cache'],
       },
     ],
-    purposeGroups: [
+    techSpecs: [
       {
-        purpose: 'Motor de Inteligencia Artificial',
-        techList: [
-          { name: 'Groq AI Fast LLM (0.38s)', isStar: true },
-          { name: 'OpenAI GPT-4o Multimodal', isStar: true },
-        ],
+        category: 'Motor de Inteligencia Artificial',
+        items: ['Groq AI Fast LLM (0.38s)', 'OpenAI GPT-4o Multimodal'],
       },
       {
-        purpose: 'Base de Conocimiento & RAG',
-        techList: [
-          { name: 'LangChain & RAG Vector DB', isStar: true },
-          { name: 'Python 3.12 FastAPI', isStar: false },
-        ],
+        category: 'Base de Conocimiento & RAG',
+        items: ['LangChain & RAG Vector DB', 'Python 3.12 FastAPI Services'],
       },
       {
-        purpose: 'Canales & Atención 24/7',
-        techList: [
-          { name: 'WhatsApp Business API', isStar: true },
-          { name: 'Vue 3 / React 19 Dashboards', isStar: false },
-        ],
+        category: 'Canales & Interfaz Táctil',
+        items: ['WhatsApp Business API', 'Vue 3 & React 19 Dashboards'],
       },
       {
-        purpose: 'Infraestructura & Microservicios',
-        techList: [
-          { name: 'Node.js Engine', isStar: false },
-          { name: 'Redis Cache', isStar: false },
-          { name: 'Docker & Kubernetes', isStar: false },
-        ],
+        category: 'Infraestructura & Caché',
+        items: ['Node.js Microservices', 'Redis In-Memory', 'Docker Containers'],
       },
     ],
   },
@@ -220,35 +175,22 @@ const SECTORS: SectorInfo[] = [
         tech: ['IoT Telemetry', 'WebSockets', 'Google Maps API', 'AWS IoT Core'],
       },
     ],
-    purposeGroups: [
+    techSpecs: [
       {
-        purpose: 'Telemetría & Sensores IoT',
-        techList: [
-          { name: 'Sensores IoT (-18°C)', isStar: true },
-          { name: 'WebSockets Real-Time', isStar: true },
-        ],
+        category: 'Telemetría & Sensores',
+        items: ['Sensores IoT (-18°C)', 'WebSockets Real-Time'],
       },
       {
-        purpose: 'Rutas & Geolocalización',
-        techList: [
-          { name: 'Google Maps Platform API', isStar: true },
-          { name: 'PostgreSQL Spatial / GIS', isStar: false },
-        ],
+        category: 'Rutas & Cartografía',
+        items: ['Google Maps Platform API', 'PostgreSQL Spatial / GIS'],
       },
       {
-        purpose: 'Certificación & Evidencia Digital',
-        techList: [
-          { name: 'Firma Digital NOM-151', isStar: true },
-          { name: 'Manifiesto GPS Inviolable', isStar: false },
-        ],
+        category: 'Evidencia Legal Digital',
+        items: ['Firma Digital NOM-151', 'Manifiesto GPS Inviolable'],
       },
       {
-        purpose: 'Infraestructura & Cloud',
-        techList: [
-          { name: 'Laravel 11 Backend API', isStar: false },
-          { name: 'AWS IoT Core Cluster', isStar: false },
-          { name: 'Docker Containers', isStar: false },
-        ],
+        category: 'Servidores & Cloud',
+        items: ['Laravel 11 Backend API', 'AWS IoT Core Cluster', 'Docker Containers'],
       },
     ],
   },
@@ -267,12 +209,12 @@ export function IntegrationsGrid() {
   }
 
   return (
-    <section className="py-16 lg:py-24 bg-[#f8fafc] relative overflow-hidden font-[family-name:var(--font-display)]" id="integrations">
-      {/* Background Glow */}
-      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-accent-100/30 rounded-full blur-[140px] pointer-events-none" />
+    <section className="py-16 lg:py-24 bg-[#fafafa] relative overflow-hidden font-[family-name:var(--font-display)]" id="integrations">
+      {/* Subtle Background Glow */}
+      <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[700px] h-[700px] bg-accent-100/20 rounded-full blur-[140px] pointer-events-none" />
 
       <Container>
-        {/* Simplified Non-Overwhelming Header */}
+        {/* Sleek Minimalist Header */}
         <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-14">
           <motion.div
             initial={{ opacity: 0, y: 15 }}
@@ -280,7 +222,7 @@ export function IntegrationsGrid() {
             viewport={{ once: true }}
             transition={{ duration: 0.4 }}
           >
-            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-accent-50 text-accent-700 text-xs font-extrabold border border-accent-100 mb-3 shadow-2xs">
+            <span className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-accent-50 text-accent-700 text-xs font-bold border border-accent-100 mb-3 shadow-2xs">
               <Zap className="w-3.5 h-3.5 text-accent-500" />
               Ecosistema Tecnológico & Conectores API
             </span>
@@ -320,7 +262,7 @@ export function IntegrationsGrid() {
                 onClick={() => setActiveSectorId(sector.id)}
                 className={`px-4 py-2.5 rounded-2xl text-xs font-bold transition-all cursor-pointer flex items-center gap-2 ${
                   isActive
-                    ? 'bg-navy-950 text-white shadow-md shadow-navy-950/20 ring-2 ring-accent-400/30 scale-[1.02]'
+                    ? 'bg-navy-950 text-white shadow-md shadow-navy-950/15 ring-1 ring-navy-800 scale-[1.01]'
                     : 'bg-white hover:bg-gray-100 text-gray-700 border border-gray-200'
                 }`}
               >
@@ -334,15 +276,15 @@ export function IntegrationsGrid() {
         <AnimatePresence mode="wait">
           <motion.div
             key={activeSectorId}
-            initial={{ opacity: 0, y: 12 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -12 }}
-            transition={{ duration: 0.3 }}
-            className="max-w-5xl mx-auto bg-white rounded-[36px] border border-gray-200/90 p-6 sm:p-9 shadow-sm relative overflow-hidden space-y-8"
+            exit={{ opacity: 0, y: -10 }}
+            transition={{ duration: 0.25 }}
+            className="max-w-5xl mx-auto bg-white rounded-[32px] border border-gray-200 p-6 sm:p-9 shadow-xs relative overflow-hidden space-y-8"
           >
             {/* Top Header of Active Sector */}
             <div className="border-b border-gray-100 pb-5">
-              <span className="text-[10px] font-extrabold uppercase tracking-wider text-accent-600 bg-accent-50 px-3 py-1 rounded-full border border-accent-100">
+              <span className="text-[10px] font-bold uppercase tracking-widest text-accent-600 bg-accent-50 px-3 py-1 rounded-full border border-accent-100">
                 Enfoque Operativo & Arquitectura
               </span>
               <h3 className="text-xl sm:text-2xl font-bold text-navy-950 mt-2 font-[family-name:var(--font-display)]">
@@ -358,15 +300,15 @@ export function IntegrationsGrid() {
               {currentSector.solutions.map((item, idx) => (
                 <div
                   key={idx}
-                  className="p-6 rounded-3xl bg-gray-50/70 hover:bg-accent-50/40 border border-gray-200/80 hover:border-accent-300 transition-all flex flex-col justify-between space-y-5 group"
+                  className="p-6 rounded-2xl bg-gray-50/60 hover:bg-accent-50/30 border border-gray-200/80 hover:border-accent-300 transition-all flex flex-col justify-between space-y-5 group"
                 >
                   <div className="space-y-3">
                     <div className="flex items-center justify-between gap-2">
                       <h4 className="text-lg font-bold text-navy-950 group-hover:text-accent-600 transition-colors">
                         {item.name}
                       </h4>
-                      <span className="text-[10px] font-extrabold text-emerald-800 bg-emerald-100/90 px-2.5 py-0.5 rounded-full border border-emerald-200 font-sans shrink-0">
-                        ✓ {item.highlight}
+                      <span className="text-[10px] font-bold text-emerald-800 bg-emerald-50 px-2.5 py-0.5 rounded-md border border-emerald-200/60 font-sans shrink-0">
+                        {item.highlight}
                       </span>
                     </div>
 
@@ -376,14 +318,14 @@ export function IntegrationsGrid() {
 
                     {/* Tech Pills Directly Under Card Title */}
                     <div className="pt-2">
-                      <span className="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider block mb-1.5 font-sans">
+                      <span className="text-[10px] font-bold text-gray-400 uppercase tracking-wider block mb-1.5 font-sans">
                         Tecnología & Integraciones Clave:
                       </span>
                       <div className="flex flex-wrap items-center gap-1.5 font-sans">
                         {item.tech.map((t) => (
                           <span
                             key={t}
-                            className="text-[10px] font-bold text-navy-900 bg-white px-2.5 py-1 rounded-lg border border-gray-200 shadow-2xs"
+                            className="text-[10px] font-semibold text-navy-900 bg-white px-2.5 py-1 rounded-md border border-gray-200"
                           >
                             {t}
                           </span>
@@ -394,7 +336,7 @@ export function IntegrationsGrid() {
 
                   <button
                     onClick={() => handleOpenDemo(item.id)}
-                    className="w-full py-3 px-4 rounded-xl bg-navy-900 hover:bg-accent-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-sm group-hover:shadow-md"
+                    className="w-full py-2.5 px-4 rounded-xl bg-navy-900 hover:bg-accent-500 text-white font-bold text-xs flex items-center justify-center gap-2 transition-all cursor-pointer shadow-xs group-hover:shadow-sm"
                   >
                     <Play className="w-3.5 h-3.5 fill-white" />
                     <span>Probar Demostración en Vivo</span>
@@ -404,47 +346,33 @@ export function IntegrationsGrid() {
               ))}
             </div>
 
-            {/* Ecosistema Tecnológico por Área Operativa */}
-            <div className="pt-6 border-t border-gray-200/90 font-sans space-y-5">
+            {/* MINIMALIST EXECUTIVE TECH SPECS FOOTER (Sobrio, Elegante y Monocromático) */}
+            <div className="pt-6 border-t border-gray-200/80 font-sans space-y-4">
               <div className="flex items-center justify-between">
-                <span className="text-xs font-extrabold text-navy-950 uppercase tracking-wider flex items-center gap-2">
-                  <Star className="w-4 h-4 text-amber-500 fill-amber-500 shrink-0" />
-                  <span>Infraestructura & Ecosistema de Integraciones por Área Operativa:</span>
+                <span className="text-[11px] font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2">
+                  <Code2 className="w-4 h-4 text-navy-800" />
+                  <span>Especificaciones de Infraestructura & Ecosistema</span>
                 </span>
-                <span className="text-[11px] font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                  {currentSector.purposeGroups.reduce((acc, g) => acc + g.techList.length, 0)} Conectores Activos
+                <span className="text-[10px] font-mono text-gray-400">
+                  Arquitectura Modular B2B
                 </span>
               </div>
 
-              {/* Purpose Group Grid */}
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                {currentSector.purposeGroups.map((group, groupIdx) => (
-                  <div
-                    key={groupIdx}
-                    className="p-4 bg-slate-50/90 rounded-2xl border border-slate-200/80 space-y-2.5"
-                  >
-                    <span className="text-[11px] font-bold text-accent-700 uppercase tracking-wider block">
-                      🚀 Área: {group.purpose}
+              {/* Minimalist 4-Column Spec Grid */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 pt-1">
+                {currentSector.techSpecs.map((group, gIdx) => (
+                  <div key={gIdx} className="space-y-2">
+                    <span className="text-[10px] font-extrabold text-navy-900 uppercase tracking-wider block border-b border-gray-100 pb-1">
+                      {group.category}
                     </span>
-                    <div className="flex flex-wrap items-center gap-1.5">
-                      {group.techList.map((techItem, techIdx) => (
-                        <span
-                          key={techIdx}
-                          className={`px-2.5 py-1 rounded-lg text-xs font-semibold flex items-center gap-1.5 border shadow-2xs ${
-                            techItem.isStar
-                              ? 'bg-white text-navy-950 border-amber-300 font-bold'
-                              : 'bg-white text-slate-700 border-slate-200'
-                          }`}
-                        >
-                          {techItem.isStar ? (
-                            <Star className="w-3 h-3 text-amber-500 fill-amber-500 shrink-0" />
-                          ) : (
-                            <Check className="w-3 h-3 text-emerald-500 stroke-[3] shrink-0" />
-                          )}
-                          <span>{techItem.name}</span>
-                        </span>
+                    <ul className="space-y-1 text-xs text-gray-600">
+                      {group.items.map((item, itemIdx) => (
+                        <li key={itemIdx} className="flex items-center gap-1.5">
+                          <span className="w-1.5 h-1.5 rounded-full bg-accent-500 shrink-0" />
+                          <span className="font-medium text-gray-700 leading-tight">{item}</span>
+                        </li>
                       ))}
-                    </div>
+                    </ul>
                   </div>
                 ))}
               </div>
