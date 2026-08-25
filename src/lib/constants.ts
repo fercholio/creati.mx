@@ -1,5 +1,6 @@
-﻿export const navLinks = [
+export const navLinks = [
   { label: 'Inicio', href: '/' },
+  { label: 'Tecnología & Integraciones', href: '/#integrations' },
   { label: 'Showroom (Play & Try)', href: '/showroom' },
   { label: 'Nosotros', href: '/about' },
   { label: 'Contacto', href: '/contact' },
