@@ -3,7 +3,6 @@ export const navLinks = [
   { label: 'Tecnología & Integraciones', href: '/#integrations' },
   { label: 'Showroom (Play & Try)', href: '/showroom' },
   { label: 'Nosotros', href: '/about' },
-  { label: 'Contacto', href: '/contact' },
 ] as const
 
 export const socialLinks = {
@@ -35,7 +34,7 @@ export const companyValues = [
   },
   {
     title: 'Evolución constante',
-    description: 'No lanzamos y olvidamos. Nuestros productos crecen, aprenden y mejoran junto con las personas que los usan.',
+    description: 'Nuestros productos crecen, aprenden y mejoran junto con las personas que los usan.',
     icon: 'Rocket',
   },
 ] as const
