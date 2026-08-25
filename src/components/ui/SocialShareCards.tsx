@@ -13,11 +13,101 @@ export function SocialShareCards() {
   }, [])
 
   const showroomUrl = 'https://creati.mx/showroom'
-  const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(showroomUrl)}&color=0f172a&bgcolor=ffffff`
+  const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=400x400&data=${encodeURIComponent(showroomUrl)}&color=0f172a&bgcolor=ffffff`
 
-  const handleDownloadMock = () => {
-    setDownloaded(true)
-    setTimeout(() => setDownloaded(false), 3000)
+  const handleRealDownload = () => {
+    try {
+      const canvas = document.createElement('canvas')
+      canvas.width = 1200
+      canvas.height = 1600
+      const ctx = canvas.getContext('2d')
+      if (!ctx) return
+
+      // Background Gradient
+      const grad = ctx.createLinearGradient(0, 0, 1200, 1600)
+      grad.addColorStop(0, '#020617')
+      grad.addColorStop(0.5, '#0f172a')
+      grad.addColorStop(1, '#0284c7')
+      ctx.fillStyle = grad
+      ctx.fillRect(0, 0, 1200, 1600)
+
+      // Outer Border
+      ctx.strokeStyle = '#38bdf8'
+      ctx.lineWidth = 12
+      ctx.strokeRect(30, 30, 1140, 1540)
+
+      // Header Badge
+      ctx.fillStyle = '#0ea5e9'
+      ctx.font = 'bold 28px sans-serif'
+      ctx.fillText('CREATI.MX · B2B CUSTOM SOFTWARE & AI STUDIO', 80, 120)
+
+      // Main Headline
+      ctx.fillStyle = '#ffffff'
+      ctx.font = 'bold 54px sans-serif'
+      ctx.fillText('BROCHURE EJECUTIVO DE SOLUCIONES', 80, 200)
+
+      // Subtitle
+      ctx.fillStyle = '#cbd5e1'
+      ctx.font = '30px sans-serif'
+      ctx.fillText('Plataformas a la medida con IA, SAP, SPEI & WhatsApp API', 80, 260)
+
+      // Solution Cards Grid (Draw 4 Boxes)
+      const drawCard = (x: number, y: number, title: string, desc: string, color: string) => {
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.08)'
+        ctx.fillRect(x, y, 500, 220)
+        ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'
+        ctx.lineWidth = 2
+        ctx.strokeRect(x, y, 500, 220)
+
+        ctx.fillStyle = color
+        ctx.font = 'bold 32px sans-serif'
+        ctx.fillText(title, x + 30, y + 60)
+
+        ctx.fillStyle = '#e2e8f0'
+        ctx.font = '24px sans-serif'
+        ctx.fillText(desc, x + 30, y + 120)
+      }
+
+      drawCard(80, 340, '🏡 LIVU Proptech', 'Control en caseta & SPEI', '#34d399')
+      drawCard(620, 340, '⏱️ HR-TCI Tempus', 'Costeo horario & Groq AI', '#38bdf8')
+      drawCard(80, 600, '🌟 EstateFlow', 'Masterplan & Lotes 36 MSI', '#fbbf24')
+      drawCard(620, 600, '🤖 Agentes de IA', 'WhatsApp 24/7 & RAG', '#c084fc')
+
+      // QR Box Container (Bottom)
+      ctx.fillStyle = '#ffffff'
+      ctx.fillRect(80, 900, 1040, 580)
+
+      ctx.fillStyle = '#0f172a'
+      ctx.font = 'bold 44px sans-serif'
+      ctx.fillText('ESCANEA Y PRUEBA EL SHOWROOM EN VIVO', 130, 990)
+
+      ctx.fillStyle = '#475569'
+      ctx.font = '28px sans-serif'
+      ctx.fillText('Apunta la cámara de tu celular para abrir el simulador táctil.', 130, 1050)
+
+      ctx.fillStyle = '#0284c7'
+      ctx.font = 'bold 36px sans-serif'
+      ctx.fillText('https://creati.mx/showroom', 130, 1120)
+
+      // Draw QR Image inside Canvas
+      const img = new Image()
+      img.crossOrigin = 'anonymous'
+      img.onload = () => {
+        ctx.drawImage(img, 720, 960, 340, 340)
+
+        // Trigger Download
+        const link = document.createElement('a')
+        link.download = 'creati-brochure-ejecutivo-qr.png'
+        link.href = canvas.toDataURL('image/png')
+        link.click()
+
+        setDownloaded(true)
+        setTimeout(() => setDownloaded(false), 3500)
+      }
+      img.src = qrApiUrl
+    } catch (e) {
+      console.error('Download error:', e)
+    }
   }
 
   return (
@@ -100,11 +190,11 @@ export function SocialShareCards() {
 
         <div className="mt-6 text-center">
           <button
-            onClick={handleDownloadMock}
-            className="px-6 py-3 bg-accent-500 hover:bg-accent-600 text-white text-xs font-bold rounded-2xl flex items-center justify-center gap-2 mx-auto cursor-pointer shadow-lg shadow-accent-500/20 transition-all"
+            onClick={handleRealDownload}
+            className="px-6 py-3.5 bg-accent-500 hover:bg-accent-600 text-white text-xs font-bold rounded-2xl flex items-center justify-center gap-2 mx-auto cursor-pointer shadow-lg shadow-accent-500/20 transition-all active:scale-[0.98]"
           >
             <Download className="w-4 h-4" />
-            {downloaded ? '✓ Guardado como Imagen HD' : 'Guardar Brochure HD con QR para Imprimir'}
+            {downloaded ? '✓ ¡Descargando creati-brochure-ejecutivo-qr.png!' : 'Descargar Brochure HD en PNG con QR'}
           </button>
         </div>
       </div>

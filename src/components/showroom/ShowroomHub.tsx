@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import {
   ShieldCheck,
@@ -48,6 +48,11 @@ export function ShowroomHub({ initialAppId = 'livu', isStandalonePage = false }:
   const [categoryFilter, setCategoryFilter] = useState<string>('all')
   const [prospectName, setProspectName] = useState<string>('')
   const [themeMode, setThemeMode] = useState<'light' | 'dark'>('light')
+  const [isMounted, setIsMounted] = useState<boolean>(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const currentApp = SHOWROOM_APPS.find((a) => a.id === selectedAppId) || SHOWROOM_APPS[0]
 
@@ -65,8 +70,21 @@ export function ShowroomHub({ initialAppId = 'livu', isStandalonePage = false }:
     ? SHOWROOM_APPS
     : SHOWROOM_APPS.filter((a) => a.id === categoryFilter)
 
+  if (!isMounted) {
+    return (
+      <div className="space-y-8 animate-pulse">
+        <div className="h-16 bg-gray-200/80 rounded-2xl w-full" />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {[1, 2, 3, 4, 5, 6].map((n) => (
+            <div key={n} className="h-80 bg-gray-200/60 rounded-3xl" />
+          ))}
+        </div>
+      </div>
+    )
+  }
+
   return (
-    <div className="space-y-8">
+    <div className="space-y-8" suppressHydrationWarning>
       {/* Sales Representative Identity & Co-Branding Toolbar */}
       <SalesBar
         prospectName={prospectName}
