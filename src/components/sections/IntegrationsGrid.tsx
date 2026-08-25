@@ -31,7 +31,6 @@ import { ShowroomModal } from '@/components/showroom/ShowroomModal'
 
 interface PurposeGroup {
   purpose: string
-  iconLabel?: string
   techList: { name: string; isStar?: boolean }[]
 }
 
@@ -191,7 +190,7 @@ const SECTORS: SectorInfo[] = [
         ],
       },
       {
-        purpose: 'Canales & Atencion 24/7',
+        purpose: 'Canales & Atención 24/7',
         techList: [
           { name: 'WhatsApp Business API', isStar: true },
           { name: 'Vue 3 / React 19 Dashboards', isStar: false },
@@ -405,15 +404,15 @@ export function IntegrationsGrid() {
               ))}
             </div>
 
-            {/* GROUPED BY OPERATIONAL PURPOSE AT THE BOTTOM */}
+            {/* Ecosistema Tecnológico por Área Operativa */}
             <div className="pt-6 border-t border-gray-200/90 font-sans space-y-5">
               <div className="flex items-center justify-between">
                 <span className="text-xs font-extrabold text-navy-950 uppercase tracking-wider flex items-center gap-2">
                   <Star className="w-4 h-4 text-amber-500 fill-amber-500 shrink-0" />
-                  <span>Stack de Integraciones Agrupado por Propósito Operativo:</span>
+                  <span>Infraestructura & Ecosistema de Integraciones por Área Operativa:</span>
                 </span>
                 <span className="text-[11px] font-mono font-bold text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200">
-                  {currentSector.purposeGroups.reduce((acc, g) => acc + g.techList.length, 0)} Tecnologías Integradas
+                  {currentSector.purposeGroups.reduce((acc, g) => acc + g.techList.length, 0)} Conectores Activos
                 </span>
               </div>
 
@@ -425,7 +424,7 @@ export function IntegrationsGrid() {
                     className="p-4 bg-slate-50/90 rounded-2xl border border-slate-200/80 space-y-2.5"
                   >
                     <span className="text-[11px] font-bold text-accent-700 uppercase tracking-wider block">
-                      📌 Propósito: {group.purpose}
+                      🚀 Área: {group.purpose}
                     </span>
                     <div className="flex flex-wrap items-center gap-1.5">
                       {group.techList.map((techItem, techIdx) => (
