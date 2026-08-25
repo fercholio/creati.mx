@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
@@ -18,10 +18,12 @@ import {
   Tablet,
   Layout,
   Layers,
+  Utensils,
 } from 'lucide-react'
 import { SHOWROOM_APPS, ShowroomApp } from '@/data/showroomData'
 import { ShowroomModal } from './ShowroomModal'
 import { SalesBar } from './SalesBar'
+import { TechMenuDrawer } from './TechMenuDrawer'
 
 const ICON_MAP: Record<string, React.ElementType> = {
   ShieldCheck,
@@ -42,6 +44,7 @@ interface ShowroomHubProps {
 export function ShowroomHub({ initialAppId = 'livu', isStandalonePage = false }: ShowroomHubProps) {
   const [selectedAppId, setSelectedAppId] = useState<string>(initialAppId)
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false)
+  const [isMenuDrawerOpen, setIsMenuDrawerOpen] = useState<boolean>(false)
   const [categoryFilter, setCategoryFilter] = useState<string>('all')
   const [prospectName, setProspectName] = useState<string>('')
   const [themeMode, setThemeMode] = useState<'light' | 'dark'>('light')
@@ -49,6 +52,11 @@ export function ShowroomHub({ initialAppId = 'livu', isStandalonePage = false }:
   const currentApp = SHOWROOM_APPS.find((a) => a.id === selectedAppId) || SHOWROOM_APPS[0]
 
   const handleOpenDemo = (appId: string) => {
+    setSelectedAppId(appId)
+    setIsModalOpen(true)
+  }
+
+  const handleSelectAppFromMenu = (appId: string) => {
     setSelectedAppId(appId)
     setIsModalOpen(true)
   }
@@ -66,6 +74,7 @@ export function ShowroomHub({ initialAppId = 'livu', isStandalonePage = false }:
         themeMode={themeMode}
         onThemeModeToggle={() => setThemeMode(themeMode === 'light' ? 'dark' : 'light')}
         currentAppTitle={currentApp.title}
+        onOpenMenuDrawer={() => setIsMenuDrawerOpen(true)}
       />
 
       {/* Category Filter Pills */}
@@ -212,6 +221,14 @@ export function ShowroomHub({ initialAppId = 'livu', isStandalonePage = false }:
         onClose={() => setIsModalOpen(false)}
         initialAppId={selectedAppId}
         prospectName={prospectName}
+      />
+
+      {/* Gourmet Tech Bistro Menu Binder */}
+      <TechMenuDrawer
+        isOpen={isMenuDrawerOpen}
+        onClose={() => setIsMenuDrawerOpen(false)}
+        onSelectApp={handleSelectAppFromMenu}
+        currentAppId={selectedAppId}
       />
     </div>
   )

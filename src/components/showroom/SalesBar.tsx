@@ -1,4 +1,4 @@
-﻿'use client'
+'use client'
 
 import React, { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
@@ -19,6 +19,7 @@ import {
   DollarSign,
   TrendingUp,
   Award,
+  Utensils,
 } from 'lucide-react'
 
 interface SalesBarProps {
@@ -27,6 +28,7 @@ interface SalesBarProps {
   themeMode: 'light' | 'dark'
   onThemeModeToggle: () => void
   currentAppTitle: string
+  onOpenMenuDrawer: () => void
 }
 
 export function SalesBar({
@@ -35,6 +37,7 @@ export function SalesBar({
   themeMode,
   onThemeModeToggle,
   currentAppTitle,
+  onOpenMenuDrawer,
 }: SalesBarProps) {
   const [isRoiOpen, setIsRoiOpen] = useState(false)
   const [isShareOpen, setIsShareOpen] = useState(false)
@@ -111,13 +114,22 @@ export function SalesBar({
 
           {/* Right: Quick Sales Action Buttons */}
           <div className="flex items-center gap-2 ml-auto">
+            {/* Bistro Tech Menu Button */}
+            <button
+              onClick={onOpenMenuDrawer}
+              className="px-3.5 py-1.5 bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-600 hover:to-amber-700 text-stone-950 font-extrabold rounded-xl flex items-center gap-1.5 cursor-pointer shadow-md shadow-amber-500/20 transition-all active:scale-[0.98]"
+            >
+              <Utensils className="w-4 h-4" />
+              <span>Menú de Especialidades</span>
+            </button>
+
             {/* ROI Calculator Button */}
             <button
               onClick={() => setIsRoiOpen(true)}
               className="px-3 py-1.5 bg-accent-50 hover:bg-accent-100 text-accent-700 border border-accent-200 rounded-xl font-bold flex items-center gap-1.5 cursor-pointer transition-colors"
             >
               <Calculator className="w-3.5 h-3.5" />
-              <span>Calculadora ROI</span>
+              <span className="hidden sm:inline">Calculadora ROI</span>
             </button>
 
             {/* Share WhatsApp Proposal Button */}
