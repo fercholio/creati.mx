@@ -2,46 +2,46 @@
 
 import React from 'react'
 import { motion } from 'framer-motion'
-import { Award, TrendingUp, CheckCircle, ArrowRight, Building2, Truck, Stethoscope, Sparkles } from 'lucide-react'
+import { Cpu, TrendingUp, CheckCircle, ArrowRight, Building2, Truck, Stethoscope, Sparkles, Zap, ShieldCheck } from 'lucide-react'
 import { Container } from '@/components/layout/Container'
 
-const CASES = [
+const AUTOMATION_CASES = [
   {
-    title: 'Desarrolladora Residencial en Mérida Norte',
-    industry: 'Sector Inmobiliario & Lotes',
+    title: 'Automatización Comercial & Cotizaciones en Vivo',
+    industry: 'Ventas & Sector Inmobiliario',
     icon: Building2,
-    problem: 'Perdían hasta el 40% de prospectos por enviar corridas financieras en PDF con horas de retraso durante las visitas de fin de semana.',
-    solution: 'Implementación de EstateFlow: cotizador financiero interactivo en iPad para asesores y apartado digital en vivo.',
+    problem: 'Cotizaciones financieras manuales enviadas horas después que enfriaban el interés del cliente durante las visitas.',
+    solution: 'Implementación de cotizadores paramétricos interactivos en iPad con cálculo de mensualidades y apartado digital inmediato.',
     metrics: [
       { value: '+38%', label: 'Cierre de Ventas' },
-      { value: '10 seg', label: 'Tiempo de Cotización' },
-      { value: '$28.4M', label: 'Cartera Colocada' },
+      { value: '< 10 seg', label: 'Tiempo de Cotización' },
+      { value: '100%', label: 'Disponibilidad En Vivo' },
     ],
     tech: ['Next.js', 'Stripe SPEI', 'Framer Motion', 'PostgreSQL'],
   },
   {
-    title: 'Operadora de Transporte CEDIS Puerto Progreso',
-    industry: 'Logística & Cadena de Frío',
+    title: 'Automatización de Operaciones & Telemetría en Ruta',
+    industry: 'Logística & Distribución',
     icon: Truck,
-    problem: 'Pérdidas millonarias por variación térmica en traslados a Cancún y disputas por firmas de recepción en papel.',
-    solution: 'Despliegue de RouteOps: telemetría en tiempo real con alertas IoT y comprobante de entrega digital con firma y GPS.',
+    problem: 'Registros manuales en papel, pérdidas por falta de monitoreo térmico en ruta y disputas por comprobantes de entrega.',
+    solution: 'Torre de control en tiempo real con alertas IoT automáticas de temperatura y comprobante de entrega digital con firma y GPS.',
     metrics: [
-      { value: '-85%', label: 'Merma Térmica' },
+      { value: '-85%', label: 'Incidencias en Ruta' },
       { value: '99.4%', label: 'Cumplimiento SLA' },
-      { value: '18%', label: 'Ahorro de Diésel' },
+      { value: '-30%', label: 'Tiempo de Papeleo' },
     ],
     tech: ['IoT Telemetry', 'WebSockets', 'Laravel', 'Docker'],
   },
   {
-    title: 'Red de Especialidades Médicas Altabrisa',
-    industry: 'Salud & Clínicas',
+    title: 'Automatización de Citas & Expedientes Digitales',
+    industry: 'Servicios Profesionales & Salud',
     icon: Stethoscope,
-    problem: '35% de inasistencia en consultas especializadas y expedientes clínicos físicos difíciles de auditar.',
-    solution: 'Plataforma MedikCore: expediente clínico NOM-024, receta con QR y recordatorios automatizados por WhatsApp.',
+    problem: 'Alto ausentismo de usuarios por olvido de citas y tiempo perdido en la captura repetitiva de historiales en papel.',
+    solution: 'Recordatorios y confirmaciones automáticas por WhatsApp, recetas digitales con código QR y expediente unificado.',
     metrics: [
       { value: '-60%', label: 'Ausentismo' },
       { value: '+30%', label: 'Eficacia en Consulta' },
-      { value: '100%', label: 'Receta Digital QR' },
+      { value: '0 Papel', label: 'Flujo 100% Digital' },
     ],
     tech: ['WhatsApp API', 'NOM-024', 'React', 'Node.js'],
   },
@@ -59,8 +59,8 @@ export function CaseStudies() {
             transition={{ duration: 0.5 }}
           >
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-50 text-accent-600 text-xs font-bold border border-accent-100 mb-4 shadow-2xs">
-              <Award className="w-3.5 h-3.5 text-accent-500" />
-              Casos de Éxito & Resultados Reales
+              <Zap className="w-3.5 h-3.5 text-accent-500" />
+              Optimización Operativa & Automatización
             </span>
           </motion.div>
 
@@ -71,9 +71,9 @@ export function CaseStudies() {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="text-3xl sm:text-4xl lg:text-5xl font-bold font-[family-name:var(--font-display)] text-gray-900 tracking-tight leading-[1.15]"
           >
-            Resultados comprobados en empresas de{' '}
+            Soluciones diseñadas para automatizar procesos y{' '}
             <span className="bg-gradient-to-r from-accent-600 via-accent-500 to-navy-600 bg-clip-text text-transparent">
-              Mérida y el Sureste
+              elevar el rendimiento
             </span>
           </motion.h2>
 
@@ -84,12 +84,12 @@ export function CaseStudies() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-sm sm:text-base text-gray-600 mt-4 max-w-2xl mx-auto leading-relaxed"
           >
-            Nuestros clientes no buscan teorizar. Buscan acelerar ventas, eliminar ineficiencias y digitalizar sus operaciones con retorno de inversión en meses.
+            Transformamos tareas manuales, cuellos de botella y procesos lentos en flujos digitales automatizados que reducen tiempos de respuesta y aumentan la productividad de tu equipo.
           </motion.p>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 sm:gap-8">
-          {CASES.map((item, idx) => {
+          {AUTOMATION_CASES.map((item, idx) => {
             const Icon = item.icon
             return (
               <motion.div
@@ -118,11 +118,11 @@ export function CaseStudies() {
 
                   <div className="space-y-2 text-xs">
                     <div className="p-3 bg-red-50/50 rounded-2xl border border-red-100 text-gray-700">
-                      <strong className="text-red-900 font-bold block mb-0.5">Reto inicial:</strong>
+                      <strong className="text-red-900 font-bold block mb-0.5">Cuello de Botella Tradicional:</strong>
                       {item.problem}
                     </div>
                     <div className="p-3 bg-emerald-50/50 rounded-2xl border border-emerald-100 text-gray-700">
-                      <strong className="text-emerald-900 font-bold block mb-0.5">Solución Creati:</strong>
+                      <strong className="text-emerald-900 font-bold block mb-0.5">Flujo Automatizado Creati:</strong>
                       {item.solution}
                     </div>
                   </div>
