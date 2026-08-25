@@ -1,11 +1,16 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import { QrCode, Download, Share2, Sparkles, ShieldCheck, CheckCircle2, ArrowRight, Smartphone, Building2 } from 'lucide-react'
 
 export function SocialShareCards() {
   const [downloaded, setDownloaded] = useState(false)
+  const [isMounted, setIsMounted] = useState(false)
+
+  useEffect(() => {
+    setIsMounted(true)
+  }, [])
 
   const showroomUrl = 'https://creati.mx/showroom'
   const qrApiUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(showroomUrl)}&color=0f172a&bgcolor=ffffff`
@@ -81,11 +86,15 @@ export function SocialShareCards() {
 
           {/* Crisp QR Code */}
           <div className="w-28 h-28 bg-white p-2 rounded-2xl border-2 border-slate-900 shadow-md shrink-0 flex flex-col items-center justify-center">
-            <img
-              src={qrApiUrl}
-              alt="QR Code Creati Showroom"
-              className="w-full h-full object-contain rounded-lg"
-            />
+            {isMounted ? (
+              <img
+                src={qrApiUrl}
+                alt="QR Code Creati Showroom"
+                className="w-full h-full object-contain rounded-lg"
+              />
+            ) : (
+              <div className="w-full h-full bg-gray-100 rounded-lg animate-pulse" />
+            )}
           </div>
         </div>
 
@@ -122,7 +131,11 @@ export function SocialShareCards() {
 
           <div className="shrink-0 text-center">
             <div className="w-24 h-24 bg-white p-2 rounded-2xl border-2 border-accent-400 shadow-xl mb-2 mx-auto">
-              <img src={qrApiUrl} alt="QR Social Share" className="w-full h-full object-contain" />
+              {isMounted ? (
+                <img src={qrApiUrl} alt="QR Social Share" className="w-full h-full object-contain" />
+              ) : (
+                <div className="w-full h-full bg-gray-100 rounded-lg animate-pulse" />
+              )}
             </div>
             <span className="text-[10px] font-bold text-amber-300 block">creati.mx/showroom</span>
           </div>
