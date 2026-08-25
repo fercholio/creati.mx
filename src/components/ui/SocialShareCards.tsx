@@ -23,77 +23,152 @@ export function SocialShareCards() {
       const ctx = canvas.getContext('2d')
       if (!ctx) return
 
-      // Background Gradient
-      const grad = ctx.createLinearGradient(0, 0, 1200, 1600)
-      grad.addColorStop(0, '#020617')
-      grad.addColorStop(0.5, '#0f172a')
-      grad.addColorStop(1, '#0284c7')
-      ctx.fillStyle = grad
+      // Helper for rounded rectangles
+      const drawRoundRect = (
+        x: number,
+        y: number,
+        w: number,
+        h: number,
+        r: number,
+        fillColor: string,
+        strokeColor?: string,
+        strokeWidth = 2
+      ) => {
+        ctx.beginPath()
+        ctx.moveTo(x + r, y)
+        ctx.lineTo(x + w - r, y)
+        ctx.arcTo(x + w, y, x + w, y + r, r)
+        ctx.lineTo(x + w, y + h - r)
+        ctx.arcTo(x + w, y + h, x + w - r, y + h, r)
+        ctx.lineTo(x + r, y + h)
+        ctx.arcTo(x, y + h, x, y + h - r, r)
+        ctx.lineTo(x, y + r)
+        ctx.arcTo(x, y, x + r, y, r)
+        ctx.closePath()
+
+        if (fillColor) {
+          ctx.fillStyle = fillColor
+          ctx.fill()
+        }
+        if (strokeColor) {
+          ctx.strokeStyle = strokeColor
+          ctx.lineWidth = strokeWidth
+          ctx.stroke()
+        }
+      }
+
+      // Background Gradient (Deep Navy / Slate Luxury Theme)
+      const bgGrad = ctx.createLinearGradient(0, 0, 1200, 1600)
+      bgGrad.addColorStop(0, '#030712')
+      bgGrad.addColorStop(0.4, '#0f172a')
+      bgGrad.addColorStop(1, '#0284c7')
+      ctx.fillStyle = bgGrad
       ctx.fillRect(0, 0, 1200, 1600)
 
-      // Outer Border
-      ctx.strokeStyle = '#38bdf8'
-      ctx.lineWidth = 12
-      ctx.strokeRect(30, 30, 1140, 1540)
+      // Outer Decorative Glass Border
+      drawRoundRect(40, 40, 1120, 1520, 40, '', 'rgba(255, 255, 255, 0.15)', 4)
+      drawRoundRect(50, 50, 1100, 1500, 34, '', 'rgba(56, 189, 248, 0.3)', 2)
 
-      // Header Badge
-      ctx.fillStyle = '#0ea5e9'
-      ctx.font = 'bold 28px sans-serif'
-      ctx.fillText('CREATI.MX · B2B CUSTOM SOFTWARE & AI STUDIO', 80, 120)
+      // Header Tagline
+      ctx.fillStyle = '#38bdf8'
+      ctx.font = '900 24px system-ui, -apple-system, sans-serif'
+      ctx.fillText('CREATI.MX  ·  B2B CUSTOM SOFTWARE & AI STUDIO', 80, 130)
 
-      // Main Headline
+      // Main Title (Clean 2-line Wrapping)
       ctx.fillStyle = '#ffffff'
-      ctx.font = 'bold 54px sans-serif'
+      ctx.font = '900 48px system-ui, -apple-system, sans-serif'
       ctx.fillText('BROCHURE EJECUTIVO DE SOLUCIONES', 80, 200)
 
       // Subtitle
-      ctx.fillStyle = '#cbd5e1'
-      ctx.font = '30px sans-serif'
-      ctx.fillText('Plataformas a la medida con IA, SAP, SPEI & WhatsApp API', 80, 260)
+      ctx.fillStyle = '#94a3b8'
+      ctx.font = '500 26px system-ui, -apple-system, sans-serif'
+      ctx.fillText('Plataformas a la medida con IA, SAP, SPEI & WhatsApp API', 80, 250)
 
-      // Solution Cards Grid (Draw 4 Boxes)
-      const drawCard = (x: number, y: number, title: string, desc: string, color: string) => {
-        ctx.fillStyle = 'rgba(255, 255, 255, 0.08)'
-        ctx.fillRect(x, y, 500, 220)
-        ctx.strokeStyle = 'rgba(255, 255, 255, 0.15)'
-        ctx.lineWidth = 2
-        ctx.strokeRect(x, y, 500, 220)
+      // Divider Line
+      ctx.strokeStyle = 'rgba(255, 255, 255, 0.1)'
+      ctx.lineWidth = 2
+      ctx.beginPath()
+      ctx.moveTo(80, 290)
+      ctx.lineTo(1120, 290)
+      ctx.stroke()
 
-        ctx.fillStyle = color
-        ctx.font = 'bold 32px sans-serif'
-        ctx.fillText(title, x + 30, y + 60)
+      // Solution Cards (Grid 2x2 with rounded corners & glowing badges)
+      const cards = [
+        { title: '🏡 LIVU Proptech', subtitle: 'Control Residencial & SPEI', desc: 'Acceso en caseta en 6 seg y pases QR', color: '#10b981' },
+        { title: '⏱️ HR-TCI Tempus', subtitle: 'Time & Cost Intelligence', desc: 'Costeo horario real y Groq AI Coach', color: '#38bdf8' },
+        { title: '🌟 EstateFlow', subtitle: 'Masterplan & Lotes 36 MSI', desc: 'Mapa interactivo y cotización PDF', color: '#f59e0b' },
+        { title: '🤖 Agentes de IA', subtitle: 'Automatización & RAG', desc: 'Atención por WhatsApp 24/7 y contratos', color: '#a855f7' },
+      ]
 
-        ctx.fillStyle = '#e2e8f0'
-        ctx.font = '24px sans-serif'
-        ctx.fillText(desc, x + 30, y + 120)
-      }
+      cards.forEach((card, idx) => {
+        const row = Math.floor(idx / 2)
+        const col = idx % 2
+        const cx = 80 + col * 530
+        const cy = 320 + row * 240
+        const cw = 510
+        const ch = 210
 
-      drawCard(80, 340, '🏡 LIVU Proptech', 'Control en caseta & SPEI', '#34d399')
-      drawCard(620, 340, '⏱️ HR-TCI Tempus', 'Costeo horario & Groq AI', '#38bdf8')
-      drawCard(80, 600, '🌟 EstateFlow', 'Masterplan & Lotes 36 MSI', '#fbbf24')
-      drawCard(620, 600, '🤖 Agentes de IA', 'WhatsApp 24/7 & RAG', '#c084fc')
+        // Card Box
+        drawRoundRect(cx, cy, cw, ch, 24, 'rgba(255, 255, 255, 0.05)', 'rgba(255, 255, 255, 0.12)', 2)
 
-      // QR Box Container (Bottom)
-      ctx.fillStyle = '#ffffff'
-      ctx.fillRect(80, 900, 1040, 580)
+        // Card Title
+        ctx.fillStyle = card.color
+        ctx.font = 'bold 30px system-ui, -apple-system, sans-serif'
+        ctx.fillText(card.title, cx + 24, cy + 54)
+
+        // Subtitle
+        ctx.fillStyle = '#ffffff'
+        ctx.font = 'bold 22px system-ui, -apple-system, sans-serif'
+        ctx.fillText(card.subtitle, cx + 24, cy + 96)
+
+        // Description
+        ctx.fillStyle = '#cbd5e1'
+        ctx.font = '400 20px system-ui, -apple-system, sans-serif'
+        ctx.fillText(card.desc, cx + 24, cy + 140)
+
+        // Small Check Pill
+        drawRoundRect(cx + 24, cy + 160, 160, 30, 8, 'rgba(255, 255, 255, 0.1)')
+        ctx.fillStyle = '#34d399'
+        ctx.font = 'bold 15px system-ui, -apple-system, sans-serif'
+        ctx.fillText('✓ 100% Funcional', cx + 36, cy + 180)
+      })
+
+      // QR Code Container Box (Bottom White Card)
+      drawRoundRect(80, 840, 1040, 640, 36, '#ffffff', '#fbbf24', 4)
+
+      // Left Text Content Inside White Box
+      ctx.fillStyle = '#0ea5e9'
+      ctx.font = '900 20px system-ui, -apple-system, sans-serif'
+      ctx.fillText('⚡ DEMOSTRACIÓN TÁCTIL EN TIEMPO REAL', 130, 930)
 
       ctx.fillStyle = '#0f172a'
-      ctx.font = 'bold 44px sans-serif'
-      ctx.fillText('ESCANEA Y PRUEBA EL SHOWROOM EN VIVO', 130, 990)
+      ctx.font = '900 42px system-ui, -apple-system, sans-serif'
+      ctx.fillText('ESCANEA EL CÓDIGO QR', 130, 990)
+      ctx.fillText('PARA PROBAR EL SHOWROOM', 130, 1045)
 
       ctx.fillStyle = '#475569'
-      ctx.font = '28px sans-serif'
-      ctx.fillText('Apunta la cámara de tu celular para abrir el simulador táctil.', 130, 1050)
+      ctx.font = '500 24px system-ui, -apple-system, sans-serif'
+      ctx.fillText('Apunta la cámara de tu celular para interactuar', 130, 1120)
+      ctx.fillText('con las aplicaciones operativas en vivo.', 130, 1155)
 
+      // URL Pill Box
+      drawRoundRect(130, 1200, 480, 60, 16, '#f1f5f9', '#cbd5e1', 2)
       ctx.fillStyle = '#0284c7'
-      ctx.font = 'bold 36px sans-serif'
-      ctx.fillText('https://creati.mx/showroom', 130, 1120)
+      ctx.font = 'bold 26px system-ui, -apple-system, sans-serif'
+      ctx.fillText('https://creati.mx/showroom', 155, 1240)
 
-      // Draw QR Image inside Canvas
+      // Bottom Footer Badge Inside Box
+      ctx.fillStyle = '#64748b'
+      ctx.font = 'bold 20px system-ui, -apple-system, sans-serif'
+      ctx.fillText('Creati Engineering · Mérida, Yucatán', 130, 1330)
+
+      // Draw Crisp QR Code on Right Side
       const img = new Image()
       img.crossOrigin = 'anonymous'
       img.onload = () => {
-        ctx.drawImage(img, 720, 960, 340, 340)
+        // White padding background for QR
+        drawRoundRect(670, 910, 400, 400, 24, '#ffffff', '#e2e8f0', 2)
+        ctx.drawImage(img, 690, 930, 360, 360)
 
         // Trigger Download
         const link = document.createElement('a')
