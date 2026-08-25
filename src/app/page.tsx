@@ -1,8 +1,6 @@
-﻿import { Hero } from '@/components/sections/Hero'
+import { Hero } from '@/components/sections/Hero'
 import { SocialProof } from '@/components/sections/SocialProof'
-import { Problem } from '@/components/sections/Problem'
-import { Features } from '@/components/sections/Features'
-import { ShowroomSection } from '@/components/sections/ShowroomSection'
+import { TechCatalogSection } from '@/components/sections/TechCatalogSection'
 import { CaseStudies } from '@/components/sections/CaseStudies'
 import { ProjectEstimator } from '@/components/sections/ProjectEstimator'
 import { IntegrationsGrid } from '@/components/sections/IntegrationsGrid'
@@ -11,7 +9,6 @@ import { HowItWorks } from '@/components/sections/HowItWorks'
 import { Testimonials } from '@/components/sections/Testimonials'
 import { CTA } from '@/components/sections/CTA'
 import { ScrollProgress } from '@/components/ui/ScrollProgress'
-import { EditorialStripSection } from '@/components/sections/EditorialStripSection'
 
 export default function Home() {
   return (
@@ -19,14 +16,11 @@ export default function Home() {
       <ScrollProgress />
       <Hero />
       <SocialProof />
+      <TechCatalogSection />
       <CaseStudies />
-      <ShowroomSection />
       <ProjectEstimator />
-      <Problem />
-      <Features />
       <IntegrationsGrid />
       <TrustGuarantees />
-      <EditorialStripSection />
       <HowItWorks />
       <Testimonials />
       <CTA />
