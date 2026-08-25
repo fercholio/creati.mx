@@ -2,27 +2,53 @@
 
 import React, { useState } from 'react'
 import { motion } from 'framer-motion'
-import { Calculator, Clock, DollarSign, ArrowRight, Sparkles, CheckCircle2, ShieldCheck } from 'lucide-react'
+import { Calculator, Clock, DollarSign, ArrowRight, Sparkles, CheckCircle2, ShieldCheck, Layers, Plus } from 'lucide-react'
 import { Container } from '@/components/layout/Container'
 
 const PROJECT_TYPES = [
-  { id: 'mobile_app', title: 'App Móvil iOS / Android', weeks: '6 - 10 semanas', estRange: '$85,000 - $160,000 MXN', icon: 'Smartphone' },
-  { id: 'custom_saas', title: 'Plataforma Web SaaS / CRM', weeks: '8 - 12 semanas', estRange: '$120,000 - $240,000 MXN', icon: 'Globe' },
-  { id: 'real_estate', title: 'Portal Inmobiliario & Cotizador', weeks: '4 - 8 semanas', estRange: '$65,000 - $130,000 MXN', icon: 'Building' },
-  { id: 'ai_integration', title: 'Integración de IA & Automatización', weeks: '3 - 6 semanas', estRange: '$45,000 - $95,000 MXN', icon: 'Brain' },
+  { id: 'mobile_app', title: 'App Móvil iOS / Android', minWeeks: 6, maxWeeks: 10, baseMin: 85000, baseMax: 160000, desc: 'React Native / Flutter con backend API.' },
+  { id: 'custom_saas', title: 'Plataforma Web SaaS / CRM', minWeeks: 8, maxWeeks: 12, baseMin: 120000, baseMax: 240000, desc: 'Next.js 16 + Laravel 11 / Node.js.' },
+  { id: 'real_estate', title: 'Portal Inmobiliario & Cotizador', minWeeks: 4, maxWeeks: 8, baseMin: 65000, baseMax: 130000, desc: 'Mapa de lotes en vivo y simulación MSI.' },
+  { id: 'ai_integration', title: 'Integración de IA & Automatización', minWeeks: 3, maxWeeks: 6, baseMin: 45000, baseMax: 95000, desc: 'Groq AI / OpenAI con agentes RAG.' },
 ]
 
 const SCOPE_LEVELS = [
-  { id: 'mvp', label: 'MVP / Lanzamiento Rápido', mult: 1, desc: 'Funcionalidades esenciales para validar mercado en semanas.' },
-  { id: 'growth', label: 'Plataforma Completa', mult: 1.4, desc: 'Flujos avanzados, roles múltiples e integraciones API.' },
-  { id: 'enterprise', label: 'Enterprise & Multi-Sucursal', mult: 2.1, desc: 'Alta disponibilidad, auditoría, microservicios y soporte 24/7.' },
+  { id: 'mvp', label: 'MVP / Lanzamiento Rápido', mult: 1.0, addWeeks: 0, desc: 'Funcionalidades esenciales para salir al mercado en semanas.' },
+  { id: 'growth', label: 'Plataforma Completa', mult: 1.35, addWeeks: 2, desc: 'Flujos avanzados, roles múltiples e integraciones API.' },
+  { id: 'enterprise', label: 'Enterprise & Multi-Sucursal', mult: 1.85, addWeeks: 4, desc: 'Alta disponibilidad, auditoría, microservicios y soporte 24/7.' },
+]
+
+const OPTIONAL_ADDONS = [
+  { id: 'payments', label: 'Pasarela de Pagos SPEI / Stripe', price: 15000 },
+  { id: 'whatsapp', label: 'Notificaciones WhatsApp API', price: 12000 },
+  { id: 'signature', label: 'Firma Digital Certificada NOM-151', price: 18000 },
 ]
 
 export function ProjectEstimator() {
   const [selectedType, setSelectedType] = useState(PROJECT_TYPES[0])
   const [selectedScope, setSelectedScope] = useState(SCOPE_LEVELS[1])
+  const [selectedAddons, setSelectedAddons] = useState<string[]>(['payments'])
   const [leadSent, setLeadSent] = useState(false)
   const [emailInput, setEmailInput] = useState('')
+
+  const toggleAddon = (id: string) => {
+    if (selectedAddons.includes(id)) {
+      setSelectedAddons(selectedAddons.filter((a) => a !== id))
+    } else {
+      setSelectedAddons([...selectedAddons, id])
+    }
+  }
+
+  // Dynamic Math Calculations
+  const addonsTotal = selectedAddons.reduce((acc, id) => {
+    const found = OPTIONAL_ADDONS.find((a) => a.id === id)
+    return acc + (found ? found.price : 0)
+  }, 0)
+
+  const calcMin = Math.round((selectedType.baseMin * selectedScope.mult + addonsTotal) / 1000) * 1000
+  const calcMax = Math.round((selectedType.baseMax * selectedScope.mult + addonsTotal) / 1000) * 1000
+  const calcMinWeeks = selectedType.minWeeks + selectedScope.addWeeks
+  const calcMaxWeeks = selectedType.maxWeeks + selectedScope.addWeeks
 
   const handleLeadSubmit = (e: React.FormEvent) => {
     e.preventDefault()
@@ -31,7 +57,7 @@ export function ProjectEstimator() {
     setTimeout(() => {
       setLeadSent(false)
       setEmailInput('')
-    }, 4000)
+    }, 4500)
   }
 
   return (
@@ -46,7 +72,7 @@ export function ProjectEstimator() {
           >
             <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-accent-50 text-accent-600 text-xs font-bold border border-accent-100 mb-4 shadow-2xs">
               <Calculator className="w-3.5 h-3.5 text-accent-500" />
-              Estimador de Proyecto & Tiempos
+              Estimador de Proyecto & Tiempos 100% Dinámico
             </span>
           </motion.div>
 
@@ -70,7 +96,7 @@ export function ProjectEstimator() {
             transition={{ duration: 0.5, delay: 0.2 }}
             className="text-sm sm:text-base text-gray-600 mt-4 max-w-2xl mx-auto leading-relaxed"
           >
-            Sin sorpresas. Selecciona el tipo de proyecto y el nivel de alcance para obtener una estimación clara de tiempos de desarrollo e inversión aproximada.
+            Sin sorpresas. Selecciona el tipo de proyecto y el nivel de alcance para obtener una estimación clara de tiempos de desarrollo e inversión aproximada en tiempo real.
           </motion.p>
         </div>
 
@@ -98,6 +124,7 @@ export function ProjectEstimator() {
                       <span className={`text-xs font-bold block ${isSelected ? 'text-accent-600' : 'text-gray-900'}`}>
                         {t.title}
                       </span>
+                      <span className="text-[10px] text-gray-500 block mt-0.5">{t.desc}</span>
                     </button>
                   )
                 })}
@@ -138,6 +165,32 @@ export function ProjectEstimator() {
                 })}
               </div>
             </div>
+
+            {/* Step 3: Optional Add-ons */}
+            <div>
+              <label className="text-xs font-extrabold text-gray-900 uppercase tracking-wider block mb-2.5">
+                3. Módulos Adicionales (Opcional)
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {OPTIONAL_ADDONS.map((a) => {
+                  const active = selectedAddons.includes(a.id)
+                  return (
+                    <button
+                      key={a.id}
+                      onClick={() => toggleAddon(a.id)}
+                      className={`px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5 transition-all cursor-pointer ${
+                        active
+                          ? 'bg-accent-500 text-white shadow-xs'
+                          : 'bg-white text-gray-700 border border-gray-200 hover:bg-gray-100'
+                      }`}
+                    >
+                      <span>{active ? '✓' : '+'}</span>
+                      <span>{a.label}</span>
+                    </button>
+                  )
+                })}
+              </div>
+            </div>
           </div>
 
           {/* Right: Dynamic Calculation & Proposal Request (5 cols) */}
@@ -145,10 +198,10 @@ export function ProjectEstimator() {
             <div>
               <div className="flex items-center justify-between pb-4 mb-4 border-b border-navy-700">
                 <span className="text-xs text-accent-300 font-bold uppercase tracking-wider">
-                  Estimación Preliminar
+                  Cálculo en Vivo
                 </span>
-                <span className="text-[10px] bg-accent-500/20 text-accent-300 font-semibold px-2.5 py-0.5 rounded-full">
-                  Creati SLA
+                <span className="text-[10px] bg-emerald-500/20 text-emerald-300 font-bold px-2.5 py-0.5 rounded-full">
+                  100% Transparente
                 </span>
               </div>
 
@@ -157,10 +210,10 @@ export function ProjectEstimator() {
                   <span className="text-xs text-gray-400 flex items-center gap-1">
                     <Clock className="w-3.5 h-3.5 text-accent-400" /> Tiempo Estimado de Entrega:
                   </span>
-                  <p className="text-2xl font-black text-white mt-1">
-                    {selectedType.weeks}
+                  <p className="text-3xl font-black text-white mt-1 font-mono">
+                    {calcMinWeeks} - {calcMaxWeeks} <span className="text-base font-sans font-semibold text-accent-300">semanas</span>
                   </p>
-                  <p className="text-[11px] text-emerald-400 font-semibold mt-0.5">
+                  <p className="text-[11px] text-emerald-400 font-semibold mt-1">
                     ✓ Entregas funcionales probables cada viernes
                   </p>
                 </div>
@@ -169,11 +222,11 @@ export function ProjectEstimator() {
                   <span className="text-xs text-gray-400 flex items-center gap-1">
                     <DollarSign className="w-3.5 h-3.5 text-emerald-400" /> Rango de Inversión Proyectado:
                   </span>
-                  <p className="text-xl font-bold text-accent-400 mt-1">
-                    {selectedType.estRange}
+                  <p className="text-2xl font-black text-emerald-400 mt-1 font-mono">
+                    ${calcMin.toLocaleString()} - ${calcMax.toLocaleString()} <span className="text-xs font-sans font-normal text-gray-300">MXN</span>
                   </p>
-                  <p className="text-[10px] text-gray-400 mt-0.5">
-                    Incluye diseño UI/UX, arquitectura backend, pruebas y código fuente 100% tuyo.
+                  <p className="text-[10px] text-gray-400 mt-1">
+                    Incluye diseño UI/UX, arquitectura backend, pruebas de carga y código fuente 100% tuyo.
                   </p>
                 </div>
               </div>
@@ -187,7 +240,7 @@ export function ProjectEstimator() {
 
               {leadSent ? (
                 <div className="p-3 bg-emerald-500/20 border border-emerald-500/30 text-emerald-300 rounded-xl text-xs font-semibold text-center">
-                  ✓ Solicitar recibida. Un arquitecto técnico de Creati te enviará la propuesta formal hoy.
+                  ✓ Solicitud recibida. Un arquitecto técnico de Creati te enviará el desglose para {selectedType.title} a tu correo.
                 </div>
               ) : (
                 <form onSubmit={handleLeadSubmit} className="space-y-2">
