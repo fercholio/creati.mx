@@ -1,0 +1,564 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CreaTI - Software a la Medida para Empresas</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+        :root {
+            --bg-dark: #0a0a0a;
+            --bg-card: #141414;
+            --text-main: #ffffff;
+            --text-muted: #a1a1aa;
+            --accent-blue: #3b82f6;
+            --accent-glow: rgba(59, 130, 246, 0.45);
+            --border-color: #27272a;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+            line-height: 1.5;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .container {
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 0 24px;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Slide / Page Section Structure */
+        .page-section {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 50px 0;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        /* Ambient Glow in Hero */
+        .hero-glow {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 550px;
+            height: 550px;
+            background: radial-gradient(circle, var(--accent-glow) 0%, transparent 68%);
+            z-index: -1;
+            opacity: 0.35;
+            pointer-events: none;
+        }
+
+        /* SECTION 1: HERO */
+        .hero {
+            text-align: center;
+            padding: 20px 0;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 2.2em;
+            font-weight: 800;
+            letter-spacing: -1px;
+            margin-bottom: 16px;
+            display: inline-flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .logo-icon-svg {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            box-shadow: 0 0 24px rgba(59, 130, 246, 0.4), 0 4px 16px rgba(0, 0, 0, 0.6);
+            display: block;
+        }
+
+        .logo span { color: var(--accent-blue); }
+
+        .hero h1 {
+            font-size: 3em;
+            font-weight: 800;
+            margin: 0 0 16px 0;
+            line-height: 1.12;
+            letter-spacing: -1px;
+            max-width: 850px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero p {
+            font-size: 1.15em;
+            color: var(--text-muted);
+            max-width: 740px;
+            margin: 0 auto;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        /* Badges */
+        .badges {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid var(--border-color);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            color: var(--text-muted);
+        }
+
+        .badge.highlight {
+            border-color: var(--accent-blue);
+            color: var(--accent-blue);
+            background: rgba(59, 130, 246, 0.1);
+        }
+
+        /* Section Titles */
+        .section-title {
+            font-size: 1.9em;
+            font-weight: 800;
+            margin: 0 0 22px 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 14px;
+            letter-spacing: -0.5px;
+        }
+
+        /* SECTION 2: SERVICES */
+        .services-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+
+        .services-list li {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-color);
+            padding: 15px 18px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            font-size: 1.02em;
+            font-weight: 600;
+        }
+
+        .services-list li svg {
+            flex-shrink: 0;
+        }
+
+        /* SECTION 3: COMPARISON TABLE */
+        .comparison-wrapper {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 14px;
+            overflow: hidden;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 14px 18px;
+            border-bottom: 1px solid var(--border-color);
+            font-size: 0.9em;
+            line-height: 1.45;
+        }
+
+        th {
+            font-size: 0.98em;
+            font-weight: 800;
+            padding-top: 16px;
+            padding-bottom: 16px;
+        }
+        
+        .col-feature { width: 26%; color: var(--text-muted); font-weight: 600; }
+        .col-bad { width: 37%; background: rgba(239, 68, 68, 0.05); color: #d4d4d8; }
+        .col-bad th { color: var(--danger); }
+        .col-good { width: 37%; background: rgba(59, 130, 246, 0.07); }
+        .col-good th { color: var(--accent-blue); }
+        td.col-good { font-weight: 600; color: #fff; }
+
+        tr:last-child td { border-bottom: none; }
+
+        /* SECTION 4: ECOSYSTEM & CTA */
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 16px;
+            margin-bottom: 22px;
+        }
+
+        .card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 22px;
+        }
+
+        .card h3 {
+            margin: 0 0 8px 0;
+            font-size: 1.12em;
+            color: #fff;
+            font-weight: 700;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            font-size: 0.88em;
+            margin: 0;
+            line-height: 1.45;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: linear-gradient(135deg, #1d4ed8, #2563eb);
+            border-radius: 18px;
+            padding: 28px 40px;
+            color: #fff;
+            box-shadow: 0 10px 30px rgba(37, 99, 235, 0.25);
+        }
+
+        .cta-content h2 {
+            margin: 0 0 8px 0;
+            font-size: 1.85em;
+            font-weight: 800;
+            line-height: 1.15;
+        }
+
+        .cta-content p {
+            margin: 0 0 16px 0;
+            font-size: 0.98em;
+            opacity: 0.92;
+            line-height: 1.45;
+            max-width: 520px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: #ffffff;
+            color: #1e40af;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.95em;
+            transition: transform 0.2s;
+        }
+
+        .cta-button:hover { transform: scale(1.04); }
+
+        .qr-box {
+            background: #fff;
+            padding: 12px 16px;
+            border-radius: 14px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.35);
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .qr-box img { width: 95px; height: 95px; display: block; margin: 0 auto; }
+        .qr-box span { display: block; color: #000; font-size: 0.7em; font-weight: 800; margin-top: 6px; letter-spacing: 0.03em; }
+
+        .footer-brand {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 18px;
+            margin-bottom: 4px;
+            font-weight: 700;
+            color: #fff;
+            font-size: 0.95em;
+        }
+
+        .footer-text {
+            text-align: center;
+            color: #71717a;
+            font-size: 0.82em;
+            margin: 0;
+        }
+
+        /* ===================================================
+           PRINT & PDF PRESENTATION RULES (LANDSCAPE LETTER)
+           Strict 4-page layout — no cut sections or orphan rows
+           =================================================== */
+        @page {
+            size: letter landscape;
+            margin: 0;
+        }
+
+        @media print {
+            html, body {
+                width: 100% !important;
+                height: 100% !important;
+                background-color: #0a0a0a !important;
+                -webkit-print-color-adjust: exact !important;
+                print-color-adjust: exact !important;
+            }
+
+            .container {
+                max-width: 100% !important;
+                width: 100% !important;
+                padding: 0 !important;
+                margin: 0 !important;
+            }
+
+            .hero-glow {
+                display: none !important;
+            }
+
+            .page-section {
+                width: 100vw !important;
+                height: 100vh !important;
+                max-height: 100vh !important;
+                min-height: 100vh !important;
+                padding: 40px 60px !important;
+                display: flex !important;
+                flex-direction: column !important;
+                justify-content: center !important;
+                align-items: center !important;
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+                page-break-after: always !important;
+                break-after: page !important;
+                overflow: hidden !important;
+                box-sizing: border-box !important;
+            }
+
+            .page-section:last-child {
+                page-break-after: avoid !important;
+                break-after: avoid !important;
+            }
+
+            .page-section > * {
+                width: 100%;
+                max-width: 980px;
+            }
+
+            .card, .services-list li, tr, .cta-section {
+                page-break-inside: avoid !important;
+                break-inside: avoid !important;
+            }
+
+            .hero h1 { font-size: 2.7em !important; }
+            .hero p { font-size: 1.08em !important; }
+            .section-title { font-size: 1.75em !important; margin-bottom: 16px !important; padding-bottom: 10px !important; }
+            .services-list li { padding: 13px 18px !important; font-size: 0.95em !important; }
+            th, td { padding: 11px 16px !important; font-size: 0.85em !important; }
+            .card { padding: 16px 18px !important; }
+            .card h3 { font-size: 1.05em !important; }
+            .card p { font-size: 0.84em !important; }
+            .cta-section { padding: 20px 34px !important; margin-top: 14px !important; }
+            .cta-content h2 { font-size: 1.55em !important; }
+            .cta-content p { font-size: 0.9em !important; margin-bottom: 12px !important; }
+            .qr-box { padding: 10px 14px !important; }
+            .qr-box img { width: 85px !important; height: 85px !important; }
+        }
+
+        @media (max-width: 768px) {
+            .grid-2, .grid-3, .services-list { grid-template-columns: 1fr; }
+            .hero h1 { font-size: 2.3em; }
+            .hero p { font-size: 1.05em; }
+            .cta-section { flex-direction: column; text-align: center; gap: 24px; padding: 30px 20px; }
+            table, thead, tbody, th, td, tr { display: block; }
+            .col-feature, .col-bad, .col-good { width: 100%; }
+            th, td { padding: 12px 16px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+
+    <!-- SLIDE / PAGE 1: HERO PORTADA -->
+    <section class="page-section">
+        <div class="hero-glow"></div>
+        <header class="hero">
+            <div class="logo">
+                <svg class="logo-icon-svg" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="100" rx="22" fill="#0a1628" />
+                    <path d="M62 24 L38 24 C26 24 18 34 18 50 C18 66 26 76 38 76 L62 76 L50 62 L40 62 C34 62 30 57 30 50 C30 43 34 38 40 38 L50 38 Z" fill="#ffffff" />
+                    <rect x="66" y="16" width="18" height="18" rx="4" fill="#0066ff" />
+                    <rect x="72" y="42" width="10" height="10" rx="2.5" fill="#0066ff" opacity="0.5" />
+                </svg>
+                CreaTI<span>.mx</span>
+            </div>
+            <h1>Software que se adapta a tu negocio.</h1>
+            <p>Conectamos las áreas de tu empresa con tecnología que realmente funciona. Desarrollamos herramientas a la medida para reducir costos, acelerar tus ventas y darte el control total de tu operación, sin dolores de cabeza.</p>
+            
+            <div class="badges">
+                <div class="badge highlight">100% Código de tu Propiedad</div>
+                <div class="badge">Soporte Local (Mérida)</div>
+                <div class="badge">Arquitectura AWS Cloud</div>
+                <div class="badge highlight">Avances cada Viernes</div>
+            </div>
+        </header>
+    </section>
+
+    <!-- SLIDE / PAGE 2: SERVICIOS TECNOLÓGICOS -->
+    <section class="page-section">
+        <div>
+            <h2 class="section-title">Portafolio de Servicios Tecnológicos</h2>
+            <ul class="services-list">
+                <li>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"></rect><line x1="12" y1="18" x2="12.01" y2="18"></line></svg>
+                    Desarrollo de Apps Móviles Nativas (iOS / Android)
+                </li>
+                <li>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="3" y1="9" x2="21" y2="9"></line><line x1="9" y1="21" x2="9" y2="9"></line></svg>
+                    Plataformas Web SaaS y Sistemas CRM a la medida
+                </li>
+                <li>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+                    Portales Inmobiliarios y Cotizadores Financieros en vivo
+                </li>
+                <li>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>
+                    Inteligencia Artificial y Automatización de Procesos
+                </li>
+                <li>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path></svg>
+                    Conectores API para ERPs (SAP, Intelisis, Microsip)
+                </li>
+                <li>
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#3b82f6" stroke-width="2"><rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect><line x1="1" y1="10" x2="23" y2="10"></line></svg>
+                    Integración de Pagos (SPEI, Stripe) y Facturación CFDI 4.0
+                </li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- SLIDE / PAGE 3: COMPARATIVA DE MERCADO -->
+    <section class="page-section">
+        <div>
+            <h2 class="section-title">¿Por qué las empresas nos prefieren?</h2>
+            <div class="comparison-wrapper">
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col-feature">Lo que experimentas hoy</th>
+                            <th class="col-bad">Agencias Tradicionales / Freelancers</th>
+                            <th class="col-good">La Experiencia CreaTI.mx</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="col-feature">Expectativa vs. Realidad</td>
+                            <td class="col-bad">Te venden "cajas negras" y entregan un sistema que nadie en tu equipo entiende ni quiere usar.</td>
+                            <td class="col-good">Diseñamos prototipos navegables antes de programar. Construimos sólo lo que tu equipo validó y realmente necesita.</td>
+                        </tr>
+                        <tr>
+                            <td class="col-feature">Tiempos de Entrega</td>
+                            <td class="col-bad">Meses a oscuras sin reportes claros. Los proyectos se retrasan y las excusas sobran.</td>
+                            <td class="col-good">Entregas continuas (SLA): Recibes avances ejecutables y funcionales cada viernes para medir progreso real.</td>
+                        </tr>
+                        <tr>
+                            <td class="col-feature">Propiedad Intelectual</td>
+                            <td class="col-bad">Pagas rentas o "licenciamientos" eternos. Si te vas, te quedas sin sistema.</td>
+                            <td class="col-good">Cero ataduras. Tú eres el único dueño del código fuente, la base de datos y la propiedad intelectual.</td>
+                        </tr>
+                        <tr>
+                            <td class="col-feature">Presupuesto</td>
+                            <td class="col-bad">Costos ocultos, estimaciones vagas y sorpresas al momento de liberar el proyecto.</td>
+                            <td class="col-good">Simulador en vivo transparente: Conoces el rango de inversión y semanas de entrega desde el primer día.</td>
+                        </tr>
+                        <tr>
+                            <td class="col-feature">Soporte y Atención</td>
+                            <td class="col-bad">Soporte por <i>tickets</i> lentos, con intermediarios, chatbots o ingenieros en otra zona horaria.</td>
+                            <td class="col-good">Atención y acompañamiento local directo desde Mérida por el mismo equipo que programó tu solución.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- SLIDE / PAGE 4: ECOSISTEMA, CTA & CIERRE -->
+    <section class="page-section">
+        <div>
+            <h2 class="section-title" style="margin-bottom: 16px;">Ecosistema Tecnológico</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>🤖 Inteligencia Artificial</h3>
+                    <p>Asistentes automatizados que aprenden de tu propia empresa. Ahorra cientos de horas en tareas repetitivas y atención al cliente instantánea.</p>
+                </div>
+                <div class="card">
+                    <h3>🔌 Conexión sin Apagar Nada</h3>
+                    <p>No tienes que tirar tu software actual a la basura. Nos conectamos a tu ERP (SAP, Intelisis) mediante APIs para sincronizar datos e inventarios.</p>
+                </div>
+                <div class="card">
+                    <h3>🔒 Seguridad Empresarial</h3>
+                    <p>Datos protegidos con el estándar bancario AES-256. Cumplimiento normativo para firmas digitales (NOM-151) y sector salud (NOM-024).</p>
+                </div>
+            </div>
+
+            <div class="cta-section">
+                <div class="cta-content">
+                    <h2>Hablemos de negocios, no de código.</h2>
+                    <p>Usa nuestro estimador para calcular el alcance, la inversión y el tiempo de entrega de tu próximo gran proyecto tecnológico.</p>
+                    <a href="https://creati.mx/" target="_blank" class="cta-button">Visitar Estimador CreaTI.mx 🚀</a>
+                </div>
+                
+                <div class="qr-box">
+                    <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://creati.mx/" alt="QR CreaTI.mx">
+                    <span>ESCANEA PARA<br>VISITAR LA WEB</span>
+                </div>
+            </div>
+            
+            <div class="footer-brand">
+                <svg width="20" height="20" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg" style="border-radius: 5px;">
+                    <rect width="100" height="100" rx="22" fill="#0a1628" />
+                    <path d="M62 24 L38 24 C26 24 18 34 18 50 C18 66 26 76 38 76 L62 76 L50 62 L40 62 C34 62 30 57 30 50 C30 43 34 38 40 38 L50 38 Z" fill="#ffffff" />
+                    <rect x="66" y="16" width="18" height="18" rx="4" fill="#0066ff" />
+                    <rect x="72" y="42" width="10" height="10" rx="2.5" fill="#0066ff" opacity="0.5" />
+                </svg>
+                <span>CreaTI<span style="color: var(--accent-blue);">.mx</span></span>
+            </div>
+            <div class="footer-text">
+                hola@creati.mx | Mérida, Yucatán, México | © 2026 CreaTI.mx
+            </div>
+        </div>
+    </section>
+
+</div>
+
+</body>
+</html>
