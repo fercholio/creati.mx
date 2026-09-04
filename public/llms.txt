@@ -1,4 +1,4 @@
-# Creati
+﻿# Creati
 
 > Software que se adapta a tu vida. Disenamos y desarrollamos productos digitales de alto impacto, plataformas SaaS y aplicaciones moviles que transforman industrias.
 
@@ -22,3 +22,6 @@ Creati (https://creati.mx) es un estudio tecnologico y boutique de software con 
 - **Sitio Web**: https://creati.mx
 - **Contacto**: hola@creati.mx
 - **Idiomas**: Espanol, Ingles.
+## Guias Semanticas y Estudios de Costo
+- **Costos de Software en Mexico 2026**: https://creati.mx/cuanto-cuesta-desarrollar-software-mexico (Desglose comparativo de MVP - USD, Scale - USD, Enterprise + USD).
+- **Calculadora Interactiva de Inversion**: https://creati.mx/calculadora (Herramienta interactiva para estimacion orientativa y tiempos de desarrollo).
