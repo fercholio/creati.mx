@@ -1,5 +1,7 @@
-export const navLinks = [
+﻿export const navLinks = [
   { label: 'Inicio', href: '/' },
+  { label: 'Servicios', href: '/servicios' },
+  { label: 'Calculadora', href: '/calculadora' },
   { label: 'Nosotros', href: '/about' },
   { label: 'Contacto', href: '/contact' },
 ] as const
@@ -104,22 +106,22 @@ export const testimonials = [
 export const faqs = [
   {
     question: '¿Qué tipo de proyectos hacen?',
-    answer: 'Desarrollamos aplicaciones web, móviles, plataformas SaaS y herramientas internas. Si involucra software y usuarios, nos interesa.',
+    answer: 'Desarrollamos aplicaciones web, móviles, plataformas SaaS, ecosistemas con IA y herramientas internas para empresas y startups.',
   },
   {
     question: '¿Cuánto cuesta un proyecto?',
-    answer: 'Depende del alcance. Trabajamos con presupuestos desde proyectos MVP hasta plataformas enterprise. Siempre damos un estimado claro antes de empezar.',
+    answer: 'Depende del alcance técnico. Diseñamos presupuestos a la medida tanto para MVPs ágiles como para plataformas enterprise con alta concurrencia.',
   },
   {
     question: '¿Cuánto tiempo toma un proyecto?',
-    answer: 'Un MVP típico toma de 6 a 12 semanas. Proyectos más complejos pueden tomar 3-6 meses. Siempre entregamos en fases para que veas progreso real desde la semana uno.',
+    answer: 'Un MVP típico toma de 6 a 10 semanas. Proyectos más complejos pueden tomar 3 a 6 meses con entregas continuas y sprints quincenales.',
   },
   {
     question: '¿Trabajan con equipos remotos?',
-    answer: 'Sí. Nuestro equipo es remoto-first. Trabajamos con clientes en toda Latinoamérica y Estados Unidos. La comunicación clara es nuestra prioridad.',
+    answer: 'Sí. Nuestra sede física está en Mérida, Yucatán, pero colaboramos de forma remota y presencial con clientes en México, Estados Unidos y Latinoamérica.',
   },
   {
     question: '¿Qué pasa después del lanzamiento?',
-    answer: 'Ofrecemos planes de soporte y evolución continua. Tu producto sigue mejorando basado en datos reales de uso y feedback de usuarios.',
+    answer: 'Ofrecemos planes de soporte, monitoreo de infraestructura en la nube y optimización continua de conversión y producto.',
   },
 ] as const

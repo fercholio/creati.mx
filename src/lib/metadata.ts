@@ -1,8 +1,8 @@
-import type { Metadata } from 'next'
+﻿import type { Metadata } from 'next'
 
 export const siteConfig = {
   name: 'Creati',
-  description: 'Software que se adapta a tu vida. Creamos productos digitales que las personas realmente disfrutan usar.',
+  description: 'Software que se adapta a tu vida. Diseñamos y desarrollamos productos digitales de alto impacto que las personas realmente disfrutan usar.',
   url: 'https://creati.mx',
   ogImage: '/og.png',
   links: {
@@ -23,11 +23,11 @@ export const metadata: Metadata = {
     'desarrollo de aplicaciones web',
     'desarrollo de aplicaciones móviles',
     'diseño UX México',
-    'productos digitales',
-    'software a medida',
-    'consultoría tecnológica',
-    'plataformas SaaS',
-    'inteligencia artificial',
+    'productos digitales de alto impacto',
+    'software a medida para empresas',
+    'consultoría tecnológica e IA',
+    'plataformas SaaS escalables',
+    'inteligencia artificial aplicada',
   ],
   authors: [{ name: siteConfig.name, url: siteConfig.url }],
   creator: siteConfig.name,
