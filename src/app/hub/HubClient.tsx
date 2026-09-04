@@ -67,6 +67,7 @@ export function HubClient() {
   const [selectedEcosystem, setSelectedEcosystem] = useState<EcosystemId | 'all'>('all')
   const [selectedDocId, setSelectedDocId] = useState<string>('')
   const [searchQuery, setSearchQuery] = useState('')
+  const [treeFilterTerm, setTreeFilterTerm] = useState('')
   const [activeTab, setActiveTab] = useState<'docs' | 'admin_users'>('docs')
   const [maskSensitiveData, setMaskSensitiveData] = useState<boolean>(true)
   const [themeMode, setThemeMode] = useState<'light' | 'dark'>('light')
@@ -234,6 +235,11 @@ export function HubClient() {
   const filteredDocs = documents.filter((doc) => {
     if (!canViewDoc(doc)) return false
     if (selectedEcosystem !== 'all' && doc.ecosystem !== selectedEcosystem) return false
+    if (treeFilterTerm.trim()) {
+      const tq = treeFilterTerm.toLowerCase()
+      const matchesTree = doc.title.toLowerCase().includes(tq) || doc.summary.toLowerCase().includes(tq) || doc.tags.some(t => t.toLowerCase().includes(tq))
+      if (!matchesTree) return false
+    }
     if (searchQuery.trim()) {
       const q = searchQuery.toLowerCase()
       const inTitle = doc.title.toLowerCase().includes(q)
@@ -778,56 +784,73 @@ export function HubClient() {
               </div>
             ) : (
               <>
-            {/* Selector de Ecosistema */}
-            <div className="p-4 border-b border-navy-100">
-              <label className="block text-[10px] font-bold uppercase tracking-wider text-navy-400 mb-1.5">
-                Ecosistema de Software
-              </label>
-              <div className="grid grid-cols-2 gap-1.5 text-xs font-semibold">
+            {/* Header del Sidebar: Ecosistemas + Buscador en el Tree */}
+            <div className="p-3.5 border-b border-slate-200 dark:border-slate-800 space-y-3">
+              <div className="flex items-center justify-between">
+                <label className="text-[10px] font-bold uppercase tracking-wider text-slate-400 dark:text-slate-500">
+                  Ecosistemas
+                </label>
+                <span className="text-[10px] font-mono px-1.5 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-slate-500">
+                  {filteredDocs.length} docs
+                </span>
+              </div>
+              {/* Tabs de Ecosistemas con SVG */}
+              <div className="grid grid-cols-2 gap-1.5">
                 <button
+                  type="button"
                   onClick={() => setSelectedEcosystem('all')}
-                  className={`p-2 rounded-xl text-left transition-all cursor-pointer ${
-                    selectedEcosystem === 'all'
-                      ? 'bg-navy-900 text-white font-bold'
-                      : 'hover:bg-slate-100 text-navy-700'
-                  }`}
+                  className={"px-2.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer " + (selectedEcosystem === 'all' ? "bg-accent-600 text-white shadow-xs" : "hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300")}
                 >
-                  🌐 Toda la Suite
+                  <Globe className="w-3.5 h-3.5" />
+                  <span className="truncate">Toda la Suite</span>
                 </button>
                 <button
+                  type="button"
                   onClick={() => setSelectedEcosystem('abogalia')}
-                  className={`p-2 rounded-xl text-left transition-all cursor-pointer ${
-                    selectedEcosystem === 'abogalia'
-                      ? 'bg-emerald-600 text-white font-bold'
-                      : 'hover:bg-slate-100 text-navy-700'
-                  }`}
+                  className={"px-2.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer " + (selectedEcosystem === 'abogalia' ? "bg-amber-600 text-white shadow-xs" : "hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300")}
                 >
-                  ⚖️ Abogalia
+                  <Scale className="w-3.5 h-3.5" />
+                  <span className="truncate">Abogalia</span>
                 </button>
                 <button
+                  type="button"
                   onClick={() => setSelectedEcosystem('brokar')}
-                  className={`p-2 rounded-xl text-left transition-all cursor-pointer ${
-                    selectedEcosystem === 'brokar'
-                      ? 'bg-sky-600 text-white font-bold'
-                      : 'hover:bg-slate-100 text-navy-700'
-                  }`}
+                  className={"px-2.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer " + (selectedEcosystem === 'brokar' ? "bg-blue-600 text-white shadow-xs" : "hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300")}
                 >
-                  🏢 Brokar
+                  <Building2 className="w-3.5 h-3.5" />
+                  <span className="truncate">Brokar</span>
                 </button>
                 <button
+                  type="button"
                   onClick={() => setSelectedEcosystem('medical')}
-                  className={`p-2 rounded-xl text-left transition-all cursor-pointer ${
-                    selectedEcosystem === 'medical'
-                      ? 'bg-teal-600 text-white font-bold'
-                      : 'hover:bg-slate-100 text-navy-700'
-                  }`}
+                  className={"px-2.5 py-1.5 rounded-xl text-xs font-semibold flex items-center gap-1.5 transition-all cursor-pointer " + (selectedEcosystem === 'medical' ? "bg-emerald-600 text-white shadow-xs" : "hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-600 dark:text-slate-300")}
                 >
-                  🩺 Medical
+                  <Stethoscope className="w-3.5 h-3.5" />
+                  <span className="truncate">Medical</span>
                 </button>
               </div>
+              {/* Buscador en el Tree */}
+              <div className="relative">
+                <Search className="absolute left-3 top-2.5 w-3.5 h-3.5 text-slate-400" />
+                <input
+                  type="text"
+                  value={treeFilterTerm}
+                  onChange={(e) => setTreeFilterTerm(e.target.value)}
+                  placeholder="Buscar en árbol de documentos..."
+                  className="w-full pl-8.5 pr-8 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-800/60 text-xs focus:outline-hidden focus:ring-2 focus:ring-accent-500/20 focus:border-accent-500 transition-all"
+                />
+                {treeFilterTerm && (
+                  <button
+                    type="button"
+                    onClick={() => setTreeFilterTerm('')}
+                    className="absolute right-2.5 top-2 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 text-sm font-bold cursor-pointer"
+                  >
+                    ×
+                  </button>
+                )}
+              </div>
             </div>
-
-            {/* Listado de Documentos */}
+{/* Listado de Documentos */}
             <div className="flex-1 overflow-y-auto p-3 space-y-1">
               <div className="px-2 py-1 flex items-center justify-between text-[11px] font-bold text-navy-400 uppercase tracking-wider">
                 <span>Documentos ({filteredDocs.length})</span>
