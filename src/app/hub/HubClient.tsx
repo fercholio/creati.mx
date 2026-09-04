@@ -660,6 +660,7 @@ export function HubClient() {
                     <th className="p-4">Acceso a Documentos</th>
                     <th className="p-4">Estado</th>
                     <th className="p-4">Fecha Alta</th>
+                    <th className="p-4 text-right">Acciones</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-navy-50">
@@ -694,6 +695,27 @@ export function HubClient() {
                         </span>
                       </td>
                       <td className="p-4 text-navy-400 font-mono">{u.createdAt}</td>
+                      <td className="p-4 text-right">
+                        <div className="flex items-center justify-end gap-2">
+                          <button
+                            type="button"
+                            onClick={() => handleStartEditUser(u)}
+                            className="px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer shadow-2xs"
+                            title="Editar usuario"
+                          >
+                            <Edit2 className="w-3.5 h-3.5" />
+                            <span>Editar</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleDeleteUser(u.id)}
+                            className="p-1.5 rounded-lg border border-rose-200 text-rose-500 hover:text-rose-700 hover:bg-rose-50 transition-all active:scale-95 cursor-pointer shadow-2xs"
+                            title="Eliminar usuario"
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
+                        </div>
+                      </td>
                     </tr>
                   ))}
                 </tbody>
