@@ -34,7 +34,7 @@ import {
   Sparkles,
   ExternalLink,
   PlusCircle,
-  UserPlus,
+  UserPlus, X, Edit2, Trash2,
   Tag,
   Calendar,
   AlertCircle
@@ -84,6 +84,10 @@ export function HubClient() {
 
   // SuperAdmin: Modal para Crear Usuario
   const [showCreateUserModal, setShowCreateUserModal] = useState(false)
+  const [editingUser, setEditingUser] = useState<HubUser | null>(null)
+  const [editUserName, setEditUserName] = useState('')
+  const [editUserEmail, setEditUserEmail] = useState('')
+  const [editUserRole, setEditUserRole] = useState<UserRole>('DEVELOPER')
   const [newUserName, setNewUserName] = useState('')
   const [newUserEmail, setNewUserEmail] = useState('')
   const [newUserRole, setNewUserRole] = useState<UserRole>('DEVELOPER')
@@ -339,6 +343,57 @@ export function HubClient() {
     localStorage.setItem('creati_hub_users_v1', JSON.stringify(updatedUsers))
   }
 
+
+  const handleStartEditUser = (user: HubUser) => {
+    setEditingUser(user)
+    setEditUserName(user.name)
+    setEditUserEmail(user.email)
+    setEditUserRole(user.role)
+  }
+
+  const handleUpdateUser = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!editingUser || !editUserName.trim() || !editUserEmail.trim()) return
+
+    const updated = usersList.map((u) => {
+      if (u.id === editingUser.id) {
+        return {
+          ...u,
+          name: editUserName.trim(),
+          email: editUserEmail.trim(),
+          role: editUserRole,
+        }
+      }
+      return u
+    })
+
+    setUsersList(updated)
+    localStorage.setItem('creati_hub_users_v1', JSON.stringify(updated))
+    
+    if (currentUser?.id === editingUser.id) {
+      const updatedSelf = { ...currentUser, name: editUserName.trim(), email: editUserEmail.trim(), role: editUserRole }
+      setCurrentUser(updatedSelf)
+      localStorage.setItem('creati_hub_session_v1', JSON.stringify(updatedSelf))
+    }
+
+    setEditingUser(null)
+  }
+
+  const handleDeleteUser = (userId: string) => {
+    if (usersList.length <= 1) {
+      alert('Debe existir al menos un usuario en el sistema.')
+      return
+    }
+    if (currentUser?.id === userId) {
+      alert('No puedes eliminar al usuario con el que estás conectado actualmente.')
+      return
+    }
+    if (confirm('¿Estás seguro de eliminar este usuario?')) {
+      const updated = usersList.filter(u => u.id !== userId)
+      setUsersList(updated)
+      localStorage.setItem('creati_hub_users_v1', JSON.stringify(updated))
+    }
+  }
 
   const handleCreateUser = (e: React.FormEvent) => {
     e.preventDefault()
@@ -645,6 +700,74 @@ export function HubClient() {
               </table>
             </div>
           </div>
+
+          {/* Modal Editar Usuario */}
+          {editingUser && (
+            <div className="fixed inset-0 bg-navy-950/70 backdrop-blur-xs flex items-center justify-center z-50 p-4">
+              <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl border border-navy-100">
+                <div className="flex items-center justify-between mb-2">
+                  <h3 className="text-xl font-bold font-sans text-slate-900">Editar Miembro del Equipo</h3>
+                  <button
+                    onClick={() => setEditingUser(null)}
+                    className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-600 cursor-pointer"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+                <p className="text-xs text-navy-600 mb-6">Modifica los datos personales y el rol RBAC asignado a este usuario.</p>
+                <form onSubmit={handleUpdateUser} className="space-y-4">
+                  <div>
+                    <label className="block text-xs font-bold text-navy-700 mb-1">Nombre Completo</label>
+                    <input
+                      type="text"
+                      required
+                      value={editUserName}
+                      onChange={(e) => setEditUserName(e.target.value)}
+                      className="w-full px-3 py-2 border rounded-xl text-sm outline-none focus:border-accent-500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-navy-700 mb-1">Correo Corporativo</label>
+                    <input
+                      type="email"
+                      required
+                      value={editUserEmail}
+                      onChange={(e) => setEditUserEmail(e.target.value)}
+                      className="w-full px-3 py-2 border rounded-xl text-sm outline-none focus:border-accent-500 font-mono"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-xs font-bold text-navy-700 mb-1">Rol y Nivel de Acceso RBAC</label>
+                    <select
+                      value={editUserRole}
+                      onChange={(e) => setEditUserRole(e.target.value as UserRole)}
+                      className="w-full px-3 py-2 border rounded-xl text-sm bg-white outline-none focus:border-accent-500"
+                    >
+                      <option value="DEVELOPER">Developer (Arquitectura, APIs, Seguridad)</option>
+                      <option value="PRODUCT_MANAGER">Product Manager (FRDs, Roadmaps)</option>
+                      <option value="SALES_MARKETING">Sales & Marketing (Pricing, Pitches)</option>
+                      <option value="SUPER_ADMIN">Super Admin (Control Total)</option>
+                    </select>
+                  </div>
+                  <div className="flex gap-3 pt-4">
+                    <button
+                      type="button"
+                      onClick={() => setEditingUser(null)}
+                      className="flex-1 py-2.5 rounded-xl border border-navy-200 text-xs font-bold text-navy-700 hover:bg-slate-50 cursor-pointer"
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      type="submit"
+                      className="flex-1 py-2.5 rounded-xl bg-accent-600 hover:bg-accent-500 text-white text-xs font-bold cursor-pointer shadow-sm active:scale-95 transition-all"
+                    >
+                      Guardar Cambios
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
 
           {/* Modal Crear Usuario */}
           {showCreateUserModal && (
