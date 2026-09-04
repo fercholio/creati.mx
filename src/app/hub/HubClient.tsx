@@ -640,27 +640,52 @@ export function HubClient() {
     setNewUserEmail('')
   }
 
-  // PANTALLA DE LOGIN SI NO HAY SESIÓN
+  // PANTALLA DE LOGIN SI NO HAY SESIÓN (ALTA ACCESIBILIDAD WCAG AAA)
   if (!currentUser) {
+    const isDark = themeMode === 'dark'
+
     return (
-      <div className="min-h-screen bg-slate-900/95 flex flex-col justify-center py-12 sm:px-6 lg:px-8 text-slate-100 font-['Roboto',sans-serif]">
+      <div className={`min-h-screen flex flex-col justify-center py-12 px-4 sm:px-6 lg:px-8 font-['Roboto',sans-serif] transition-colors relative ${
+        isDark ? 'bg-slate-950 text-slate-100' : 'bg-slate-50 text-slate-900'
+      }`}>
+        {/* Toggle flotante de Modo Claro / Oscuro en el Login */}
+        <div className="absolute top-6 right-6 z-20 flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setThemeMode(themeMode === 'light' ? 'dark' : 'light')}
+            className={`px-3.5 py-2 rounded-xl text-xs font-semibold flex items-center gap-2 border transition-all cursor-pointer shadow-xs active:scale-95 ${
+              isDark
+                ? 'bg-slate-900 border-slate-700 text-slate-200 hover:text-white hover:bg-slate-800'
+                : 'bg-white border-slate-300 text-slate-700 hover:text-slate-900 hover:bg-slate-100'
+            }`}
+            title="Alternar Modo Claro / Oscuro"
+          >
+            {isDark ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4 text-slate-600" />}
+            <span>{isDark ? 'Modo Claro' : 'Modo Oscuro'}</span>
+          </button>
+        </div>
+
         <div className="sm:mx-auto sm:w-full sm:max-w-md text-center">
-          <div className="inline-flex p-3 rounded-2xl bg-accent-500/10 text-accent-400 border border-accent-500/20 mb-4">
+          <div className="inline-flex p-3 rounded-2xl bg-accent-500/15 text-accent-600 dark:text-accent-400 border border-accent-500/30 mb-4 shadow-sm">
             <BookOpen className="w-8 h-8" />
           </div>
-          <h1 className="text-3xl font-extrabold tracking-tight font-sans font-bold text-white">
+          <h1 className="text-3xl font-extrabold tracking-tight font-sans text-slate-900 dark:text-white">
             Creati Knowledge Hub
           </h1>
-          <p className="mt-2 text-sm text-navy-300">
-            Base de conocimiento interna, arquitectura de sistemas y estrategia por roles.
+          <p className="mt-2 text-sm text-slate-600 dark:text-slate-300 font-medium">
+            Base de conocimiento interna, arquitectura de sistemas y especificaciones.
           </p>
         </div>
 
         <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-          <div className="bg-slate-800/90 backdrop-blur-md py-8 px-6 shadow-xl rounded-2xl sm:px-10 border border-slate-700/70">
-            <form className="space-y-6" onSubmit={handleLogin}>
+          <div className={`py-8 px-6 shadow-2xl rounded-3xl sm:px-10 border transition-all ${
+            isDark
+              ? 'bg-slate-900/95 border-slate-800 text-slate-100'
+              : 'bg-white border-slate-200 text-slate-900'
+          }`}>
+            <form className="space-y-5" onSubmit={handleLogin}>
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-navy-300 mb-2">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200 mb-2">
                   Correo Electrónico
                 </label>
                 <input
@@ -669,12 +694,16 @@ export function HubClient() {
                   value={emailInput}
                   onChange={(e) => setEmailInput(e.target.value)}
                   placeholder="ej. dev@creati.mx o admin@creati.mx"
-                  className="w-full px-4 py-3 bg-slate-900/80 border border-slate-700 rounded-xl text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-accent-500 text-sm"
+                  className={`w-full px-4 py-3 rounded-xl border text-sm font-medium outline-none transition-all ${
+                    isDark
+                      ? 'bg-slate-800/90 border-slate-700 text-white placeholder-slate-400 focus:border-accent-400 focus:ring-2 focus:ring-accent-500/30'
+                      : 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-500 focus:border-accent-600 focus:ring-2 focus:ring-accent-500/20'
+                  }`}
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-semibold uppercase tracking-wider text-navy-300 mb-2">
+                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 dark:text-slate-200 mb-2">
                   Contraseña
                 </label>
                 <input
@@ -683,12 +712,16 @@ export function HubClient() {
                   value={passwordInput}
                   onChange={(e) => setPasswordInput(e.target.value)}
                   placeholder="••••••••"
-                  className="w-full px-4 py-3 bg-slate-900/80 border border-slate-700 rounded-xl text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-accent-500 text-sm"
+                  className={`w-full px-4 py-3 rounded-xl border text-sm font-medium outline-none transition-all ${
+                    isDark
+                      ? 'bg-slate-800/90 border-slate-700 text-white placeholder-slate-400 focus:border-accent-400 focus:ring-2 focus:ring-accent-500/30'
+                      : 'bg-slate-50 border-slate-300 text-slate-900 placeholder-slate-500 focus:border-accent-600 focus:ring-2 focus:ring-accent-500/20'
+                  }`}
                 />
               </div>
 
               {loginError && (
-                <div className="p-3 rounded-xl bg-rose-500/10 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2">
+                <div className="p-3 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-700 dark:text-rose-300 text-xs flex items-center gap-2 font-medium">
                   <AlertCircle className="w-4 h-4 shrink-0" />
                   <span>{loginError}</span>
                 </div>
@@ -696,48 +729,83 @@ export function HubClient() {
 
               <button
                 type="submit"
-                className="w-full py-3 px-4 rounded-xl bg-accent-500 hover:bg-accent-400 text-white font-bold text-sm shadow-lg transition-all active:scale-98 cursor-pointer"
+                className="w-full py-3 px-4 rounded-xl bg-accent-600 hover:bg-accent-500 text-white font-bold text-sm shadow-md transition-all active:scale-98 cursor-pointer"
               >
                 Ingresar al Hub
               </button>
             </form>
 
-            <div className="mt-8 pt-6 border-t border-slate-700/80">
-              <span className="text-[11px] font-bold uppercase tracking-wider text-navy-400 block mb-3 text-center">
+            <div className="mt-8 pt-6 border-t border-slate-200 dark:border-slate-800">
+              <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-3 text-center">
                 Accesos de Demostración Rápida
               </span>
-              <div className="grid grid-cols-2 gap-2 text-[11px]">
+              <div className="grid grid-cols-2 gap-2 text-xs">
                 <button
                   type="button"
                   onClick={() => { setEmailInput('admin@creati.mx'); setPasswordInput('admin123') }}
-                  className="p-2 rounded-lg bg-slate-900/70 border border-slate-700/80 hover:border-accent-400/60 text-left text-navy-300 hover:text-white transition-all cursor-pointer"
+                  className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
+                    isDark
+                      ? 'bg-slate-800/80 border-slate-700 hover:border-accent-400 text-slate-200 hover:text-white'
+                      : 'bg-slate-50 border-slate-200 hover:border-accent-500 text-slate-800 hover:text-slate-950'
+                  }`}
                 >
-                  👑 <strong>Super Admin</strong><br/><span className="text-[10px] text-navy-500">admin@creati.mx</span>
+                  <div className="font-bold flex items-center gap-1.5">
+                    <Shield className="w-3.5 h-3.5 text-amber-500" />
+                    <span>Super Admin</span>
+                  </div>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono block mt-0.5">admin@creati.mx</span>
                 </button>
+
                 <button
                   type="button"
                   onClick={() => { setEmailInput('dev@creati.mx'); setPasswordInput('admin123') }}
-                  className="p-2 rounded-lg bg-slate-900/70 border border-slate-700/80 hover:border-accent-400/60 text-left text-navy-300 hover:text-white transition-all cursor-pointer"
+                  className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
+                    isDark
+                      ? 'bg-slate-800/80 border-slate-700 hover:border-accent-400 text-slate-200 hover:text-white'
+                      : 'bg-slate-50 border-slate-200 hover:border-accent-500 text-slate-800 hover:text-slate-950'
+                  }`}
                 >
-                  💻 <strong>Developer</strong><br/><span className="text-[10px] text-navy-500">dev@creati.mx</span>
+                  <div className="font-bold flex items-center gap-1.5">
+                    <Code className="w-3.5 h-3.5 text-sky-500" />
+                    <span>Developer</span>
+                  </div>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono block mt-0.5">dev@creati.mx</span>
                 </button>
+
                 <button
                   type="button"
                   onClick={() => { setEmailInput('pm@creati.mx'); setPasswordInput('admin123') }}
-                  className="p-2 rounded-lg bg-slate-900/70 border border-slate-700/80 hover:border-accent-400/60 text-left text-navy-300 hover:text-white transition-all cursor-pointer"
+                  className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
+                    isDark
+                      ? 'bg-slate-800/80 border-slate-700 hover:border-accent-400 text-slate-200 hover:text-white'
+                      : 'bg-slate-50 border-slate-200 hover:border-accent-500 text-slate-800 hover:text-slate-950'
+                  }`}
                 >
-                  📊 <strong>Product Mgr</strong><br/><span className="text-[10px] text-navy-500">pm@creati.mx</span>
+                  <div className="font-bold flex items-center gap-1.5">
+                    <FileText className="w-3.5 h-3.5 text-emerald-500" />
+                    <span>Product Mgr</span>
+                  </div>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono block mt-0.5">pm@creati.mx</span>
                 </button>
+
                 <button
                   type="button"
                   onClick={() => { setEmailInput('ventas@creati.mx'); setPasswordInput('admin123') }}
-                  className="p-2 rounded-lg bg-slate-900/70 border border-slate-700/80 hover:border-accent-400/60 text-left text-navy-300 hover:text-white transition-all cursor-pointer"
+                  className={`p-2.5 rounded-xl border text-left transition-all cursor-pointer ${
+                    isDark
+                      ? 'bg-slate-800/80 border-slate-700 hover:border-accent-400 text-slate-200 hover:text-white'
+                      : 'bg-slate-50 border-slate-200 hover:border-accent-500 text-slate-800 hover:text-slate-950'
+                  }`}
                 >
-                  💼 <strong>Sales / Mkt</strong><br/><span className="text-[10px] text-navy-500">ventas@creati.mx</span>
+                  <div className="font-bold flex items-center gap-1.5">
+                    <Users className="w-3.5 h-3.5 text-purple-500" />
+                    <span>Sales / Mkt</span>
+                  </div>
+                  <span className="text-[10px] text-slate-500 dark:text-slate-400 font-mono block mt-0.5">ventas@creati.mx</span>
                 </button>
               </div>
-              <p className="text-center text-[10px] text-navy-500 mt-3">
-                Contraseña demo para todos: <code>admin123</code>
+              <p className="text-center text-[10px] text-slate-500 dark:text-slate-400 mt-4 font-mono">
+                Contraseña demo para todos: <code className="font-bold px-1.5 py-0.5 rounded bg-slate-200 dark:bg-slate-800 text-slate-800 dark:text-slate-200">admin123</code>
               </p>
             </div>
           </div>
@@ -746,7 +814,7 @@ export function HubClient() {
     )
   }
 
-  // INTERFAZ PRINCIPAL TIPO CONFLUENCE
+    // INTERFAZ PRINCIPAL TIPO CONFLUENCE
   return (
     <div className={`min-h-screen flex flex-col pt-16 font-['Roboto',sans-serif] transition-colors ${themeMode === 'light' ? 'bg-slate-50 text-slate-900' : 'bg-slate-950 text-slate-100'}`}>
 
