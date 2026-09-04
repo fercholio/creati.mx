@@ -84,6 +84,13 @@ export function HubClient() {
 
   // SuperAdmin: Modal para Crear Usuario
   const [showCreateUserModal, setShowCreateUserModal] = useState(false)
+  const [showCreateDocModal, setShowCreateDocModal] = useState(false)
+  const [newDocTitle, setNewDocTitle] = useState('')
+  const [newDocEcosystem, setNewDocEcosystem] = useState<EcosystemId>('abogalia')
+  const [newDocRole, setNewDocRole] = useState<UserRole | 'ALL'>('ALL')
+  const [newDocCategory, setNewDocCategory] = useState<'architecture' | 'api' | 'security' | 'frd' | 'roadmap' | 'sales_pricing' | 'seo_marketing' | 'operations'>('architecture')
+  const [newDocSummary, setNewDocSummary] = useState('')
+  const [newDocTemplate, setNewDocTemplate] = useState<'blank' | 'api' | 'architecture' | 'kpis'>('architecture')
   const [editingUser, setEditingUser] = useState<HubUser | null>(null)
   const [editUserName, setEditUserName] = useState('')
   const [editUserEmail, setEditUserEmail] = useState('')
@@ -343,6 +350,181 @@ export function HubClient() {
     localStorage.setItem('creati_hub_users_v1', JSON.stringify(updatedUsers))
   }
 
+
+  const handleCreateDocument = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!newDocTitle.trim() || !currentUser) return
+
+    let templateContent = ''
+    if (newDocTemplate === 'api') {
+      templateContent = [
+        '# ' + newDocTitle.trim(),
+        '',
+        '> **Especificación de API & Contratos de Integración B2B**',
+        '> Documentación técnica oficial para servicios de backend y microservicios.',
+        '',
+        '---',
+        '',
+        '## 1. Parámetros de Solicitud (Request Payload)',
+        '',
+        '| Parámetro | Tipo | Requerido | Descripción |',
+        '| :--- | :--- | :---: | :--- |',
+        '| `api_key` | string | Sí | Token JWT emitido por la bóveda central |',
+        '| `limit` | number | No | Cantidad de registros por página (default: 50) |',
+        '| `filter` | string | No | Criterio de búsqueda en base de datos |',
+        '',
+        '---',
+        '',
+        '## 2. Flujo de Comunicación del Endpoint',
+        '',
+        '```mermaid',
+        'sequenceDiagram',
+        '    autonumber',
+        '    actor Cliente as App / Satélite',
+        '    participant Gateway as API Gateway',
+        '    participant Auth as Bóveda IAM',
+        '    participant Service as Servicio de Dominio',
+        '',
+        '    Cliente->>Gateway: POST /api/v1/' + newDocTitle.toLowerCase().replace(/\s+/g, '-'),
+        '    Gateway->>Auth: Validar Token JWT',
+        '    Auth-->>Gateway: 200 OK (Rol Válido)',
+        '    Gateway->>Service: Procesar Transacción',
+        '    Service-->>Gateway: Dataset Cifrado',
+        '    Gateway-->>Cliente: HTTP 200 JSON Response',
+        '```',
+        '',
+        '---',
+        '',
+        '## 3. Consideraciones de Seguridad & Rate Limiting',
+        '',
+        '> [!NOTE]',
+        '> Todo request debe contener el header `Authorization: Bearer <TOKEN>` y está limitado a 120 peticiones por minuto.',
+        ''
+      ].join('\n')
+    } else if (newDocTemplate === 'architecture') {
+      templateContent = [
+        '# ' + newDocTitle.trim(),
+        '',
+        '> **Arquitectura del Sistema & Blueprint Técnico**',
+        '> Diagrama de bloques, dependencias estructurales y modelo de flujo.',
+        '',
+        '---',
+        '',
+        '## 1. Topología del Sistema',
+        '',
+        '```mermaid',
+        'graph TD',
+        '    A[Tráfico Web / Clientes] --> B{Load Balancer Cloud}',
+        '    B -->|Frontend| C[Next.js App Router]',
+        '    B -->|Backend API| D[Cluster de Microservicios]',
+        '    D --> E[(Bóveda Cifrada B2B)]',
+        '    D --> F[Redis Cache / In-Memory]',
+        '```',
+        '',
+        '---',
+        '',
+        '## 2. Matriz de Componentes',
+        '',
+        '| Componente | Responsabilidad | Nivel de Redundancia |',
+        '| :--- | :--- | :---: |',
+        '| Gateway | Terminación TLS, Autenticación y Rate Limiting | Alta (Multi-Region) |',
+        '| Worker Sync | Ingestión autónoma de repositorios satélites | Standby Activo |',
+        '| Storage | Almacenamiento seguro de snapshots y versiones | Cifrado AES-256 |',
+        '',
+        '---',
+        '',
+        '## 3. Directrices de Despliegue',
+        '',
+        '> [!TIP]',
+        '> Todo cambio estructural debe verificarse primero mediante suites de tests headless (`npm test`) antes de promover a producción.',
+        ''
+      ].join('\n')
+    } else if (newDocTemplate === 'kpis') {
+      templateContent = [
+        '# ' + newDocTitle.trim(),
+        '',
+        '> **Dashboard de Métricas, KPIs y Objetivos de Negocio**',
+        '> Monitoreo de ingresos recurrentes, conversión y retención del ecosistema.',
+        '',
+        '---',
+        '',
+        '## 1. Métricas Clave de Desempeño (KPIs)',
+        '',
+        '| Métrica / Objetivo | Meta Mensual | Estado Actual | Desviación | Desempeño |',
+        '| :--- | :---: | :---: | :---: | :---: |',
+        '| MRR B2B SaaS | $150,000 MXN | $168,500 MXN | +12.3% | Superado |',
+        '| Churn Mensual | < 1.8% | 1.2% | -0.6% | Óptimo |',
+        '| Conversión Checkout | > 4.5% | 5.1% | +0.6% | Excelente |',
+        '',
+        '---',
+        '',
+        '## 2. Diagrama de Embudo de Conversión',
+        '',
+        '```mermaid',
+        'graph TD',
+        '    A[Visitantes Únicos / Mes: 10,000] --> B[Registro Gratuito / Trial: 1,200]',
+        '    B --> C[Activación de Producto: 850]',
+        '    C --> D[Suscripción de Pago: 210]',
+        '    D --> E[Expansión Anual / Retención: 185]',
+        '```',
+        ''
+      ].join('\n')
+    } else {
+      templateContent = [
+        '# ' + newDocTitle.trim(),
+        '',
+        '> Documentación técnica creada para el ecosistema ' + newDocEcosystem.toUpperCase() + '.',
+        '',
+        'Escribe aquí el contenido de la especificación...'
+      ].join('\n')
+    }
+
+    const nowIso = new Date().toISOString()
+    const nowDate = nowIso.split('T')[0]
+    const docId = 'doc_' + newDocEcosystem + '_' + Date.now()
+
+    const newDoc: HubDocument = {
+      id: docId,
+      ecosystem: newDocEcosystem,
+      title: newDocTitle.trim(),
+      category: newDocCategory,
+      requiredRole: newDocRole,
+      summary: newDocSummary.trim() || 'Documento técnico creado desde Creati Hub',
+      lastUpdated: nowDate,
+      author: currentUser.name,
+      tags: [newDocEcosystem, newDocCategory],
+      content: templateContent,
+      lastModifiedBy: {
+        name: currentUser.name,
+        email: currentUser.email,
+        role: currentUser.role,
+        timestamp: nowIso
+      },
+      versions: [
+        {
+          versionId: 'ver_' + Date.now(),
+          versionNumber: 'v1.0',
+          timestamp: nowIso,
+          authorId: currentUser.id,
+          authorName: currentUser.name,
+          authorEmail: currentUser.email,
+          authorRole: currentUser.role,
+          changeSummary: 'Creación inicial del documento',
+          contentSnapshot: templateContent
+        }
+      ]
+    }
+
+    const updated = [newDoc, ...documents]
+    setDocuments(updated)
+    localStorage.setItem('creati_hub_docs_v1', JSON.stringify(updated))
+    setSelectedDocId(newDoc.id)
+    setIsEditing(true)
+    setEditableContent(newDoc.content)
+    setShowCreateDocModal(false)
+    setNewDocTitle('')
+    setNewDocSummary('')
+  }
 
   const handleStartEditUser = (user: HubUser) => {
     setEditingUser(user)
@@ -722,6 +904,137 @@ export function HubClient() {
               </table>
             </div>
           </div>
+
+          {/* Modal Crear Nueva Página / Documento */}
+          {showCreateDocModal && (
+            <div className="fixed inset-0 bg-navy-950/70 backdrop-blur-xs flex items-center justify-center z-50 p-4">
+              <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-navy-100 dark:border-slate-800 text-slate-900 dark:text-slate-100">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="flex items-center gap-2">
+                    <div className="p-2 rounded-xl bg-accent-500/10 text-accent-600">
+                      <FileText className="w-5 h-5" />
+                    </div>
+                    <div>
+                      <h3 className="text-lg font-bold">Crear Nueva Página / Documento</h3>
+                      <p className="text-xs text-slate-500">Añade especificaciones, arquitectura o planes al Hub.</p>
+                    </div>
+                  </div>
+                  <button
+                    onClick={() => setShowCreateDocModal(false)}
+                    className="p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 cursor-pointer"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+
+                <form onSubmit={handleCreateDocument} className="space-y-4 text-xs mt-4">
+                  <div>
+                    <label className="block font-bold mb-1 text-slate-700 dark:text-slate-300">Título de la Página *</label>
+                    <input
+                      type="text"
+                      required
+                      value={newDocTitle}
+                      onChange={(e) => setNewDocTitle(e.target.value)}
+                      placeholder="ej. Arquitectura de Ingestión B2B v2"
+                      className="w-full px-3 py-2 border rounded-xl bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700 outline-none focus:border-accent-500 text-sm"
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block font-bold mb-1 text-slate-700 dark:text-slate-300">Ecosistema</label>
+                      <select
+                        value={newDocEcosystem}
+                        onChange={(e) => setNewDocEcosystem(e.target.value as EcosystemId)}
+                        className="w-full px-3 py-2 border rounded-xl bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700 outline-none"
+                      >
+                        <option value="abogalia">Abogalia (LegalTech)</option>
+                        <option value="brokar">Brokar (Inmobiliaria)</option>
+                        <option value="medical">Medical (HealthTech)</option>
+                        <option value="creati_core">Creati Core (Plataforma)</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block font-bold mb-1 text-slate-700 dark:text-slate-300">Plantilla Inicial</label>
+                      <select
+                        value={newDocTemplate}
+                        onChange={(e) => setNewDocTemplate(e.target.value as any)}
+                        className="w-full px-3 py-2 border rounded-xl bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700 outline-none font-semibold text-accent-600"
+                      >
+                        <option value="architecture">Arquitectura (Mermaid + Tablas)</option>
+                        <option value="api">API Endpoint (Secuencia + Params)</option>
+                        <option value="kpis">Métricas & KPIs (Gráficas + Metas)</option>
+                        <option value="blank">En Blanco (Documento Vacío)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-3">
+                    <div>
+                      <label className="block font-bold mb-1 text-slate-700 dark:text-slate-300">Categoría</label>
+                      <select
+                        value={newDocCategory}
+                        onChange={(e) => setNewDocCategory(e.target.value as any)}
+                        className="w-full px-3 py-2 border rounded-xl bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700 outline-none"
+                      >
+                        <option value="architecture">Arquitectura</option>
+                        <option value="api">API & Contratos</option>
+                        <option value="security">Seguridad & IAM</option>
+                        <option value="frd">FRD / Requerimientos</option>
+                        <option value="roadmap">Roadmap & Producto</option>
+                        <option value="sales_pricing">Pricing & Ventas</option>
+                        <option value="seo_marketing">Estrategia SEO</option>
+                        <option value="operations">Operaciones</option>
+                      </select>
+                    </div>
+
+                    <div>
+                      <label className="block font-bold mb-1 text-slate-700 dark:text-slate-300">Nivel de Acceso RBAC</label>
+                      <select
+                        value={newDocRole}
+                        onChange={(e) => setNewDocRole(e.target.value as UserRole | 'ALL')}
+                        className="w-full px-3 py-2 border rounded-xl bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700 outline-none"
+                      >
+                        <option value="ALL">Público (Todo el equipo)</option>
+                        <option value="DEVELOPER">Developer</option>
+                        <option value="PRODUCT_MANAGER">Product Manager</option>
+                        <option value="SALES_MARKETING">Sales & Marketing</option>
+                        <option value="SUPER_ADMIN">Solo Super Admin</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label className="block font-bold mb-1 text-slate-700 dark:text-slate-300">Resumen Ejecutivo</label>
+                    <textarea
+                      value={newDocSummary}
+                      onChange={(e) => setNewDocSummary(e.target.value)}
+                      placeholder="Breve resumen del propósito de este documento..."
+                      rows={2}
+                      className="w-full px-3 py-2 border rounded-xl bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700 outline-none resize-none"
+                    />
+                  </div>
+
+                  <div className="flex gap-3 pt-3">
+                    <button
+                      type="button"
+                      onClick={() => setShowCreateDocModal(false)}
+                      className="flex-1 py-2.5 rounded-xl border border-slate-300 dark:border-slate-700 font-semibold hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+                    >
+                      Cancelar
+                    </button>
+                    <button
+                      type="submit"
+                      className="flex-1 py-2.5 rounded-xl bg-accent-600 hover:bg-accent-500 text-white font-bold cursor-pointer shadow-md active:scale-95 transition-all"
+                    >
+                      Crear y Editar Documento
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          )}
 
           {/* Modal Editar Usuario */}
           {editingUser && (
