@@ -9,6 +9,15 @@ interface MarkdownRendererProps {
   themeMode?: 'light' | 'dark'
 }
 
+export function slugify(text: string): string {
+  return text
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[^a-z0-9]+/g, '-')
+    .replace(/(^-|-$)+/g, '')
+}
+
 export function MarkdownRenderer({ content, themeMode = 'light' }: MarkdownRendererProps) {
   const [copiedIndex, setCopiedIndex] = useState<number | null>(null)
 
@@ -142,22 +151,22 @@ export function MarkdownRenderer({ content, themeMode = 'light' }: MarkdownRende
         } else {
           elements.push(
             <div key={`code-${i}`} className="my-5 rounded-2xl overflow-hidden border border-slate-700/60 bg-slate-900/90 shadow-md">
-            <div className="flex items-center justify-between px-4 py-2 bg-slate-800/80 border-b border-slate-700 text-xs font-mono text-slate-400">
-              <span className="uppercase tracking-wider font-semibold text-[11px] text-sky-400">{codeLanguage}</span>
-              <button
-                type="button"
-                onClick={() => copyToClipboard(currentCode, blockIdx)}
-                className="flex items-center gap-1 px-2 py-1 rounded-md hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer text-xs"
-              >
-                {copiedIndex === blockIdx ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
-                <span>{copiedIndex === blockIdx ? 'Copiado' : 'Copiar'}</span>
-              </button>
+              <div className="flex items-center justify-between px-4 py-2 bg-slate-800/80 border-b border-slate-700 text-xs font-mono text-slate-400">
+                <span className="uppercase tracking-wider font-semibold text-[11px] text-sky-400">{codeLanguage}</span>
+                <button
+                  type="button"
+                  onClick={() => copyToClipboard(currentCode, blockIdx)}
+                  className="flex items-center gap-1 px-2 py-1 rounded-md hover:bg-slate-700 text-slate-300 hover:text-white transition-colors cursor-pointer text-xs"
+                >
+                  {copiedIndex === blockIdx ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
+                  <span>{copiedIndex === blockIdx ? 'Copiado' : 'Copiar'}</span>
+                </button>
+              </div>
+              <pre className="p-4 text-xs font-mono font-['Roboto_Mono',monospace] text-slate-100 overflow-x-auto whitespace-pre-wrap leading-relaxed">
+                {currentCode}
+              </pre>
             </div>
-            <pre className="p-4 text-xs font-mono font-['Roboto_Mono',monospace] text-slate-100 overflow-x-auto whitespace-pre-wrap leading-relaxed">
-              {currentCode}
-            </pre>
-          </div>
-        )
+          )
         }
       }
       continue
@@ -168,43 +177,64 @@ export function MarkdownRenderer({ content, themeMode = 'light' }: MarkdownRende
       continue
     }
 
+    // Parsing de Tablas Markdown
     if (line.trim().startsWith('|') && line.trim().endsWith('|')) {
-      inTable = true
-      const cells = line.trim().slice(1, -1).split('|')
+      if (!inTable) inTable = true
+      const cells = line.split('|').slice(1, -1)
       tableRows.push(cells)
       continue
     } else if (inTable) {
       flushTable(i)
     }
 
-    if (line.startsWith('# ')) {
+    // Encabezados con anclas ID para Table of Contents (Outline)
+    if (line.trim().startsWith('# ')) {
+      const rawText = line.replace(/^#\s+/, '').trim()
+      const headingId = slugify(rawText)
       elements.push(
-        <h1 key={`h1-${i}`} className={`text-2xl sm:text-3xl font-bold tracking-tight mt-8 mb-4 ${isDark ? 'text-white' : 'text-slate-900'}`}>
-          {line.replace('# ', '')}
+        <h1
+          key={`h1-${i}`}
+          id={headingId}
+          className={`text-2xl sm:text-3xl font-bold tracking-tight mt-8 mb-4 scroll-mt-24 ${isDark ? 'text-white' : 'text-slate-900'}`}
+        >
+          {formatInline(rawText, isDark)}
         </h1>
       )
       continue
     }
-    if (line.startsWith('## ')) {
+    if (line.trim().startsWith('## ')) {
+      const rawText = line.replace(/^##\s+/, '').trim()
+      const headingId = slugify(rawText)
       elements.push(
-        <h2 key={`h2-${i}`} className={`text-xl sm:text-2xl font-bold tracking-tight mt-6 mb-3 border-b pb-2 ${isDark ? 'text-slate-100 border-slate-800' : 'text-slate-800 border-slate-200'}`}>
-          {line.replace('## ', '')}
+        <h2
+          key={`h2-${i}`}
+          id={headingId}
+          className={`text-xl sm:text-2xl font-bold tracking-tight mt-6 mb-3 border-b pb-2 scroll-mt-24 ${isDark ? 'text-slate-100 border-slate-800' : 'text-slate-800 border-slate-200'}`}
+        >
+          {formatInline(rawText, isDark)}
         </h2>
       )
       continue
     }
-    if (line.startsWith('### ')) {
+    if (line.trim().startsWith('### ')) {
+      const rawText = line.replace(/^###\s+/, '').trim()
+      const headingId = slugify(rawText)
       elements.push(
-        <h3 key={`h3-${i}`} className={`text-base sm:text-lg font-bold tracking-tight mt-5 mb-2 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}>
-          {line.replace('### ', '')}
+        <h3
+          key={`h3-${i}`}
+          id={headingId}
+          className={`text-base sm:text-lg font-bold tracking-tight mt-5 mb-2 scroll-mt-24 ${isDark ? 'text-slate-200' : 'text-slate-800'}`}
+        >
+          {formatInline(rawText, isDark)}
         </h3>
       )
       continue
     }
 
-    if (line.trim().startsWith('> [!NOTE]') || line.trim().startsWith('> [!IMPORTANT]') || line.trim().startsWith('> [!WARNING]')) {
+    if (line.trim().startsWith('> [!NOTE]') || line.trim().startsWith('> [!IMPORTANT]') || line.trim().startsWith('> [!WARNING]') || line.trim().startsWith('> [!TIP]')) {
       const isWarn = line.includes('WARNING')
       const isImportant = line.includes('IMPORTANT')
+      const isTip = line.includes('TIP')
       elements.push(
         <div
           key={`alert-${i}`}
@@ -213,15 +243,18 @@ export function MarkdownRenderer({ content, themeMode = 'light' }: MarkdownRende
               ? 'bg-amber-500/10 border-amber-500/30 text-amber-900 dark:text-amber-200'
               : isImportant
               ? 'bg-purple-500/10 border-purple-500/30 text-purple-900 dark:text-purple-200'
+              : isTip
+              ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-900 dark:text-emerald-200'
               : 'bg-sky-500/10 border-sky-500/30 text-sky-900 dark:text-sky-200'
           }`}
         >
           {isWarn ? <AlertTriangle className="w-4 h-4 text-amber-600 dark:text-amber-400 shrink-0 mt-0.5" /> :
            isImportant ? <AlertCircle className="w-4 h-4 text-purple-600 dark:text-purple-400 shrink-0 mt-0.5" /> :
+           isTip ? <Sparkles className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" /> :
            <Info className="w-4 h-4 text-sky-600 dark:text-sky-400 shrink-0 mt-0.5" />}
           <div className="flex-1 font-normal">
             <span className="font-bold block mb-1">
-              {isWarn ? 'ADVERTENCIA' : isImportant ? 'INFORMACION CRITICA' : 'NOTA IMPORTANTE'}
+              {isWarn ? 'ADVERTENCIA' : isImportant ? 'INFORMACIÓN CRÍTICA' : isTip ? 'CONSEJO / BUENA PRÁCTICA' : 'NOTA IMPORTANTE'}
             </span>
             {formatInline(line.replace(/> \[\![A-Z]+\]\s*/, ''), isDark)}
           </div>

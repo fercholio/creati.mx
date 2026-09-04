@@ -5,7 +5,7 @@ import { defaultUsers } from '@/lib/hub/users'
 import { initialDocuments } from '@/lib/hub/documents'
 import { HubUser, HubDocument, UserRole, EcosystemId } from '@/lib/hub/types'
 import { obfuscateSensitiveContent } from '@/lib/hub/security-engine'
-import { MarkdownRenderer } from '@/components/hub/MarkdownRenderer'
+import { MarkdownRenderer, slugify } from '@/components/hub/MarkdownRenderer'
 import { GlobalSearchModal } from '@/components/hub/GlobalSearchModal'
 import { GeminiDocAssistant } from '@/components/hub/GeminiDocAssistant'
 import { RichDocumentEditor } from '@/components/hub/RichDocumentEditor'
@@ -13,7 +13,7 @@ import { VersionHistoryModal } from '@/components/hub/VersionHistoryModal'
 import { PermissionManagerModal } from '@/components/hub/PermissionManagerModal'
 import { DEFAULT_ROLES } from '@/lib/hub/permissions-config'
 import { RoleDefinition, DocumentVersion } from '@/lib/hub/types'
-import { Key, History, ShieldAlert, CheckCircle2, PanelLeftClose, PanelLeftOpen, ChevronLeft, Scale, Building2, Stethoscope, Globe } from 'lucide-react'
+import { Key, History, ShieldAlert, CheckCircle2, Share2, Link, Printer, HelpCircle, AlignLeft, PanelLeftClose, PanelLeftOpen, ChevronLeft, Scale, Building2, Stethoscope, Globe } from 'lucide-react'
 import { Edit3, Check, Clock } from 'lucide-react'
 import { Eye, EyeOff, Moon, Sun } from 'lucide-react'
 import {
@@ -71,6 +71,10 @@ export function HubClient() {
   const [activeTab, setActiveTab] = useState<'docs' | 'admin_users'>('docs')
   const [maskSensitiveData, setMaskSensitiveData] = useState<boolean>(true)
   const [themeMode, setThemeMode] = useState<'light' | 'dark'>('light')
+  const [showShortcutsModal, setShowShortcutsModal] = useState(false)
+  const [activeHeadingId, setActiveHeadingId] = useState<string>('')
+  const [linkCopied, setLinkCopied] = useState(false)
+  const [isTocCollapsed, setIsTocCollapsed] = useState(false)
   const [isSidebarCollapsed, setIsSidebarCollapsed] = useState<boolean>(false)
   const [rolesList, setRolesList] = useState<RoleDefinition[]>(DEFAULT_ROLES)
   const [isPermissionModalOpen, setIsPermissionModalOpen] = useState(false)
@@ -273,7 +277,59 @@ export function HubClient() {
     })
   }
 
+  const handleCopyDeepLink = () => {
+    if (!currentDoc || typeof window === 'undefined') return
+    const url = new URL(window.location.href)
+    url.searchParams.set('doc', currentDoc.id)
+    navigator.clipboard.writeText(url.toString())
+    setLinkCopied(true)
+    setTimeout(() => setLinkCopied(false), 2000)
+  }
+
+  // Atajo universal '?' para abrir el centro de comandos / atajos
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement) return
+      if (e.key === '?') {
+        setShowShortcutsModal((prev) => !prev)
+      }
+      if (e.key === 'p' && (e.ctrlKey || e.metaKey)) {
+        // Permitir default o abrir print
+      }
+    }
+    window.addEventListener('keydown', handleKeyDown)
+    return () => window.removeEventListener('keydown', handleKeyDown)
+  }, [])
+
+  // IntersectionObserver para el Table of Contents (Outline)
+  useEffect(() => {
+    if (!currentDoc) return
+
+    const headings = document.querySelectorAll('main h1[id], main h2[id], main h3[id]')
+    if (headings.length === 0) return
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActiveHeadingId(entry.target.id)
+          }
+        })
+      },
+      { rootMargin: '-80px 0px -60% 0px' }
+    )
+
+    headings.forEach((h) => observer.observe(h))
+    return () => observer.disconnect()
+  }, [currentDoc, isEditing])
+
   const handleSelectDoc = (id: string) => {
+    if (typeof window !== 'undefined') {
+      const url = new URL(window.location.href)
+      url.searchParams.set('doc', id)
+      window.history.replaceState({}, '', url.toString())
+    }
+  
     setSelectedDocId(id)
     setIsEditing(false)
     const d = documents.find((doc) => doc.id === id)
@@ -814,6 +870,22 @@ export function HubClient() {
     )
   }
 
+    // Extraer encabezados del contenido activo para Outline
+  const docHeadings = currentDoc
+    ? currentDoc.content
+        .split('\n')
+        .filter((l) => l.trim().startsWith('# ') || l.trim().startsWith('## ') || l.trim().startsWith('### '))
+        .map((l) => {
+          const level = l.trim().startsWith('### ') ? 3 : l.trim().startsWith('## ') ? 2 : 1
+          const text = l.trim().replace(/^#{1,3}\s+/, '')
+          return { id: slugify(text), text, level }
+        })
+    : []
+
+  // Métricas de lectura estimadas
+  const wordCount = currentDoc ? currentDoc.content.trim().split(/\s+/).filter(Boolean).length : 0
+  const readingTimeMinutes = Math.max(1, Math.ceil(wordCount / 200))
+
     // INTERFAZ PRINCIPAL TIPO CONFLUENCE
   return (
     <div className={`min-h-screen flex flex-col pt-16 font-['Roboto',sans-serif] transition-colors ${themeMode === 'light' ? 'bg-slate-50 text-slate-900' : 'bg-slate-950 text-slate-100'}`}>
@@ -1016,7 +1088,80 @@ export function HubClient() {
             </div>
           </div>
 
-          {/* Modal Crear Nueva Página / Documento */}
+          {/* Modal Centro de Atajos de Teclado */}
+      {showShortcutsModal && (
+        <div className="fixed inset-0 bg-navy-950/70 backdrop-blur-xs flex items-center justify-center z-60 p-4">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100">
+            <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-200 dark:border-slate-800">
+              <div className="flex items-center gap-2">
+                <div className="p-2 rounded-xl bg-accent-500/10 text-accent-500">
+                  <HelpCircle className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold">Atajos de Teclado Universales</h3>
+                  <p className="text-xs text-slate-500">Navega a la velocidad del pensamiento sin tocar el mouse.</p>
+                </div>
+              </div>
+              <button
+                onClick={() => setShowShortcutsModal(false)}
+                className="p-1.5 rounded-xl hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-400 hover:text-slate-600 cursor-pointer"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <div className="space-y-3 text-xs">
+              <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                <span className="font-medium text-slate-700 dark:text-slate-300">Alternar Barra Lateral (Sidebar)</span>
+                <kbd className="px-2 py-1 rounded bg-slate-200 dark:bg-slate-700 font-mono font-bold text-accent-600 dark:text-accent-400 text-xs shadow-2xs">[</kbd>
+              </div>
+
+              <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                <span className="font-medium text-slate-700 dark:text-slate-300">Búsqueda Spotlight Global</span>
+                <div className="flex gap-1">
+                  <kbd className="px-2 py-1 rounded bg-slate-200 dark:bg-slate-700 font-mono font-bold text-xs shadow-2xs">Ctrl</kbd>
+                  <kbd className="px-2 py-1 rounded bg-slate-200 dark:bg-slate-700 font-mono font-bold text-xs shadow-2xs">K</kbd>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                <span className="font-medium text-slate-700 dark:text-slate-300">Enfocar Buscador del Árbol</span>
+                <kbd className="px-2 py-1 rounded bg-slate-200 dark:bg-slate-700 font-mono font-bold text-xs shadow-2xs">/</kbd>
+              </div>
+
+              <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                <span className="font-medium text-slate-700 dark:text-slate-300">Imprimir / Exportar PDF</span>
+                <div className="flex gap-1">
+                  <kbd className="px-2 py-1 rounded bg-slate-200 dark:bg-slate-700 font-mono font-bold text-xs shadow-2xs">Ctrl</kbd>
+                  <kbd className="px-2 py-1 rounded bg-slate-200 dark:bg-slate-700 font-mono font-bold text-xs shadow-2xs">P</kbd>
+                </div>
+              </div>
+
+              <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                <span className="font-medium text-slate-700 dark:text-slate-300">Abrir esta Guía de Atajos</span>
+                <kbd className="px-2 py-1 rounded bg-slate-200 dark:bg-slate-700 font-mono font-bold text-accent-600 dark:text-accent-400 text-xs shadow-2xs">?</kbd>
+              </div>
+
+              <div className="flex items-center justify-between p-2.5 rounded-xl bg-slate-50 dark:bg-slate-800/60 border border-slate-200 dark:border-slate-700">
+                <span className="font-medium text-slate-700 dark:text-slate-300">Cerrar Modales Activos</span>
+                <kbd className="px-2 py-1 rounded bg-slate-200 dark:bg-slate-700 font-mono font-bold text-xs shadow-2xs">Esc</kbd>
+              </div>
+            </div>
+
+            <div className="pt-4 mt-4 border-t border-slate-200 dark:border-slate-800 flex justify-end">
+              <button
+                type="button"
+                onClick={() => setShowShortcutsModal(false)}
+                className="px-4 py-2 rounded-xl bg-accent-600 hover:bg-accent-500 text-white font-bold text-xs cursor-pointer shadow-xs active:scale-95 transition-all"
+              >
+                Entendido
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Modal Crear Nueva Página / Documento */}
           {showCreateDocModal && (
             <div className="fixed inset-0 bg-navy-950/70 backdrop-blur-xs flex items-center justify-center z-50 p-4">
               <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 sm:p-8 max-w-lg w-full shadow-2xl border border-navy-100 dark:border-slate-800 text-slate-900 dark:text-slate-100">
@@ -1501,7 +1646,39 @@ export function HubClient() {
                       </span>
                     )}
 
-                                        {/* Botón Gemini AI Assistant */}
+                                        {/* Botón Copiar Enlace Directo (Deep Linking) */}
+                    <button
+                      type="button"
+                      onClick={handleCopyDeepLink}
+                      className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold cursor-pointer transition-all active:scale-95 ${
+                        linkCopied
+                          ? 'bg-emerald-500/15 border-emerald-500/40 text-emerald-600 dark:text-emerald-400'
+                          : themeMode === 'dark'
+                          ? 'bg-slate-900 hover:bg-slate-800 border-slate-700 text-slate-200'
+                          : 'bg-white hover:bg-slate-100 border-slate-300 text-slate-700'
+                      }`}
+                      title="Copiar enlace permanente a este documento"
+                    >
+                      {linkCopied ? <Check className="w-3.5 h-3.5 text-emerald-500" /> : <Link className="w-3.5 h-3.5 text-accent-500" />}
+                      <span>{linkCopied ? '¡Copiado!' : 'Compartir'}</span>
+                    </button>
+
+                    {/* Botón Imprimir / Exportar a PDF */}
+                    <button
+                      type="button"
+                      onClick={() => window.print()}
+                      className={`hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-xl border text-xs font-semibold cursor-pointer transition-all active:scale-95 ${
+                        themeMode === 'dark'
+                          ? 'bg-slate-900 hover:bg-slate-800 border-slate-700 text-slate-200'
+                          : 'bg-white hover:bg-slate-100 border-slate-300 text-slate-700'
+                      }`}
+                      title="Imprimir o Guardar como PDF"
+                    >
+                      <Printer className="w-3.5 h-3.5 text-slate-500" />
+                      <span className="hidden md:inline">Imprimir / PDF</span>
+                    </button>
+
+                    {/* Botón Gemini AI Assistant */}
                     <button
                       type="button"
                       onClick={() => setIsGeminiOpen(true)}
