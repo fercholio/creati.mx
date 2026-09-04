@@ -287,6 +287,34 @@ export function HubClient() {
     }
   }
 
+    // Función helper para persistencia centralizada remota B2B (Multi-Usuario)
+  const syncDocToServer = async (docPayload: {
+    docId: string
+    ecosystem: string
+    title: string
+    content: string
+    category: string
+    requiredRole: string
+    summary: string
+    author: string
+    authorEmail: string
+    authorRole: string
+    changeSummary: string
+  }) => {
+    try {
+      await fetch('/api/hub/sync.php', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer CREATI_VAULT_B2B_SYNC_KEY_99812_SECURE_ALPHA'
+        },
+        body: JSON.stringify(docPayload)
+      })
+    } catch (err) {
+      console.warn('Sync to remote server failed, preserved in local cache:', err)
+    }
+  }
+
   const handleSaveEdit = (newContent?: string, changeSummary?: string) => {
     if (!currentDoc || !currentUser) return
     const contentToSave = newContent !== undefined ? newContent : editableContent
@@ -524,6 +552,21 @@ export function HubClient() {
     setShowCreateDocModal(false)
     setNewDocTitle('')
     setNewDocSummary('')
+
+    // Sincronización Inmediata al Servidor Central
+    syncDocToServer({
+      docId: newDoc.id,
+      ecosystem: newDoc.ecosystem,
+      title: newDoc.title,
+      content: newDoc.content,
+      category: newDoc.category,
+      requiredRole: newDoc.requiredRole,
+      summary: newDoc.summary,
+      author: currentUser.name,
+      authorEmail: currentUser.email,
+      authorRole: currentUser.role,
+      changeSummary: 'Creación de nuevo documento desde Creati Hub'
+    })
   }
 
   const handleStartEditUser = (user: HubUser) => {
@@ -814,12 +857,12 @@ export function HubClient() {
       {activeTab === 'admin_users' && currentUser.role === 'SUPER_ADMIN' ? (
         // PANEL SUPERADMIN: GESTIÓN DE USUARIOS
         <div className="max-w-6xl mx-auto w-full p-6 sm:p-10 space-y-8">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-navy-200">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-6 border-b border-slate-200 dark:border-slate-800">
             <div>
-              <h1 className="text-3xl font-extrabold font-sans font-bold text-slate-900">
+              <h1 className="text-3xl font-extrabold font-sans font-bold text-slate-900 dark:text-white">
                 Gestión de Usuarios y Permisos RBAC
               </h1>
-              <p className="text-sm text-navy-600 mt-1">
+              <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
                 Control de acceso a la documentación técnica, especificaciones de producto y planes comerciales.
               </p>
             </div>
@@ -831,10 +874,10 @@ export function HubClient() {
             </button>
           </div>
 
-          <div className="bg-white rounded-2xl border border-navy-100 shadow-sm overflow-hidden">
+          <div className="bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 shadow-sm overflow-hidden">
             <div className="overflow-x-auto">
               <table className="w-full text-left text-xs">
-                <thead className="bg-navy-50/70 text-navy-700 font-bold uppercase tracking-wider border-b border-navy-100">
+                <thead className="bg-slate-50 dark:bg-slate-800/80 text-slate-700 dark:text-slate-300 font-bold uppercase tracking-wider border-b border-slate-200 dark:border-slate-800">
                   <tr>
                     <th className="p-4">Usuario</th>
                     <th className="p-4">Correo</th>
@@ -845,16 +888,16 @@ export function HubClient() {
                     <th className="p-4 text-right">Acciones</th>
                   </tr>
                 </thead>
-                <tbody className="divide-y divide-navy-50">
+                <tbody className="divide-y divide-slate-100 dark:divide-slate-800/70">
                   {usersList.map((u) => (
-                    <tr key={u.id} className="hover:bg-slate-50/80 transition-colors">
-                      <td className="p-4 font-bold text-navy-950 flex items-center gap-2.5">
+                    <tr key={u.id} className="hover:bg-slate-50 dark:hover:bg-slate-800/40 transition-colors">
+                      <td className="p-4 font-bold text-slate-900 dark:text-slate-100 flex items-center gap-2.5">
                         <div className={`w-7 h-7 rounded-full bg-gradient-to-tr ${u.avatarColor} text-white flex items-center justify-center text-[10px] font-bold`}>
                           {u.name.split(' ').map(n => n[0]).join('')}
                         </div>
                         <span>{u.name}</span>
                       </td>
-                      <td className="p-4 text-navy-600 font-mono">{u.email}</td>
+                      <td className="p-4 text-slate-600 dark:text-slate-400 font-mono">{u.email}</td>
                       <td className="p-4">
                         <span className={`px-2.5 py-1 rounded-full font-mono text-[10px] font-bold ${
                           u.role === 'SUPER_ADMIN' ? 'bg-amber-100 text-amber-800' :
@@ -865,7 +908,7 @@ export function HubClient() {
                           {u.role.replace('_', ' ')}
                         </span>
                       </td>
-                      <td className="p-4 text-navy-600">
+                      <td className="p-4 text-slate-600 dark:text-slate-300">
                         {u.role === 'SUPER_ADMIN' && 'Acceso Ilimitado (100% de la Suite)'}
                         {u.role === 'DEVELOPER' && 'Arquitectura, APIs, Seguridad y Deploys'}
                         {u.role === 'PRODUCT_MANAGER' && 'FRDs, Roadmaps y Especificaciones'}
@@ -876,13 +919,13 @@ export function HubClient() {
                           <span className="w-2 h-2 rounded-full bg-emerald-500"></span> Activo
                         </span>
                       </td>
-                      <td className="p-4 text-navy-400 font-mono">{u.createdAt}</td>
+                      <td className="p-4 text-slate-400 dark:text-slate-500 font-mono">{u.createdAt}</td>
                       <td className="p-4 text-right">
                         <div className="flex items-center justify-end gap-2">
                           <button
                             type="button"
                             onClick={() => handleStartEditUser(u)}
-                            className="px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer shadow-2xs"
+                            className="px-3 py-1.5 rounded-lg bg-blue-50 hover:bg-blue-100 dark:bg-blue-900/30 dark:hover:bg-blue-900/50 text-blue-700 dark:text-blue-300 border border-blue-200 dark:border-blue-700/60 text-xs font-bold flex items-center gap-1.5 transition-all active:scale-95 cursor-pointer shadow-2xs"
                             title="Editar usuario"
                           >
                             <Edit2 className="w-3.5 h-3.5" />
@@ -891,7 +934,7 @@ export function HubClient() {
                           <button
                             type="button"
                             onClick={() => handleDeleteUser(u.id)}
-                            className="p-1.5 rounded-lg border border-rose-200 text-rose-500 hover:text-rose-700 hover:bg-rose-50 transition-all active:scale-95 cursor-pointer shadow-2xs"
+                            className="p-1.5 rounded-lg border border-rose-200 dark:border-rose-800/60 text-rose-500 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/40 transition-all active:scale-95 cursor-pointer shadow-2xs"
                             title="Eliminar usuario"
                           >
                             <Trash2 className="w-3.5 h-3.5" />
@@ -1039,9 +1082,9 @@ export function HubClient() {
           {/* Modal Editar Usuario */}
           {editingUser && (
             <div className="fixed inset-0 bg-navy-950/70 backdrop-blur-xs flex items-center justify-center z-50 p-4">
-              <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl border border-navy-100">
+              <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100">
                 <div className="flex items-center justify-between mb-2">
-                  <h3 className="text-xl font-bold font-sans text-slate-900">Editar Miembro del Equipo</h3>
+                  <h3 className="text-xl font-bold font-sans text-slate-900 dark:text-white">Editar Miembro del Equipo</h3>
                   <button
                     onClick={() => setEditingUser(null)}
                     className="p-1.5 rounded-xl hover:bg-slate-100 text-slate-400 hover:text-slate-600 cursor-pointer"
@@ -1049,7 +1092,7 @@ export function HubClient() {
                     <X className="w-5 h-5" />
                   </button>
                 </div>
-                <p className="text-xs text-navy-600 mb-6">Modifica los datos personales y el rol RBAC asignado a este usuario.</p>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mb-6">Modifica los datos personales y el rol RBAC asignado a este usuario.</p>
                 <form onSubmit={handleUpdateUser} className="space-y-4">
                   <div>
                     <label className="block text-xs font-bold text-navy-700 mb-1">Nombre Completo</label>
@@ -1058,7 +1101,7 @@ export function HubClient() {
                       required
                       value={editUserName}
                       onChange={(e) => setEditUserName(e.target.value)}
-                      className="w-full px-3 py-2 border rounded-xl text-sm outline-none focus:border-accent-500"
+                      className="w-full px-3 py-2 border rounded-xl text-sm bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 outline-none focus:border-accent-500"
                     />
                   </div>
                   <div>
@@ -1068,7 +1111,7 @@ export function HubClient() {
                       required
                       value={editUserEmail}
                       onChange={(e) => setEditUserEmail(e.target.value)}
-                      className="w-full px-3 py-2 border rounded-xl text-sm outline-none focus:border-accent-500 font-mono"
+                      className="w-full px-3 py-2 border rounded-xl text-sm bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 outline-none focus:border-accent-500 font-mono"
                     />
                   </div>
                   <div>
@@ -1076,7 +1119,7 @@ export function HubClient() {
                     <select
                       value={editUserRole}
                       onChange={(e) => setEditUserRole(e.target.value as UserRole)}
-                      className="w-full px-3 py-2 border rounded-xl text-sm bg-white outline-none focus:border-accent-500"
+                      className="w-full px-3 py-2 border rounded-xl text-sm bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 outline-none focus:border-accent-500"
                     >
                       <option value="DEVELOPER">Developer (Arquitectura, APIs, Seguridad)</option>
                       <option value="PRODUCT_MANAGER">Product Manager (FRDs, Roadmaps)</option>
@@ -1107,9 +1150,9 @@ export function HubClient() {
           {/* Modal Crear Usuario */}
           {showCreateUserModal && (
             <div className="fixed inset-0 bg-navy-950/70 backdrop-blur-xs flex items-center justify-center z-50 p-4">
-              <div className="bg-white rounded-3xl p-8 max-w-md w-full shadow-2xl border border-navy-100">
-                <h3 className="text-xl font-bold font-sans font-bold text-slate-900 mb-2">Crear Nuevo Miembro del Equipo</h3>
-                <p className="text-xs text-navy-600 mb-6">El nuevo usuario podrá ingresar al Knowledge Hub con los permisos correspondientes.</p>
+              <div className="bg-white dark:bg-slate-900 rounded-3xl p-8 max-w-md w-full shadow-2xl border border-slate-200 dark:border-slate-800 text-slate-900 dark:text-slate-100">
+                <h3 className="text-xl font-bold font-sans font-bold text-slate-900 dark:text-white mb-2">Crear Nuevo Miembro del Equipo</h3>
+                <p className="text-xs text-slate-500 dark:text-slate-400 mb-6">El nuevo usuario podrá ingresar al Knowledge Hub con los permisos correspondientes.</p>
                 <form onSubmit={handleCreateUser} className="space-y-4">
                   <div>
                     <label className="block text-xs font-bold text-navy-700 mb-1">Nombre Completo</label>
@@ -1119,7 +1162,7 @@ export function HubClient() {
                       value={newUserName}
                       onChange={(e) => setNewUserName(e.target.value)}
                       placeholder="ej. Valeria Méndez"
-                      className="w-full px-3 py-2 border rounded-xl text-sm"
+                      className="w-full px-3 py-2 border rounded-xl text-sm bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 outline-none"
                     />
                   </div>
                   <div>
@@ -1138,7 +1181,7 @@ export function HubClient() {
                     <select
                       value={newUserRole}
                       onChange={(e) => setNewUserRole(e.target.value as UserRole)}
-                      className="w-full px-3 py-2 border rounded-xl text-sm bg-white"
+                      className="w-full px-3 py-2 border rounded-xl text-sm bg-slate-50 dark:bg-slate-800/80 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 outline-none"
                     >
                       <option value="DEVELOPER">Developer (Arquitectura, APIs, Seguridad)</option>
                       <option value="PRODUCT_MANAGER">Product Manager (FRDs, Roadmaps)</option>

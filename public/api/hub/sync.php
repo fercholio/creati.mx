@@ -1,16 +1,16 @@
-﻿<?php
+<?php
 /**
  * ==============================================================================
- * CREATI KNOWLEDGE HUB — B2B AUTO-SYNC INGESTION ENDPOINT
+ * CREATI KNOWLEDGE HUB — B2B AUTO-SYNC & CENTRAL VAULT INGESTION ENDPOINT
  * ==============================================================================
- * Permite que cualquier repositorio satélite (Abogalia, Brokar, Medical, etc.)
- * sincronice automáticamente sus documentos Markdown hacia el Hub de Creati.mx.
+ * Centraliza la persistencia multi-usuario y multi-repositorio de documentos
+ * Markdown para todo el ecosistema Creati.mx (Abogalia, Brokar, Medical, etc.).
  * ==============================================================================
  */
 
 header('Content-Type: application/json; charset=utf-8');
 header('Access-Control-Allow-Origin: *');
-header('Access-Control-Allow-Methods: POST, GET, OPTIONS');
+header('Access-Control-Allow-Methods: POST, GET, DELETE, OPTIONS');
 header('Access-Control-Allow-Headers: Content-Type, Authorization, X-Hub-Secret');
 
 // Responder a preflight OPTIONS
@@ -47,18 +47,46 @@ if ($providedToken !== CREATI_HUB_SECRET) {
 // Ruta del archivo de documentos dinámicos en el servidor
 $docsFile = __DIR__ . '/hub_dynamic_documents.json';
 
-// Si es GET, retornar los documentos sincronizados
+// 1. GET: Retornar los documentos almacenados en el servidor
 if ($_SERVER['REQUEST_METHOD'] === 'GET') {
     if (!file_exists($docsFile)) {
         echo json_encode(['success' => true, 'documents' => []]);
         exit;
     }
     $content = file_get_contents($docsFile);
+    $content = preg_replace('/^\xEF\xBB\xBF/', '', $content);
     echo $content ?: json_encode(['success' => true, 'documents' => []]);
     exit;
 }
 
-// Si es POST, procesar payload de sincronización
+// 2. DELETE: Eliminar documento del servidor central
+if ($_SERVER['REQUEST_METHOD'] === 'DELETE') {
+    $rawInput = file_get_contents('php://input');
+    $payload = json_decode($rawInput, true);
+    $docId = isset($_GET['docId']) ? trim($_GET['docId']) : (isset($payload['docId']) ? trim($payload['docId']) : '');
+
+    if (empty($docId)) {
+        http_response_code(400);
+        echo json_encode(['success' => false, 'error' => 'Bad Request: Missing docId parameter.']);
+        exit;
+    }
+
+    if (!file_exists($docsFile)) {
+        echo json_encode(['success' => true, 'message' => 'File empty, nothing to delete.']);
+        exit;
+    }
+
+    $existing = json_decode(preg_replace('/^\xEF\xBB\xBF/', '', file_get_contents($docsFile)), true) ?: [];
+    $filtered = array_values(array_filter($existing, function($doc) use ($docId) {
+        return $doc['id'] !== $docId;
+    }));
+
+    file_put_contents($docsFile, json_encode($filtered, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE));
+    echo json_encode(['success' => true, 'message' => "Document '{$docId}' removed from server central vault."]);
+    exit;
+}
+
+// 3. POST: Guardar o actualizar documento en el servidor central
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $rawInput = file_get_contents('php://input');
     $payload = json_decode($rawInput, true);
@@ -74,7 +102,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $existing = [];
     if (file_exists($docsFile)) {
-        $existing = json_decode(file_get_contents($docsFile), true) ?: [];
+        $existing = json_decode(preg_replace('/^\xEF\xBB\xBF/', '', file_get_contents($docsFile)), true) ?: [];
     }
 
     $docId = trim($payload['docId']);
@@ -83,9 +111,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $category = trim($payload['category'] ?? 'architecture');
     $requiredRole = trim($payload['requiredRole'] ?? 'ALL');
     $author = trim($payload['author'] ?? 'AI Agent (Sync Bot)');
+    $authorEmail = trim($payload['authorEmail'] ?? ('agent@' . $ecosystem . '.creati.mx'));
     $authorRole = trim($payload['authorRole'] ?? 'DEVELOPER');
-    $changeSummary = trim($payload['changeSummary'] ?? 'Sincronización automática multi-repo');
-    $tags = is_array($payload['tags'] ?? null) ? $payload['tags'] : ['auto-sync'];
+    $changeSummary = trim($payload['changeSummary'] ?? 'Actualización desde Creati Hub');
+    $tags = is_array($payload['tags'] ?? null) ? $payload['tags'] : ['creati-hub'];
     $summary = trim($payload['summary'] ?? substr(strip_tags($payload['content']), 0, 160) . '...');
     $timestamp = date('c');
     $today = date('Y-m-d');
@@ -95,9 +124,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'versionId' => 'ver_' . round(microtime(true) * 1000),
         'versionNumber' => 'v' . date('ymd.His'),
         'timestamp' => $timestamp,
-        'authorId' => 'usr_sync_agent',
+        'authorId' => 'usr_' . substr(md5($authorEmail), 0, 8),
         'authorName' => $author,
-        'authorEmail' => 'agent@' . $ecosystem . '.creati.mx',
+        'authorEmail' => $authorEmail,
         'authorRole' => $authorRole,
         'changeSummary' => $changeSummary,
         'contentSnapshot' => $payload['content']
@@ -123,7 +152,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $existing[$foundIndex]['tags'] = $tags;
         $existing[$foundIndex]['lastModifiedBy'] = [
             'name' => $author,
-            'email' => 'agent@' . $ecosystem . '.creati.mx',
+            'email' => $authorEmail,
             'role' => $authorRole,
             'timestamp' => $timestamp
         ];
@@ -143,7 +172,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'content' => $payload['content'],
             'lastModifiedBy' => [
                 'name' => $author,
-                'email' => 'agent@' . $ecosystem . '.creati.mx',
+                'email' => $authorEmail,
                 'role' => $authorRole,
                 'timestamp' => $timestamp
             ],
@@ -158,7 +187,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         'message' => "Document '{$docId}' synchronized successfully to Creati Knowledge Hub.",
         'version' => $newVersion['versionNumber'],
         'ecosystem' => $ecosystem,
+        'total_docs' => count($existing),
         'timestamp' => $timestamp
     ]);
     exit;
 }
+
+http_response_code(405);
+echo json_encode(['error' => 'Method Not Allowed']);

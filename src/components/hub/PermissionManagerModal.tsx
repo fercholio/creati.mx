@@ -232,7 +232,7 @@ export function PermissionManagerModal({
                         : 'bg-white border-accent-500 text-slate-900 shadow-xs ring-1 ring-accent-500/30'
                       : isDark
                       ? 'border-slate-800 hover:bg-slate-800/40 text-slate-400'
-                      : 'border-slate-200 hover:bg-white text-slate-600'
+                      : (isDark ? 'border-slate-800 hover:bg-slate-800/40 text-slate-300' : 'border-slate-200 hover:bg-white text-slate-700')
                   }`}
                 >
                   <div className="flex items-center justify-between mb-1">
@@ -386,7 +386,7 @@ export function PermissionManagerModal({
                   isDark ? 'bg-slate-800/50 border-slate-700' : 'bg-slate-50 border-slate-200'
                 }`}
               >
-                <h3 className="text-base font-bold">{currentUserObj.name}</h3>
+                <h3 className="text-base font-bold text-slate-900 dark:text-white">{currentUserObj.name}</h3>
                 <p className="text-xs text-slate-500">
                   Rol base actual: <strong>{currentUserObj.role}</strong> ({currentUserObj.email})
                 </p>
@@ -471,7 +471,7 @@ export function PermissionManagerModal({
                 isDark ? 'bg-slate-900 border-slate-700 text-slate-100' : 'bg-white border-slate-200 text-slate-900'
               }`}
             >
-              <h3 className="text-base font-bold mb-4">Crear Nuevo Rol Personalizado</h3>
+              <h3 className="text-base font-bold mb-4 text-slate-900 dark:text-white">Crear Nuevo Rol Personalizado</h3>
               <form onSubmit={handleCreateNewRole} className="space-y-4 text-xs">
                 <div>
                   <label className="block font-bold mb-1">Nombre del Rol</label>
@@ -481,7 +481,7 @@ export function PermissionManagerModal({
                     placeholder="ej. Auditor Legal Externo"
                     value={newRoleName}
                     onChange={(e) => setNewRoleName(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-xl bg-transparent outline-none"
+                    className="w-full px-3 py-2 border rounded-xl bg-slate-50 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 outline-none"
                   />
                 </div>
                 <div>
@@ -491,7 +491,7 @@ export function PermissionManagerModal({
                     placeholder="ej. Acceso a contratos y bóveda sin secretos"
                     value={newRoleDescription}
                     onChange={(e) => setNewRoleDescription(e.target.value)}
-                    className="w-full px-3 py-2 border rounded-xl bg-transparent outline-none"
+                    className="w-full px-3 py-2 border rounded-xl bg-slate-50 dark:bg-slate-800 border-slate-300 dark:border-slate-700 text-slate-900 dark:text-slate-100 outline-none"
                   />
                 </div>
 
