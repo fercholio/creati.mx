@@ -13,7 +13,7 @@ import { VersionHistoryModal } from '@/components/hub/VersionHistoryModal'
 import { PermissionManagerModal } from '@/components/hub/PermissionManagerModal'
 import { DEFAULT_ROLES } from '@/lib/hub/permissions-config'
 import { RoleDefinition, DocumentVersion } from '@/lib/hub/types'
-import { Key, History, ShieldAlert, CheckCircle2, PanelLeftClose, PanelLeftOpen, ChevronLeft } from 'lucide-react'
+import { Key, History, ShieldAlert, CheckCircle2, PanelLeftClose, PanelLeftOpen, ChevronLeft, Scale, Building2, Stethoscope, Globe } from 'lucide-react'
 import { Edit3, Check, Clock } from 'lucide-react'
 import { Eye, EyeOff, Moon, Sun } from 'lucide-react'
 import {
@@ -708,7 +708,7 @@ export function HubClient() {
           {/* SIDEBAR IZQUIERDA: Árbol de Documentos */}
           <aside
             className={`border-r flex flex-col shrink-0 h-[calc(100vh-4rem)] relative transition-all duration-300 ease-in-out ${
-              isSidebarCollapsed ? 'w-16 overflow-hidden' : 'w-80'
+              isSidebarCollapsed ? 'w-16' : 'w-80'
             } ${
               themeMode === 'light' ? 'bg-white border-slate-200' : 'bg-slate-900/90 border-slate-800'
             }`}
@@ -717,7 +717,7 @@ export function HubClient() {
             <button
               type="button"
               onClick={toggleSidebar}
-              className={`absolute top-3 -right-3.5 z-30 w-7 h-7 rounded-full border shadow-md flex items-center justify-center transition-transform hover:scale-110 cursor-pointer ${
+              className={`absolute top-3 -right-3 z-50 w-7 h-7 rounded-full border shadow-md flex items-center justify-center transition-transform hover:scale-110 cursor-pointer ${
                 themeMode === 'dark'
                   ? 'bg-slate-800 border-slate-700 text-slate-300 hover:text-white hover:bg-slate-700'
                   : 'bg-white border-slate-300 text-slate-600 hover:text-slate-900 hover:bg-slate-50'
@@ -747,33 +747,33 @@ export function HubClient() {
                   type="button"
                   onClick={() => { setSelectedEcosystem('abogalia'); if (isSidebarCollapsed) toggleSidebar() }}
                   title="Abogalia"
-                  className="p-2 rounded-xl text-base hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-400 hover:text-accent-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                 >
-                  ⚖️
+                  <Scale className="w-5 h-5" />
                 </button>
                 <button
                   type="button"
                   onClick={() => { setSelectedEcosystem('brokar'); if (isSidebarCollapsed) toggleSidebar() }}
                   title="Brokar"
-                  className="p-2 rounded-xl text-base hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-400 hover:text-accent-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                 >
-                  🏢
+                  <Building2 className="w-5 h-5" />
                 </button>
                 <button
                   type="button"
                   onClick={() => { setSelectedEcosystem('medical'); if (isSidebarCollapsed) toggleSidebar() }}
                   title="Medical"
-                  className="p-2 rounded-xl text-base hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-400 hover:text-accent-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                 >
-                  🩺
+                  <Stethoscope className="w-5 h-5" />
                 </button>
                 <button
                   type="button"
                   onClick={() => { setSelectedEcosystem('all'); if (isSidebarCollapsed) toggleSidebar() }}
                   title="Toda la Suite"
-                  className="p-2 rounded-xl text-base hover:bg-slate-100 dark:hover:bg-slate-800 cursor-pointer"
+                  className="w-10 h-10 rounded-xl flex items-center justify-center text-slate-400 hover:text-accent-500 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors cursor-pointer"
                 >
-                  🌐
+                  <Globe className="w-5 h-5" />
                 </button>
               </div>
             ) : (
